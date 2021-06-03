@@ -1,7 +1,7 @@
 #' @title Total Area Normalisation
 #' @param X spectral matrix with rows being the spectra and columns being the chemical shift variables
 #' @return list of normalised X matrix and an array of the corresponding dilution factors
-#' @details also called Constant Sum normalisation
+#' @details also called Constant Sum or Integral normalisation
 #' @author kylebario1@@gmail.com
 #' @example
 #' Xn <- taNorm(X)
