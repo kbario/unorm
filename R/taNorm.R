@@ -1,6 +1,6 @@
 #' @title Total Area Normalisation
-#' @param X spectral matrix with rows being the spectra and columns being the chemical shift variables
-#' @return list of normalised X matrix and an array of the corresponding dilution factors
+#' @param X A matrix containing the NMR spectra with rows contain all data points from one spectra and the columns containing the chemical shift variables.
+#' @return A list with the normalised X matrix and an array of the corresponding dilution factors.
 #' @details also called Constant Sum or Integral normalisation
 #' @author kylebario1@@gmail.com
 #' @example
