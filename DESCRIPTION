@@ -2,9 +2,12 @@ Package: unorm
 Type: Package
 Title: Urine Normalisation
 Version: 0.1.0
-Author: Kyle Bario & Dr. Torben Kimhofer
-Maintainer: Kyle Bario <kylebario@gmail.com>
-Description: unorm is a package designed to normalise nuclear magnetic resonance (NMR) spectrospy spectra through a variety of methods. 
+Authors@R: c(person("Kyle","Bario", email = "kylebario@gmail.com", role = c("aut", "cre")), person("Torben","Kimhofer", role= ("ctb")))
+Author: Kyle Bario [aut, cre],
+  Torben Kimhofer [ctb]
+Maintainer: Kyle Bario <kylebario1@gmail.com>
+Description: unorm is a package designed to normalise nuclear magnetic resonance (NMR) spectrospy spectra through a variety of methods.
+  This package could be useful to anyone working with urine data derived from samples with dilution variations and contains a number of commonly used functions such as PQN and Total Area (a.k.a. Constant Sum or Integral) Normalisation.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
