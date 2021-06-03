@@ -4,7 +4,7 @@
 #' @details also called Constant Sum or Integral normalisation
 #' @author kylebario1@@gmail.com
 #' @example
-#' Xn <- taNorm(X)
+#'     Xn <- taNorm(X)
 #' @export
 
 taNorm <- function(X){

@@ -1,10 +1,10 @@
 #' @title Probabilistic Quotient Normalisation
 #' @param X A matrix containing the NMR spectra with rows contain all data points from one spectra and the columns containing the chemical shift variables.
 #' @return A list with the normalised X matrix and an array of the corresponding dilution factors.
-#' @details https://doi.org/10.1021/ac051632c
-#' @author kylebario1@@gmail.com
+#' @details The methods paper can be found here: https://doi.org/10.1021/ac051632c
+#' @author \email{kylebario1@@gmail.com}
 #' @example
-#' Xn <- pqNorm(X)
+#'     Xn <- pqNorm(X)
 #' @export
 #' @importFrom stats median density
 

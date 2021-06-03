@@ -1,5 +1,11 @@
 #' @title Standard 1D NMR Preprocessing
-#' @details This function streamlines the preprocessing process combining a range of functions that ensure the spectra are orientated the correct way, will calibrate the spectra based on a specific peak, calculate the line width of the peaks and return warnings if they exceed a specified threshold, remove the lower, upper, water and urea region of the spectra, correct the baseline using asymmetric least squares and will verify that the resulting X, ppm and meta objects match appropriately.
+#' @details This function streamlines the preprocessing of NMR urine spectra by combining a range of functions that:
+#' 1. orientate the spectra correctly,
+#' 2. calibrated the spectra by a specific peak,
+#' 3. calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
+#' 4. remove the lower, upper, water and urea regions of the spectra,
+#' 5. correct the baseline of the spectra using asymmetric least squares
+#' 6. verify that the resulting X, ppm and meta objects match appropriately.
 #' @param ppm An array of the chemical shift variables the same length as X.
 #' @param X A matrix containing the NMR spectral data, the rows containing all values of a single experiment and the columns contain values per chemical shift variables.
 #' @param meta The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and linewidth calculation.
@@ -16,7 +22,7 @@
 #' @param ureaUpper The upper ppm value from which the urea region will be cut to.
 #' @importFrom metabom8 calibrate lw get_idx bline
 #' @example
-#' preprocessed <- preprocessing(X, ppm, meta, flip = F, cali = F, 0.5, 9.5, 4.5, 5, 5.2, 6)
+#'     preprocessed <- preprocessing(X, ppm, meta, flip = F, cali = F, 0.5, 9.5, 4.5, 5, 5.2, 6)
 #' @export
 #' @family preproc
 
@@ -31,7 +37,7 @@ preprocessing <- function(X, ppm, meta, flip = TRUE, cali = TRUE, calibrant = 't
     Xf <- flip(X, sh=c(2.9,3))
     cat('Done\n')
   } else {
-    warning("flip was set to FALSE, no flipping has been performed")
+    warning("flip was set to FALSE, spectra have not been checked for orientation")
   }
 
   #calibrate spectra to tsp
@@ -41,7 +47,7 @@ preprocessing <- function(X, ppm, meta, flip = TRUE, cali = TRUE, calibrant = 't
     cat('Done.\n')
   } else {
     cat('cali is set to FALSE...\n')
-    cat('checking metadata to verify calibration not required...\n')
+    cat('checking the metadata to verify calibration not required...\n')
     if (all(meta$p_SREF_mod==1)){
       Xc <- Xf
       cat('all spectra have already been calibrated.\n')
@@ -59,7 +65,7 @@ preprocessing <- function(X, ppm, meta, flip = TRUE, cali = TRUE, calibrant = 't
   if (all(lwB)){
     cat('all spectra have linewidths less than ', linWid, '\n')
   } else {
-    warning('not all spectra have linewidths less than ', linWid, '. refer to the data frame DfX for more information')
+    warning('the spectra ', which(lwB==FALSE), ' have linewidths greater than ',linWid, ', check pproc[[1]] for further information')
   }
   DfX <- data.frame(lwd = lwd, lwB = lwB)
   DfX$n <- 1:(length(rownames(X)))

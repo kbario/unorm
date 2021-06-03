@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>standard preprocessing 1D — preprocessing • unorm</title>
+<title>Standard 1D NMR Preprocessing — preprocessing • unorm</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="standard preprocessing 1D — preprocessing" />
-<meta property="og:description" content="standard preprocessing 1D" />
+<meta property="og:title" content="Standard 1D NMR Preprocessing — preprocessing" />
+<meta property="og:description" content="Standard 1D NMR Preprocessing" />
 
 
 
@@ -103,13 +103,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>standard preprocessing 1D</h1>
+    <h1>Standard 1D NMR Preprocessing</h1>
     
     <div class="hidden name"><code>preprocessing.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>standard preprocessing 1D</p>
+    <p>Standard 1D NMR Preprocessing</p>
     </div>
 
     <pre class="usage"><span class='fu'>preprocessing</span><span class='op'>(</span>
@@ -118,6 +118,8 @@
   <span class='va'>meta</span>,
   flip <span class='op'>=</span> <span class='cn'>TRUE</span>,
   cali <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  calibrant <span class='op'>=</span> <span class='st'>"tsp"</span>,
+  linWid <span class='op'>=</span> <span class='fl'>1</span>,
   baseline <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>lowerCutoff</span>,
   <span class='va'>upperCutoff</span>,
@@ -131,11 +133,66 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>X</th>
+      <td><p>A matrix containing the NMR spectral data, the rows containing all values of a single experiment and the columns contain values per chemical shift variables.</p></td>
+    </tr>
+    <tr>
       <th>ppm</th>
-      <td><p>an array of the chemical shift variables</p></td>
+      <td><p>An array of the chemical shift variables the same length as X.</p></td>
+    </tr>
+    <tr>
+      <th>meta</th>
+      <td><p>The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and linewidth calculation.</p></td>
+    </tr>
+    <tr>
+      <th>flip</th>
+      <td><p>A function that checks the orientation of spectra. This is a particularly important function for spectra derived from a small number of scans; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.</p></td>
+    </tr>
+    <tr>
+      <th>cali</th>
+      <td><p>This is a metabom8 function that calibrates the spectra based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.</p></td>
+    </tr>
+    <tr>
+      <th>calibrant</th>
+      <td><p>This is the signal you wish to use as the calibrant. This signal must be compatible with the metabom8 function. For urine spectra, tsp is the main calibrant.</p></td>
+    </tr>
+    <tr>
+      <th>linWid</th>
+      <td><p>The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.</p></td>
+    </tr>
+    <tr>
+      <th>baseline</th>
+      <td><p>This function calls on the metabom8 function *bline* to flatten and correct the baseline; baseline correction.</p></td>
+    </tr>
+    <tr>
+      <th>lowerCutoff</th>
+      <td><p>The ppm value from where the lowest limit of the spectra will be trimmed/cutoff at.</p></td>
+    </tr>
+    <tr>
+      <th>upperCutoff</th>
+      <td><p>The ppm value from where the highest limit of the spectra will be trimmed/cutoff at.</p></td>
+    </tr>
+    <tr>
+      <th>waterLower</th>
+      <td><p>The lower ppm value from which the water region will be cut from.</p></td>
+    </tr>
+    <tr>
+      <th>waterUpper</th>
+      <td><p>The upper ppm value from which the water region will be cut to.</p></td>
+    </tr>
+    <tr>
+      <th>ureaLower</th>
+      <td><p>The lower ppm value from which the urea region will be cut from.</p></td>
+    </tr>
+    <tr>
+      <th>ureaUpper</th>
+      <td><p>The upper ppm value from which the urea region will be cut to.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function streamlines the preprocessing process combining a range of functions that ensure the spectra are orientated the correct way, will calibrate the spectra based on a specific peak, calculate the line width of the peaks and return warnings if they exceed a specified threshold, remove the lower, upper, water and urea region of the spectra, correct the baseline using asymmetric least squares and will verify that the resulting X, ppm and meta objects match appropriately.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

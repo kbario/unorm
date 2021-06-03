@@ -2,7 +2,7 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocessing}
 \alias{preprocessing}
-\title{standard preprocessing 1D}
+\title{Standard 1D NMR Preprocessing}
 \usage{
 preprocessing(
   X,
@@ -10,6 +10,8 @@ preprocessing(
   meta,
   flip = TRUE,
   cali = TRUE,
+  calibrant = "tsp",
+  linWid = 1,
   baseline = TRUE,
   lowerCutoff,
   upperCutoff,
@@ -20,9 +22,38 @@ preprocessing(
 )
 }
 \arguments{
-\item{ppm}{an array of the chemical shift variables}
+\item{X}{A matrix containing the NMR spectral data, the rows containing all values of a single experiment and the columns contain values per chemical shift variables.}
+
+\item{ppm}{An array of the chemical shift variables the same length as X.}
+
+\item{meta}{The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and linewidth calculation.}
+
+\item{flip}{A function that checks the orientation of spectra. This is a particularly important function for spectra derived from a small number of scans; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.}
+
+\item{cali}{This is a metabom8 function that calibrates the spectra based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.}
+
+\item{calibrant}{This is the signal you wish to use as the calibrant. This signal must be compatible with the metabom8 function. For urine spectra, tsp is the main calibrant.}
+
+\item{linWid}{The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.}
+
+\item{baseline}{This function calls on the metabom8 function *bline* to flatten and correct the baseline; baseline correction.}
+
+\item{lowerCutoff}{The ppm value from where the lowest limit of the spectra will be trimmed/cutoff at.}
+
+\item{upperCutoff}{The ppm value from where the highest limit of the spectra will be trimmed/cutoff at.}
+
+\item{waterLower}{The lower ppm value from which the water region will be cut from.}
+
+\item{waterUpper}{The upper ppm value from which the water region will be cut to.}
+
+\item{ureaLower}{The lower ppm value from which the urea region will be cut from.}
+
+\item{ureaUpper}{The upper ppm value from which the urea region will be cut to.}
 }
 \description{
-standard preprocessing 1D
+Standard 1D NMR Preprocessing
+}
+\details{
+This function streamlines the preprocessing process combining a range of functions that ensure the spectra are orientated the correct way, will calibrate the spectra based on a specific peak, calculate the line width of the peaks and return warnings if they exceed a specified threshold, remove the lower, upper, water and urea region of the spectra, correct the baseline using asymmetric least squares and will verify that the resulting X, ppm and meta objects match appropriately.
 }
 \concept{preproc}

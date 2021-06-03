@@ -7,10 +7,10 @@
 taNorm(X)
 }
 \arguments{
-\item{X}{spectral matrix with rows being the spectra and columns being the chemical shift variables}
+\item{X}{A matrix containing the NMR spectra with rows contain all data points from one spectra and the columns containing the chemical shift variables.}
 }
 \value{
-list of normalised X matrix and an array of the corresponding dilution factors
+A list with the normalised X matrix and an array of the corresponding dilution factors.
 }
 \description{
 Total Area Normalisation
