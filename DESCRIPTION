@@ -1,9 +1,9 @@
 Package: unorm
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Urine Normalisation
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Kyle Bario & Dr. Torben Kimhofer
+Maintainer: Kyle Bario <kylebario@gmail.com>
 Description: unorm is a package designed to normalise nuclear magnetic resonance (NMR) spectrospy spectra through a variety of methods. 
 License: What license is it under?
 Encoding: UTF-8
