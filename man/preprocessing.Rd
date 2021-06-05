@@ -54,6 +54,12 @@ preprocessing(
 Standard 1D NMR Preprocessing
 }
 \details{
-This function streamlines the preprocessing process combining a range of functions that ensure the spectra are orientated the correct way, will calibrate the spectra based on a specific peak, calculate the line width of the peaks and return warnings if they exceed a specified threshold, remove the lower, upper, water and urea region of the spectra, correct the baseline using asymmetric least squares and will verify that the resulting X, ppm and meta objects match appropriately.
+This function streamlines the preprocessing of NMR urine spectra by combining a range of functions that:
+1. orientate the spectra correctly,
+2. calibrated the spectra by a specific peak,
+3. calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
+4. remove the lower, upper, water and urea regions of the spectra,
+5. correct the baseline of the spectra using asymmetric least squares
+6. verify that the resulting X, ppm and meta objects match appropriately.
 }
 \concept{preproc}
