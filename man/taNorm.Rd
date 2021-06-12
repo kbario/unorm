@@ -2,21 +2,21 @@
 % Please edit documentation in R/taNorm.R
 \name{taNorm}
 \alias{taNorm}
-\title{Total Area Normalisation}
+\title{Total Area Normalisation (TAN/CSN)}
 \usage{
 taNorm(X)
 }
 \arguments{
-\item{X}{spectral matrix with rows being the spectra and columns being the chemical shift variables}
+\item{X}{a numerical matrix with rows being the spectra and columns being the chemical shift variables}
 }
 \value{
-list of normalised X matrix and an array of the corresponding dilution factors
+a list of the normalised X matrix and a numerical array of the corresponding dilution factors
 }
 \description{
-Total Area Normalisation
+Total Area Normalisation (TAN/CSN)
 }
 \details{
-also called Constant Sum normalisation
+also called Constant Sum normalisation https://doi.org/10.1021/ac051632c
 }
 \author{
 kylebario1@gmail.com

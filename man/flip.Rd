@@ -4,7 +4,7 @@
 \alias{flip}
 \title{flipping spectra}
 \usage{
-flip(X, ppm, x, sh = c(3, 3.1))
+flip(X, ppm, i, sh = c(3, 3.1))
 }
 \description{
 flipping spectra

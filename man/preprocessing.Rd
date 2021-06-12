@@ -2,7 +2,7 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocessing}
 \alias{preprocessing}
-\title{standard preprocessing 1D}
+\title{Standard Preprocessing of 1D spectra}
 \usage{
 preprocessing(
   X,
@@ -10,6 +10,7 @@ preprocessing(
   meta,
   flip = TRUE,
   cali = TRUE,
+  caliType = "tsp",
   baseline = TRUE,
   lowerCutoff,
   upperCutoff,
@@ -20,9 +21,43 @@ preprocessing(
 )
 }
 \arguments{
-\item{ppm}{an array of the chemical shift variables}
+\item{X}{a numerical matrix with rows being the spectra and the columns being the chemical shift variables}
+
+\item{ppm}{a numerical array holding the chemical shift values of the X matrix}
+
+\item{meta}{a matrix containing the metadata of X}
+
+\item{flip}{specifies if the flip function will correctly orientate the spectra. highly recommended for spectra with a low number of scans. default is TRUE}
+
+\item{cali}{specifies if the metabom8 function 'calibrate' is performed. this is not necessary if this has been done at an NMR level. default is TRUE}
+
+\item{caliType}{specifies what signal will be used to calibrate the spectra. default is 'tsp'}
+
+\item{baseline}{specifies if the metabom8 function 'baseline' will be performed. highly recommended this is performed. default = TRUE}
+
+\item{lowerCutoff}{requires a numerical value that defines the ppm value from where the spectra will be cutoff at the lower end}
+
+\item{upperCutoff}{requires a numerical value that defines the ppm value from where the spectra will be cutoff at the upper end}
+
+\item{waterLower}{a numerical value of the ppm defining the lower cutoff of the water}
+
+\item{waterUpper}{a numerical value of the ppm defining the upper cutoff of the water}
+
+\item{ureaLower}{a numerical value of the ppm defining the lower cutoff of the urea}
+
+\item{ureaUpper}{a numerical value of the ppm defining the upper cutoff of the urea}
 }
 \description{
-standard preprocessing 1D
+Standard Preprocessing of 1D spectra
+}
+\details{
+this function will take a matrix containing spectra in the rows and chemical shift values in the columns, the a numerical array of chemical shifts, and the metadata of the X matrix, and ensure that it is correctly orientated, calibrated, baseline corrected, and the noise regions removed, while also providing information about the linewidths of the peaks. errors will appear if X, ppm and meta do not match at the end of the function. contact author if this occurs.
+}
+\examples{
+preProcessed <- preprocessing(X, ppm, meta, 0.5, 9.5, 4.7,4.85, 5.6,6)
+preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE, 0.5, 9.5, 4.7,4.85, 5.6,6)
+}
+\author{
+<kylebario1@gmail.com>
 }
 \concept{preproc}

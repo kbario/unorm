@@ -1,14 +1,15 @@
 Package: unorm
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Contains functions able to preprocess and normalise 1D NMR spectra
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Kyle Bario and Torben Kimhofer
+Maintainer: Kyle Bario <kylebario1@gmail.com>
+Description: this package contains functions that are able to normalise and preprocess 1D NMR spectra.
+    the preprocessing will ensure that the spectra are correctly orientated, calibrated (default = tsp), nonquantative regions are removed, and baseline corrected, while also returning a information about the linewidth of the peaks.
+    the normalisation methods used are Total Area/Constant Sum Normalisation, Probabilistic Quotient Normalisation (PQN), Normalisation based on an External Factor, Region of Interest (ROI) Normalisation, Quantile Normalisation, Histogram Matching and Multiplicative Scatter Correction Normalisation.
+License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports:
- metabom8
+    metabom8, stats 
 RoxygenNote: 7.1.1
