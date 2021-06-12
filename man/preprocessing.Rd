@@ -2,7 +2,11 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocessing}
 \alias{preprocessing}
+<<<<<<< HEAD
 \title{Standard Preprocessing of 1D spectra}
+=======
+\title{Standard 1D NMR Preprocessing}
+>>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
 \usage{
 preprocessing(
   X,
@@ -10,7 +14,12 @@ preprocessing(
   meta,
   flip = TRUE,
   cali = TRUE,
+<<<<<<< HEAD
   caliType = "tsp",
+=======
+  calibrant = "tsp",
+  linWid = 1,
+>>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
   baseline = TRUE,
   lowerCutoff,
   upperCutoff,
@@ -21,6 +30,7 @@ preprocessing(
 )
 }
 \arguments{
+<<<<<<< HEAD
 \item{X}{a numerical matrix with rows being the spectra and the columns being the chemical shift variables}
 
 \item{ppm}{a numerical array holding the chemical shift values of the X matrix}
@@ -59,5 +69,46 @@ preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline
 }
 \author{
 <kylebario1@gmail.com>
+=======
+\item{X}{A matrix containing the NMR spectral data, the rows containing all values of a single experiment and the columns contain values per chemical shift variables.}
+
+\item{ppm}{An array of the chemical shift variables the same length as X.}
+
+\item{meta}{The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and linewidth calculation.}
+
+\item{flip}{A function that checks the orientation of spectra. This is a particularly important function for spectra derived from a small number of scans; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.}
+
+\item{cali}{This is a metabom8 function that calibrates the spectra based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.}
+
+\item{calibrant}{This is the signal you wish to use as the calibrant. This signal must be compatible with the metabom8 function. For urine spectra, tsp is the main calibrant.}
+
+\item{linWid}{The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.}
+
+\item{baseline}{This function calls on the metabom8 function *bline* to flatten and correct the baseline; baseline correction.}
+
+\item{lowerCutoff}{The ppm value from where the lowest limit of the spectra will be trimmed/cutoff at.}
+
+\item{upperCutoff}{The ppm value from where the highest limit of the spectra will be trimmed/cutoff at.}
+
+\item{waterLower}{The lower ppm value from which the water region will be cut from.}
+
+\item{waterUpper}{The upper ppm value from which the water region will be cut to.}
+
+\item{ureaLower}{The lower ppm value from which the urea region will be cut from.}
+
+\item{ureaUpper}{The upper ppm value from which the urea region will be cut to.}
+}
+\description{
+Standard 1D NMR Preprocessing
+}
+\details{
+This function streamlines the preprocessing of NMR urine spectra by combining a range of functions that:
+1. orientate the spectra correctly,
+2. calibrated the spectra by a specific peak,
+3. calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
+4. remove the lower, upper, water and urea regions of the spectra,
+5. correct the baseline of the spectra using asymmetric least squares
+6. verify that the resulting X, ppm and meta objects match appropriately.
+>>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
 }
 \concept{preproc}

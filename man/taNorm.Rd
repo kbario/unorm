@@ -7,16 +7,27 @@
 taNorm(X)
 }
 \arguments{
+<<<<<<< HEAD
 \item{X}{a numerical matrix with rows being the spectra and columns being the chemical shift variables}
 }
 \value{
 a list of the normalised X matrix and a numerical array of the corresponding dilution factors
+=======
+\item{X}{A matrix containing the NMR spectra with rows contain all data points from one spectra and the columns containing the chemical shift variables.}
+}
+\value{
+A list with the normalised X matrix and an array of the corresponding dilution factors.
+>>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
 }
 \description{
 Total Area Normalisation (TAN/CSN)
 }
 \details{
+<<<<<<< HEAD
 also called Constant Sum normalisation https://doi.org/10.1021/ac051632c
+=======
+also called Constant Sum or Integral normalisation
+>>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
 }
 \author{
 kylebario1@gmail.com

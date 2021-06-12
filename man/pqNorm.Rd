@@ -7,17 +7,31 @@
 pqNorm(X)
 }
 \arguments{
+<<<<<<< HEAD
 \item{X}{a numerical matrix with rows being the spectra and columns being the chemical shift variables}
 }
 \value{
 a list of the normalised X matrix and a numerical array of the corresponding dilution factors
+=======
+\item{X}{A matrix containing the NMR spectra with rows contain all data points from one spectra and the columns containing the chemical shift variables.}
+}
+\value{
+A list with the normalised X matrix and an array of the corresponding dilution factors.
+>>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
 }
 \description{
 Probabilistic Quotient Normalisation
 }
 \details{
+<<<<<<< HEAD
 https://doi.org/10.1021/ac051632c
 }
 \author{
 <kylebario1@gmail.com>
+=======
+The methods paper can be found here: https://doi.org/10.1021/ac051632c
+}
+\author{
+\email{kylebario1@gmail.com}
+>>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
 }
