@@ -5,4 +5,4 @@ This is an R package that contains functions able to normalise nuclear magnetic 
 - Creatinine Normalisation **(CN)**
 - Probabilistic Quotient Normalisation **(PQN)**
 - Histogram Matching **(HM)**
-- Quantile Normalisation **(QN)**
+- Region of Interest Normalisation **(ROIN)**
