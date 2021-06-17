@@ -7,14 +7,14 @@
 roiNorm(X, ppm, shift = c(3, 3.1))
 }
 \arguments{
-\item{X}{a numerical matrix with rows being the spectra and columns being the chemical shift variables}
+\item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
 
-\item{ppm}{a numerical array holding the chemical shift values of the X matrix}
+\item{ppm}{A numerical array holding the chemical shift values of the X matrix}
 
-\item{shift}{the numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).}
+\item{shift}{The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).}
 }
 \value{
-a list of the normalised X matrix and a numerical array of the corresponding dilution factors
+A list of the normalised X matrix and a numerical array of the corresponding dilution factors
 }
 \description{
 Region of Interest Normalisation (ROI)
@@ -22,6 +22,11 @@ Region of Interest Normalisation (ROI)
 \details{
 http://dx.doi.org/10.1007/s11306-018-1400-6
 }
+\examples{
+  Xn <- roiNorm(X, ppm, shift = c(2,2.3))
+  roiDilf <- Xn[[2]]
+  Xn <- Xn[[1]]
+}
 \author{
-<kylebario1@gmail.com>
+\email{kylebario1@gmail.com}
 }

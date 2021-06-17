@@ -1,20 +1,19 @@
-#' @title Histogram Matching Normalisation
+#' @title Histogram Matching
 #' @param X A numerical matrix with rows being the spectra and columns being the chemical shift variables
 #' @param ppm A numerical array holding the chemical shift values of the X matrix
 #' @return A list with the normalised X matrix and an array of the corresponding dilution factors.
 #' @details Histogram Matching aims to normalise spectra based on the intensities of the signals and not take into consideration the ppm positions of peaks. This attribute overcomes issues of peak shift that impact methods such as PQN. However, HM has limitations caused by differently shaped histograms which limits the exact matching of the sample and reference and thus impacts the dilution coefficient estimation. The methods paper can be found here: http://dx.doi.org/10.1007/s11306-018-1400-6
-#' @example
-#'    histMod <- hmNorm(X, ppm)
-#'    hmDilf <- histMod[[2]]
-#'    Xn <- histMod[[1]]
+#' @examples
+#'  histMod <- hmNorm(X, ppm)
+#'  hmDilf <- histMod[[2]]
+#'  Xn <- histMod[[1]]
 #' @export
 #' @author \email{kylebario1@@gmail.com}
 #' @importFrom stats sd
 #' @importFrom metabom8 get_idx
 #' @importFrom graphics hist
 
-library(metabom8)
-histMatch <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.5, alpha_to = 1.5, alpha_n = 101, use_median = F){
+hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.5, alpha_to = 1.5, alpha_n = 101, use_median = F){
   std <- apply(X[,get_idx(noi, ppm)], 1, function(i){
     sd(i)
   })

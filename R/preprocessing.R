@@ -13,7 +13,7 @@
 #' @param cali This is a metabom8 function that calibrates the spectra based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.
 #' @param calibrant This is the signal you wish to use as the calibrant. This signal must be compatible with the metabom8 function. For urine spectra, tsp is the main calibrant.
 #' @param lineWid The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.
-#' @param baseline This function calls on the metabom8 function *bcor* to flatten and correct the baseline; baseline correction.
+#' @param baseline This function calls on the metabom8 function **bcor** to flatten and correct the baseline; baseline correction.
 #' @param lowerCutoff The ppm value from where the lowest limit of the spectra will be trimmed/cutoff at.
 #' @param upperCutoff The ppm value from where the highest limit of the spectra will be trimmed/cutoff at.
 #' @param waterLower The lower ppm value from which the water region will be cut from.

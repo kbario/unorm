@@ -3,7 +3,7 @@
 #' @param ppm A numerical array holding the chemical shift values of the X matrix
 #' @param shift The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).
 #' @return A list of the normalised X matrix and a numerical array of the corresponding dilution factors
-#' @example
+#' @examples
 #'   Xn <- roiNorm(X, ppm, shift = c(2,2.3))
 #'   roiDilf <- Xn[[2]]
 #'   Xn <- Xn[[1]]

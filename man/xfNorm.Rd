@@ -9,7 +9,7 @@ xfNorm(X, xfactor)
 \arguments{
 \item{X}{a numerical matrix with rows being the spectra and columns being the chemical shift variables}
 
-\item{xfactor}{a numerical array of values that corresond to the dilution coefficients of the spectra}
+\item{xfactor}{a numerical array of values that correspond to the dilution coefficients of the spectra}
 }
 \value{
 a list of the normalised X matrix and a numerical array of the corresponding dilution factors
@@ -20,6 +20,11 @@ Normalisation based on an External Factor
 \details{
 https://doi.org/10.1021/ac051632c
 }
+\examples{
+  Xn <- xfNorm(X, osmo)
+  xfDilf <- Xn[[2]]
+  Xn <- Xn[[1]]
+}
 \author{
-<kylebario1@gmail.com>
+\email{kylebario1@gmail.com}
 }

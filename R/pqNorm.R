@@ -3,10 +3,10 @@
 #' @return A list of the normalised X matrix and a numerical array of the corresponding dilution factors
 #' @details PQN is currently considered the gold standard NMR spectra normalisation method at this point in time. Multiple studies have tested its validity. PQN reliably normalises spectra and handles large amounts of noise. One limitation of the method is that it operates on the assumption that over 50% of the data must stay reasonably constant so hugely varying spectra may produces suboptimally normalised spectra. The methods paper can be found here: https://doi.org/10.1021/ac051632c
 #' @author \email{kylebario1@@gmail.com}
-#' @example
-#'   Xn <- pqNorm(X)
-#'   pqnDilf <- Xn[[2]]
-#'   Xn <- t(Xn[[1]])
+#' @examples
+#' Xn <- pqNorm(X)
+#' pqnDilf <- Xn[[2]]
+#' Xn <- t(Xn[[1]])
 #' @importFrom metabom8 bcor
 #' @importFrom graphics hist
 #' @export

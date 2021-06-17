@@ -2,11 +2,7 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocessing}
 \alias{preprocessing}
-<<<<<<< HEAD
-\title{Standard Preprocessing of 1D spectra}
-=======
 \title{Standard 1D NMR Preprocessing}
->>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
 \usage{
 preprocessing(
   X,
@@ -14,12 +10,8 @@ preprocessing(
   meta,
   flip = TRUE,
   cali = TRUE,
-<<<<<<< HEAD
-  caliType = "tsp",
-=======
   calibrant = "tsp",
-  linWid = 1,
->>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
+  lineWid = 1,
   baseline = TRUE,
   lowerCutoff,
   upperCutoff,
@@ -30,46 +22,6 @@ preprocessing(
 )
 }
 \arguments{
-<<<<<<< HEAD
-\item{X}{a numerical matrix with rows being the spectra and the columns being the chemical shift variables}
-
-\item{ppm}{a numerical array holding the chemical shift values of the X matrix}
-
-\item{meta}{a matrix containing the metadata of X}
-
-\item{flip}{specifies if the flip function will correctly orientate the spectra. highly recommended for spectra with a low number of scans. default is TRUE}
-
-\item{cali}{specifies if the metabom8 function 'calibrate' is performed. this is not necessary if this has been done at an NMR level. default is TRUE}
-
-\item{caliType}{specifies what signal will be used to calibrate the spectra. default is 'tsp'}
-
-\item{baseline}{specifies if the metabom8 function 'baseline' will be performed. highly recommended this is performed. default = TRUE}
-
-\item{lowerCutoff}{requires a numerical value that defines the ppm value from where the spectra will be cutoff at the lower end}
-
-\item{upperCutoff}{requires a numerical value that defines the ppm value from where the spectra will be cutoff at the upper end}
-
-\item{waterLower}{a numerical value of the ppm defining the lower cutoff of the water}
-
-\item{waterUpper}{a numerical value of the ppm defining the upper cutoff of the water}
-
-\item{ureaLower}{a numerical value of the ppm defining the lower cutoff of the urea}
-
-\item{ureaUpper}{a numerical value of the ppm defining the upper cutoff of the urea}
-}
-\description{
-Standard Preprocessing of 1D spectra
-}
-\details{
-this function will take a matrix containing spectra in the rows and chemical shift values in the columns, the a numerical array of chemical shifts, and the metadata of the X matrix, and ensure that it is correctly orientated, calibrated, baseline corrected, and the noise regions removed, while also providing information about the linewidths of the peaks. errors will appear if X, ppm and meta do not match at the end of the function. contact author if this occurs.
-}
-\examples{
-preProcessed <- preprocessing(X, ppm, meta, 0.5, 9.5, 4.7,4.85, 5.6,6)
-preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE, 0.5, 9.5, 4.7,4.85, 5.6,6)
-}
-\author{
-<kylebario1@gmail.com>
-=======
 \item{X}{A matrix containing the NMR spectral data, the rows containing all values of a single experiment and the columns contain values per chemical shift variables.}
 
 \item{ppm}{An array of the chemical shift variables the same length as X.}
@@ -82,9 +34,9 @@ preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline
 
 \item{calibrant}{This is the signal you wish to use as the calibrant. This signal must be compatible with the metabom8 function. For urine spectra, tsp is the main calibrant.}
 
-\item{linWid}{The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.}
+\item{lineWid}{The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.}
 
-\item{baseline}{This function calls on the metabom8 function *bline* to flatten and correct the baseline; baseline correction.}
+\item{baseline}{This function calls on the metabom8 function \strong{bcor} to flatten and correct the baseline; baseline correction.}
 
 \item{lowerCutoff}{The ppm value from where the lowest limit of the spectra will be trimmed/cutoff at.}
 
@@ -103,12 +55,20 @@ Standard 1D NMR Preprocessing
 }
 \details{
 This function streamlines the preprocessing of NMR urine spectra by combining a range of functions that:
-1. orientate the spectra correctly,
-2. calibrated the spectra by a specific peak,
-3. calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
-4. remove the lower, upper, water and urea regions of the spectra,
-5. correct the baseline of the spectra using asymmetric least squares
-6. verify that the resulting X, ppm and meta objects match appropriately.
->>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
+\enumerate{
+\item orientate the spectra correctly,
+\item calibrated the spectra by a specific peak,
+\item calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
+\item remove the lower, upper, water and urea regions of the spectra,
+\item correct the baseline of the spectra using asymmetric least squares
+\item verify that the resulting X, ppm and meta objects match appropriately.
+}
+}
+\examples{
+preProcessed <- preprocessing(X, ppm, meta, 0.5, 9.5, 4.7,4.85, 5.6,6)
+preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE, 0.5, 9.5, 4.7,4.85, 5.6,6)
+}
+\author{
+\email{kylebario1@gmail.com}
 }
 \concept{preproc}

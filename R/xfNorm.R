@@ -4,7 +4,7 @@
 #' @return a list of the normalised X matrix and a numerical array of the corresponding dilution factors
 #' @details https://doi.org/10.1021/ac051632c
 #' @author \email{kylebario1@@gmail.com}
-#' @example
+#' @examples
 #'   Xn <- xfNorm(X, osmo)
 #'   xfDilf <- Xn[[2]]
 #'   Xn <- Xn[[1]]

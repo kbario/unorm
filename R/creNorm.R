@@ -6,7 +6,7 @@
 #' @return A list of the normalised X matrix, a numerical array of the corresponding dilution factors, and ratio of the creatinine signals (ideally should equal 0.667)
 #' @details Creatinine normalisation is a method used to normalise based on the intensities of the creatinine signal. While useful, there are complicating factors associated with its use such as inter- and intra-individual creatinine signal fluctuation which hinders accurate normalisation.
 #' @author \email{kylebario1@@gmail.com}
-#' @example
+#' @examples
 #'   Xn <- creNorm(X)
 #'   creDilf <- Xn[[2]]
 #'   Xn <- Xn[[1]]

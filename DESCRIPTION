@@ -13,3 +13,4 @@ LazyData: true
 Imports:
     metabom8, stats 
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
