@@ -1,0 +1,14 @@
+reference:
+- title: Preprocessing Functions
+  desc: Preprocesses urine spectra for streamlined data analysis
+- contents:
+  - has_concept('preproc')
+- title: Normalisation Functions
+- subtitle: Reference-Based
+  desc:  Normalises spectra in relation to a reference
+- contents:
+  - has_concept('Reference-Based')
+- subtitle: Attribute-Based
+  desc: Normalises spectra based on an attribute they share (i.e., a specific peak or area of the spectra)
+- contents:
+  - has_concept('Attribute-Based')

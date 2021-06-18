@@ -25,10 +25,17 @@ Creatinine Normalisation
 Creatinine normalisation is a method used to normalise based on the intensities of the creatinine signal. While useful, there are complicating factors associated with its use such as inter- and intra-individual creatinine signal fluctuation which hinders accurate normalisation.
 }
 \examples{
+\dontrun{
   Xn <- creNorm(X)
   creDilf <- Xn[[2]]
-  Xn <- Xn[[1]]
+  Xn <- Xn[[1]]}
+}
+\seealso{
+Other {Attribute-Based}: 
+\code{\link{roiNorm}()},
+\code{\link{taNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
+\concept{{Attribute-Based}}

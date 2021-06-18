@@ -190,15 +190,16 @@
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="the-pipeline"><a class="anchor" href="#the-pipeline"></a>The Pipeline</h2>
 
-    <p>This function streamlines the preprocessing of NMR urine spectra by combining a range of functions that:</p><ol>
-<li><p>orientate the spectra correctly,</p></li>
-<li><p>calibrated the spectra by a specific peak,</p></li>
-<li><p>calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,</p></li>
-<li><p>remove the lower, upper, water and urea regions of the spectra,</p></li>
-<li><p>correct the baseline of the spectra using asymmetric least squares</p></li>
-<li><p>verify that the resulting X, ppm and meta objects match appropriately.</p></li>
+    <p>This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. &lt;br&gt;
+It:</p><ol>
+<li><p>Orientates the spectra correctly,</p></li>
+<li><p>Calibrates the spectra by a specific peak,</p></li>
+<li><p>Calculates the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,</p></li>
+<li><p>Removes the lower, upper, water and urea regions of the spectra,</p></li>
+<li><p>Corrects the baseline of the spectra using asymmetric least squares</p></li>
+<li><p>Verifies that the resulting X, ppm and meta objects match appropriately.</p></li>
 </ol>
 
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -206,9 +207,10 @@
     <p><a href='mailto:kylebario1@gmail.com'>kylebario1@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>preProcessed</span> <span class='op'>&lt;-</span> <span class='fu'>preprocessing</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, <span class='va'>meta</span>, <span class='fl'>0.5</span>, <span class='fl'>9.5</span>, <span class='fl'>4.7</span>,<span class='fl'>4.85</span>, <span class='fl'>5.6</span>,<span class='fl'>6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in preprocessing(X, ppm, meta, 0.5, 9.5, 4.7, 4.85, 5.6, 6): object 'X' not found</span></div><div class='input'><span class='va'>preProcessed</span> <span class='op'>&lt;-</span> <span class='fu'>preprocessing</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, <span class='va'>meta</span>, flip <span class='op'>=</span> <span class='cn'>FALSE</span>, cali <span class='op'>=</span> <span class='cn'>FALSE</span>, baseline <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='fl'>0.5</span>, <span class='fl'>9.5</span>, <span class='fl'>4.7</span>,<span class='fl'>4.85</span>, <span class='fl'>5.6</span>,<span class='fl'>6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE,     0.5, 9.5, 4.7, 4.85, 5.6, 6): object 'X' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>preProcessed</span> <span class='op'>&lt;-</span> <span class='fu'>preprocessing</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, <span class='va'>meta</span>, <span class='fl'>0.5</span>, <span class='fl'>9.5</span>, <span class='fl'>4.7</span>,<span class='fl'>4.85</span>, <span class='fl'>5.6</span>,<span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>preProcessed</span> <span class='op'>&lt;-</span> <span class='fu'>preprocessing</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, <span class='va'>meta</span>, flip <span class='op'>=</span> <span class='cn'>FALSE</span>, cali <span class='op'>=</span> <span class='cn'>FALSE</span>, baseline <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='fl'>0.5</span>, <span class='fl'>9.5</span>, <span class='fl'>4.7</span>,<span class='fl'>4.85</span>, <span class='fl'>5.6</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

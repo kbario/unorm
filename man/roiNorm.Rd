@@ -23,10 +23,17 @@ Region of Interest Normalisation (ROI)
 http://dx.doi.org/10.1007/s11306-018-1400-6
 }
 \examples{
+\dontrun{
   Xn <- roiNorm(X, ppm, shift = c(2,2.3))
   roiDilf <- Xn[[2]]
-  Xn <- Xn[[1]]
+  Xn <- Xn[[1]]}
+}
+\seealso{
+Other {Attribute-Based}: 
+\code{\link{creNorm}()},
+\code{\link{taNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
+\concept{{Attribute-Based}}

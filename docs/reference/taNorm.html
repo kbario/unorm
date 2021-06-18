@@ -129,15 +129,21 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Also called Constant Sum normalisation https://doi.org/10.1021/ac051632c</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Attribute-Based: 
+<code><a href='creNorm.html'>creNorm</a>()</code>,
+<code><a href='roiNorm.html'>roiNorm</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p><a href='mailto:kylebario1@gmail.com'>kylebario1@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>    <span class='va'>Xn</span> <span class='op'>&lt;-</span> <span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in apply(X, 1, sum): object 'X' not found</span></div><div class='input'>    <span class='va'>taDilf</span> <span class='op'>&lt;-</span> <span class='va'>Xn</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'Xn' not found</span></div><div class='input'>    <span class='va'>Xn</span> <span class='op'>&lt;-</span> <span class='va'>Xn</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'Xn' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='va'>Xn</span> <span class='op'>&lt;-</span> <span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>
+    <span class='va'>taDilf</span> <span class='op'>&lt;-</span> <span class='va'>Xn</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
+    <span class='va'>Xn</span> <span class='op'>&lt;-</span> <span class='va'>Xn</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

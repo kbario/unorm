@@ -7,5 +7,5 @@
 flip(X, ppm, i, sh = c(3, 3.1))
 }
 \description{
-flipping spectra
+NMR urine spectra that are produced from a small number of scans are often incorrectly orientated due to the water signal. This function looks at the creatinine signal (ppm = 3.05) which is in all urine spectra and see if the value is positive or negative. For negative valued spectra, they are mulitplied by -1 and flipped to the correct orientation.
 }

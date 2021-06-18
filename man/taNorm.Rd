@@ -19,10 +19,17 @@ Total Area Normalisation (TAN/CSN)
 Also called Constant Sum normalisation https://doi.org/10.1021/ac051632c
 }
 \examples{
+\dontrun{
     Xn <- taNorm(X)
     taDilf <- Xn[[2]]
-    Xn <- Xn[[1]]
+    Xn <- Xn[[1]]}
+}
+\seealso{
+Other {Attribute-Based}: 
+\code{\link{creNorm}()},
+\code{\link{roiNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
+\concept{{Attribute-Based}}

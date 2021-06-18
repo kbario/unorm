@@ -30,10 +30,17 @@ Histogram Matching
 Histogram Matching aims to normalise spectra based on the intensities of the signals and not take into consideration the ppm positions of peaks. This attribute overcomes issues of peak shift that impact methods such as PQN. However, HM has limitations caused by differently shaped histograms which limits the exact matching of the sample and reference and thus impacts the dilution coefficient estimation. The methods paper can be found here: http://dx.doi.org/10.1007/s11306-018-1400-6
 }
 \examples{
+\dontrun{
  histMod <- hmNorm(X, ppm)
  hmDilf <- histMod[[2]]
- Xn <- histMod[[1]]
+ Xn <- histMod[[1]]}
+}
+\seealso{
+Other {Reference-Based}: 
+\code{\link{pqNorm}()},
+\code{\link{xfNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
+\concept{{Reference-Based}}

@@ -1,11 +1,13 @@
 #' @title Standard 1D NMR Preprocessing
-#' @details This function streamlines the preprocessing of NMR urine spectra by combining a range of functions that:
-#' 1. orientate the spectra correctly,
-#' 2. calibrated the spectra by a specific peak,
-#' 3. calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
-#' 4. remove the lower, upper, water and urea regions of the spectra,
-#' 5. correct the baseline of the spectra using asymmetric least squares
-#' 6. verify that the resulting X, ppm and meta objects match appropriately.
+#' @details # The Pipeline
+#' This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. <br>
+#' It:
+#' 1. Orientates the spectra correctly,
+#' 2. Calibrates the spectra by a specific peak,
+#' 3. Calculates the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
+#' 4. Removes the lower, upper, water and urea regions of the spectra,
+#' 5. Corrects the baseline of the spectra using asymmetric least squares
+#' 6. Verifies that the resulting X, ppm and meta objects match appropriately.
 #' @param ppm An array of the chemical shift variables the same length as X.
 #' @param X A matrix containing the NMR spectral data, the rows containing all values of a single experiment and the columns contain values per chemical shift variables.
 #' @param meta The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and linewidth calculation.
@@ -23,10 +25,11 @@
 #' @importFrom metabom8 calibrate lw get_idx bcor
 #' @export
 #' @author \email{kylebario1@@gmail.com}
-#' @family preproc
+#' @family {preproc}
 #' @examples
+#' \dontrun{
 #' preProcessed <- preprocessing(X, ppm, meta, 0.5, 9.5, 4.7,4.85, 5.6,6)
-#' preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE, 0.5, 9.5, 4.7,4.85, 5.6,6)
+#' preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE, 0.5, 9.5, 4.7,4.85, 5.6,6)}
 
 preprocessing <- function(X, ppm, meta, flip = TRUE, cali = TRUE, calibrant = 'tsp', lineWid = 1.0, baseline = TRUE, lowerCutoff, upperCutoff, waterLower, waterUpper, ureaLower, ureaUpper){
   #relabel X and ppm

@@ -2,27 +2,52 @@
 % Please edit documentation in R/pqNorm.R
 \name{pqNorm}
 \alias{pqNorm}
-\title{Probabilistic Quotient Normalisation}
+\title{Probabilistic Quotient Normalisation (PQN)}
 \usage{
 pqNorm(X)
 }
 \arguments{
-\item{X}{a numerical matrix with rows being the spectra and columns being the chemical shift variables}
+\item{X}{The numerical matrix containing the NMR data. The rows contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
 }
 \value{
-A list of the normalised X matrix and a numerical array of the corresponding dilution factors
+The output of this function is a list containing the normalised version of X and a numerical array of the corresponding dilution factors.
 }
 \description{
-Probabilistic Quotient Normalisation
+\code{\link[=pqNorm]{pqNorm()}} is unorm's function to normalise spectra using PQN.
 }
 \details{
-PQN is currently considered the gold standard NMR spectra normalisation method at this point in time. Multiple studies have tested its validity. PQN reliably normalises spectra and handles large amounts of noise. One limitation of the method is that it operates on the assumption that over 50\% of the data must stay reasonably constant so hugely varying spectra may produces suboptimally normalised spectra. The methods paper can be found here: https://doi.org/10.1021/ac051632c
+\subsection{How It Works:}{
+\itemize{
+\item PQN works by normalising experimental spectra in the provided X matrix in relation to a reference spectrum.
+\item \code{\link[=pqNorm]{pqNorm()}} creates the reference automatically by calculating the median spectrum of X as outlined in the initial methods paper (see 'See also')
+\item \code{\link[=pqNorm]{pqNorm()}} derives a quotient for each ppm value in a experimental spectrum by dividing it's intensities with that of the reference spectrum's.
+\item The most frequently occurring quotient is calculated and is said to be the dilution coefficient (\code{dilf}) of that spectrum.
+\item The sample is then scaled with this dilf and will be comparable with all other spectra normalised with the reference spectrum.
+}
+}
+
+\subsection{Background Information:}{
+\itemize{
+\item PQN is currently the gold standard for normalising NMR spectra.
+\item Multiple studies have tested its validity.
+\item PQN reliably normalises spectra and handles large amounts of noise.
+\item PQN's biggest limitation is that it operates on the assumption that the majority of the spectra will stay constant so hugely varying spectra may be suboptimally normalised.
+}
+}
 }
 \examples{
 Xn <- pqNorm(X)
 pqnDilf <- Xn[[2]]
 Xn <- t(Xn[[1]])
 }
+\seealso{
+The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}
+
+Other {Reference-Based}: 
+\code{\link{hmNorm}()},
+\code{\link{xfNorm}()}
+}
 \author{
 \email{kylebario1@gmail.com}
 }
+\concept{{Reference-Based}}

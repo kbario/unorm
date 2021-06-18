@@ -4,11 +4,13 @@
 #' @param shift The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).
 #' @return A list of the normalised X matrix and a numerical array of the corresponding dilution factors
 #' @examples
+#' \dontrun{
 #'   Xn <- roiNorm(X, ppm, shift = c(2,2.3))
 #'   roiDilf <- Xn[[2]]
-#'   Xn <- Xn[[1]]
+#'   Xn <- Xn[[1]]}
 #' @details http://dx.doi.org/10.1007/s11306-018-1400-6
 #' @author \email{kylebario1@@gmail.com}
+#' @family {Attribute-Based}
 #' @export
 #' @importFrom metabom8 get_idx
 

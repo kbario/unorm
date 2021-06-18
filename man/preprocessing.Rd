@@ -53,22 +53,25 @@ preprocessing(
 \description{
 Standard 1D NMR Preprocessing
 }
-\details{
-This function streamlines the preprocessing of NMR urine spectra by combining a range of functions that:
+\section{The Pipeline}{
+This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. <br>
+It:
 \enumerate{
-\item orientate the spectra correctly,
-\item calibrated the spectra by a specific peak,
-\item calculate the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
-\item remove the lower, upper, water and urea regions of the spectra,
-\item correct the baseline of the spectra using asymmetric least squares
-\item verify that the resulting X, ppm and meta objects match appropriately.
+\item Orientates the spectra correctly,
+\item Calibrates the spectra by a specific peak,
+\item Calculates the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,
+\item Removes the lower, upper, water and urea regions of the spectra,
+\item Corrects the baseline of the spectra using asymmetric least squares
+\item Verifies that the resulting X, ppm and meta objects match appropriately.
 }
 }
+
 \examples{
+\dontrun{
 preProcessed <- preprocessing(X, ppm, meta, 0.5, 9.5, 4.7,4.85, 5.6,6)
-preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE, 0.5, 9.5, 4.7,4.85, 5.6,6)
+preProcessed <- preprocessing(X, ppm, meta, flip = FALSE, cali = FALSE, baseline = TRUE, 0.5, 9.5, 4.7,4.85, 5.6,6)}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
-\concept{preproc}
+\concept{{preproc}}

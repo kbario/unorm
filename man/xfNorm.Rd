@@ -21,10 +21,17 @@ Normalisation based on an External Factor
 https://doi.org/10.1021/ac051632c
 }
 \examples{
+\dontrun{
   Xn <- xfNorm(X, osmo)
   xfDilf <- Xn[[2]]
-  Xn <- Xn[[1]]
+  Xn <- Xn[[1]]}
+}
+\seealso{
+Other {Reference-Based}: 
+\code{\link{hmNorm}()},
+\code{\link{pqNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
+\concept{{Reference-Based}}
