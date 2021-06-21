@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Total Area Normalisation (TAN/CSN) — taNorm • unorm</title>
+<title>Total Area Normalisation — taNorm • unorm</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Total Area Normalisation (TAN/CSN) — taNorm" />
-<meta property="og:description" content="Total Area Normalisation (TAN/CSN)" />
+<meta property="og:title" content="Total Area Normalisation — taNorm" />
+<meta property="og:description" content="taNorm() finds the total integral of the spectra and divides each spectra by its integral." />
 
 
 
@@ -103,13 +103,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Total Area Normalisation (TAN/CSN)</h1>
+    <h1>Total Area Normalisation</h1>
     
     <div class="hidden name"><code>taNorm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Total Area Normalisation (TAN/CSN)</p>
+    <p><code>taNorm()</code> finds the total integral of the spectra and divides each spectra by its integral.</p>
     </div>
 
     <pre class="usage"><span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span></pre>
@@ -128,10 +128,13 @@
     <p>A list of the normalised X matrix and a numerical array of the corresponding dilution factors</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Also called Constant Sum normalisation https://doi.org/10.1021/ac051632c</p>
+    <p>Total area normalisation (TA) was once considered the gold standard in NMR spectra normalisation.
+TA is useful for spectra that have similar peaks. If spectra differ a lot from each other - for instance, some have large peaks created by drug metabolites, etc. - then the total area will not be a suitable normalisation method.
+TA is also referred to as constant sum or integral normalisation</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Attribute-Based: 
+    <div class='dont-index'><p><a href='https://doi.org/10.1021/ac051632c'>https://doi.org/10.1021/ac051632c</a></p>
+<p>Other Attribute-Based: 
 <code><a href='creNorm.html'>creNorm</a>()</code>,
 <code><a href='roiNorm.html'>roiNorm</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>

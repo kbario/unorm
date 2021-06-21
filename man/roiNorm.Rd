@@ -14,10 +14,10 @@ roiNorm(X, ppm, shift = c(3, 3.1))
 \item{shift}{The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).}
 }
 \value{
-A list of the normalised X matrix and a numerical array of the corresponding dilution factors
+this function returns a list of the normalised X matrix and a numerical array of the corresponding dilution factors.
 }
 \description{
-Region of Interest Normalisation (ROI)
+This function, \code{\link[=roiNorm]{roiNorm()}}, normalises the spectra based on a specific area of the spectra. This is helpful when one region is constant across all spectra.
 }
 \details{
 http://dx.doi.org/10.1007/s11306-018-1400-6

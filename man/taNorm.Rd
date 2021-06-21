@@ -2,7 +2,7 @@
 % Please edit documentation in R/taNorm.R
 \name{taNorm}
 \alias{taNorm}
-\title{Total Area Normalisation (TAN/CSN)}
+\title{Total Area Normalisation}
 \usage{
 taNorm(X)
 }
@@ -13,10 +13,12 @@ taNorm(X)
 A list of the normalised X matrix and a numerical array of the corresponding dilution factors
 }
 \description{
-Total Area Normalisation (TAN/CSN)
+\code{\link[=taNorm]{taNorm()}} finds the total integral of the spectra and divides each spectra by its integral.
 }
 \details{
-Also called Constant Sum normalisation https://doi.org/10.1021/ac051632c
+Total area normalisation (TA) was once considered the gold standard in NMR spectra normalisation.
+TA is useful for spectra that have similar peaks. If spectra differ a lot from each other - for instance, some have large peaks created by drug metabolites, etc. - then the total area will not be a suitable normalisation method.
+TA is also referred to as constant sum or integral normalisation
 }
 \examples{
 \dontrun{
@@ -25,6 +27,8 @@ Also called Constant Sum normalisation https://doi.org/10.1021/ac051632c
     Xn <- Xn[[1]]}
 }
 \seealso{
+\url{https://doi.org/10.1021/ac051632c}
+
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
 \code{\link{roiNorm}()}

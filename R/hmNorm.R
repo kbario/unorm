@@ -1,8 +1,12 @@
 #' @title Histogram Matching
+#' @description [hmNorm()] is a reference based normalisation that aims to match the histogram created from a experimental spectra with that made from a reference spectra.
 #' @param X A numerical matrix with rows being the spectra and columns being the chemical shift variables
 #' @param ppm A numerical array holding the chemical shift values of the X matrix
 #' @return A list with the normalised X matrix and an array of the corresponding dilution factors.
-#' @details Histogram Matching aims to normalise spectra based on the intensities of the signals and not take into consideration the ppm positions of peaks. This attribute overcomes issues of peak shift that impact methods such as PQN. However, HM has limitations caused by differently shaped histograms which limits the exact matching of the sample and reference and thus impacts the dilution coefficient estimation. The methods paper can be found here: http://dx.doi.org/10.1007/s11306-018-1400-6
+#' @details #Limitations:
+#' * Histogram matching (HM) overcomes issues like peak shift that impact methods such as PQN, however, HM has limitations caused by differently shaped histograms.
+#' * Because not all histograms will have the same level of skewness or kurtosis, not all matchings will be ideal which limits this methods applicability.
+#' @seealso The methods paper for HM can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 #' @examples
 #' \dontrun{
 #'  histMod <- hmNorm(X, ppm)
@@ -25,13 +29,9 @@ hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from 
     out[(X[j,] <= std[j]*5)] = NA
     return(out)
   }))
-  Xstar_small <- sapply(1:nrow(X), function(i){
-    Xstar[i,]*alpha[1]
-  })
+  Xstar_small <- Xstar*alpha[1]
   Zsmall <- log2(abs(Xstar_small)+1)
-  Xstar_big <- sapply(1:nrow(X), function(i){
-    (Xstar[i,]*alpha[alpha_n])
-  })
+  Xstar_big <- Xstar*alpha[alpha_n]
   Zbig <- log2(abs(Xstar_big)+1)
   width <- ((max(Zbig, na.rm = T)-min(Zsmall, na.rm = T))/intensity_binwidth)
   br <- seq(from = min(Zsmall, na.rm = T), to = max(Zbig, na.rm = T), length.out = width)
@@ -50,7 +50,8 @@ hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from 
     })
     matching <- t(matching)
   } else {
-    Htarget <- hist(Z[1,], breaks = br, plot = F)
+    Zt <- log2(abs(Xstar[1,])+1)
+    Htarget <- hist(Zt, breaks = br, plot = F)
     matching <- sapply(1:nrow(X), function(i){
       sapply(1:length(alpha), function(j){
         star_new <- Xstar[i,]*alpha[j]
@@ -65,8 +66,8 @@ hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from 
   alpha_min <- sapply(1:nrow(X), function(k){
     (alpha[which.min(matching[k,])])
   })
-  Xn <- sapply(1:nrow(X), function(l){
+  Xn <- t(sapply(1:nrow(X), function(l){
     X[l,]/alpha_min[l]
-  })
+  }))
   return(list(Xn,alpha_min))
 }

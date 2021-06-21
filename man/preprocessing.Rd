@@ -8,17 +8,15 @@ preprocessing(
   X,
   ppm,
   meta,
-  flip = TRUE,
-  cali = TRUE,
+  flip = T,
+  cali = T,
+  baseline = T,
   calibrant = "tsp",
   lineWid = 1,
-  baseline = TRUE,
-  lowerCutoff,
-  upperCutoff,
-  waterLower,
-  waterUpper,
-  ureaLower,
-  ureaUpper
+  lowerCutoff = 0.25,
+  waterCutoff = c(4.5, 5),
+  ureaCutoff = c(5.6, 6),
+  upperCutoff = 9.5
 )
 }
 \arguments{
@@ -26,35 +24,42 @@ preprocessing(
 
 \item{ppm}{An array of the chemical shift variables the same length as X.}
 
-\item{meta}{The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and linewidth calculation.}
+\item{meta}{The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and line width calculation.}
 
 \item{flip}{A function that checks the orientation of spectra. This is a particularly important function for spectra derived from a small number of scans; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.}
 
-\item{cali}{This is a metabom8 function that calibrates the spectra based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.}
+\item{cali}{This is a \strong{metabom8} function that calibrates the spectra based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.}
+
+\item{baseline}{This function calls on the \strong{metabom8} function \strong{bcor} to flatten and correct the baseline; baseline correction.}
 
 \item{calibrant}{This is the signal you wish to use as the calibrant. This signal must be compatible with the metabom8 function. For urine spectra, tsp is the main calibrant.}
 
-\item{lineWid}{The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.}
-
-\item{baseline}{This function calls on the metabom8 function \strong{bcor} to flatten and correct the baseline; baseline correction.}
+\item{lineWid}{This function is part of the \strong{metabom8} function \strong{lw} The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.}
 
 \item{lowerCutoff}{The ppm value from where the lowest limit of the spectra will be trimmed/cutoff at.}
 
+\item{waterCutoff}{The upper ppm value from which the water region will be cut to.}
+
+\item{ureaCutoff}{The upper ppm value from which the urea region will be cut to.}
+
 \item{upperCutoff}{The ppm value from where the highest limit of the spectra will be trimmed/cutoff at.}
-
-\item{waterLower}{The lower ppm value from which the water region will be cut from.}
-
-\item{waterUpper}{The upper ppm value from which the water region will be cut to.}
-
-\item{ureaLower}{The lower ppm value from which the urea region will be cut from.}
-
-\item{ureaUpper}{The upper ppm value from which the urea region will be cut to.}
+}
+\value{
+This function returns a list with:
+\enumerate{
+\item The processed X matrix in the first element,
+\item The processed ppm array in the second element, and
+\item The line width results in a data frame in the third element
+}
 }
 \description{
-Standard 1D NMR Preprocessing
+Preprocessing NMR spectra is an important step in progressing data analysis, making the results more accurate and robust. This function ultimately takes the arguments of X and ppm as the NMR data and modifies them based on the other arguments.
 }
-\section{The Pipeline}{
-This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. <br>
+\details{
+\code{\link[=preprocessing]{preprocessing()}} is powered by the metabom8 package and is simply a tool to harness and streamline functions of metabom8 when preprocessing NMR spectra.
+\subsection{The Pipeline}{
+
+This function streamlines the preprocessing of NMR urine spectra by combining a range of functions.
 It:
 \enumerate{
 \item Orientates the spectra correctly,
@@ -65,7 +70,7 @@ It:
 \item Verifies that the resulting X, ppm and meta objects match appropriately.
 }
 }
-
+}
 \examples{
 \dontrun{
 preProcessed <- preprocessing(X, ppm, meta, 0.5, 9.5, 4.7,4.85, 5.6,6)

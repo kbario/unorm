@@ -10,10 +10,10 @@ pqNorm(X)
 \item{X}{The numerical matrix containing the NMR data. The rows contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
 }
 \value{
-The output of this function is a list containing the normalised version of X and a numerical array of the corresponding dilution factors.
+The output of this function is a list containing the normalised version of X and a numerical array of the corresponding dilution factors calculated by the function.
 }
 \description{
-\code{\link[=pqNorm]{pqNorm()}} is unorm's function to normalise spectra using PQN.
+PQN is currently the gold standard normalisation method use to transform NMR spectra.
 }
 \details{
 \subsection{How It Works:}{
@@ -31,14 +31,21 @@ The output of this function is a list containing the normalised version of X and
 \item PQN is currently the gold standard for normalising NMR spectra.
 \item Multiple studies have tested its validity.
 \item PQN reliably normalises spectra and handles large amounts of noise.
+}
+}
+
+\subsection{Limitations:}{
+\itemize{
 \item PQN's biggest limitation is that it operates on the assumption that the majority of the spectra will stay constant so hugely varying spectra may be suboptimally normalised.
 }
 }
 }
 \examples{
+\donttest{
 Xn <- pqNorm(X)
 pqnDilf <- Xn[[2]]
 Xn <- t(Xn[[1]])
+}
 }
 \seealso{
 The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}

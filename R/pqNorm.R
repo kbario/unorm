@@ -1,7 +1,7 @@
 #' @title Probabilistic Quotient Normalisation (PQN)
-#' @description [pqNorm()] is `r packageName()`'s function to normalise spectra using PQN.
+#' @description PQN is currently the gold standard normalisation method use to transform NMR spectra.
 #' @param X The numerical matrix containing the NMR data. The rows contain information of one whole spectrum and the columns contain the specific chemical shift variables.
-#' @return The output of this function is a list containing the normalised version of X and a numerical array of the corresponding dilution factors.
+#' @return The output of this function is a list containing the normalised version of X and a numerical array of the corresponding dilution factors calculated by the function.
 #' @details ## How It Works:
 #' * PQN works by normalising experimental spectra in the provided X matrix in relation to a reference spectrum.
 #' * [pqNorm()] creates the reference automatically by calculating the median spectrum of X as outlined in the initial methods paper (see 'See also')
@@ -12,14 +12,17 @@
 #' * PQN is currently the gold standard for normalising NMR spectra.
 #' * Multiple studies have tested its validity.
 #' * PQN reliably normalises spectra and handles large amounts of noise.
+#' ## Limitations:
 #' * PQN's biggest limitation is that it operates on the assumption that the majority of the spectra will stay constant so hugely varying spectra may be suboptimally normalised.
 #' @seealso The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}
 #' @author \email{kylebario1@@gmail.com}
 #' @family {Reference-Based}
 #' @examples
+#' \donttest{
 #' Xn <- pqNorm(X)
 #' pqnDilf <- Xn[[2]]
 #' Xn <- t(Xn[[1]])
+#' }
 #' @importFrom metabom8 bcor
 #' @importFrom graphics hist
 #' @export

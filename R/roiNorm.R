@@ -1,8 +1,9 @@
 #' @title Region of Interest Normalisation (ROI)
+#' @description This function, [roiNorm()], normalises the spectra based on a specific area of the spectra. This is helpful when one region is constant across all spectra.
 #' @param X A numerical matrix with rows being the spectra and columns being the chemical shift variables
 #' @param ppm A numerical array holding the chemical shift values of the X matrix
 #' @param shift The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).
-#' @return A list of the normalised X matrix and a numerical array of the corresponding dilution factors
+#' @return this function returns a list of the normalised X matrix and a numerical array of the corresponding dilution factors.
 #' @examples
 #' \dontrun{
 #'   Xn <- roiNorm(X, ppm, shift = c(2,2.3))

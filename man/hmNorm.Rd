@@ -24,10 +24,14 @@ hmNorm(
 A list with the normalised X matrix and an array of the corresponding dilution factors.
 }
 \description{
-Histogram Matching
+\code{\link[=hmNorm]{hmNorm()}} is a reference based normalisation that aims to match the histogram created from a experimental spectra with that made from a reference spectra.
 }
 \details{
-Histogram Matching aims to normalise spectra based on the intensities of the signals and not take into consideration the ppm positions of peaks. This attribute overcomes issues of peak shift that impact methods such as PQN. However, HM has limitations caused by differently shaped histograms which limits the exact matching of the sample and reference and thus impacts the dilution coefficient estimation. The methods paper can be found here: http://dx.doi.org/10.1007/s11306-018-1400-6
+#Limitations:
+\itemize{
+\item Histogram matching (HM) overcomes issues like peak shift that impact methods such as PQN, however, HM has limitations caused by differently shaped histograms.
+\item Because not all histograms will have the same level of skewness or kurtosis, not all matchings will be ideal which limits this methods applicability.
+}
 }
 \examples{
 \dontrun{
@@ -36,6 +40,8 @@ Histogram Matching aims to normalise spectra based on the intensities of the sig
  Xn <- histMod[[1]]}
 }
 \seealso{
+The methods paper for HM can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
+
 Other {Reference-Based}: 
 \code{\link{pqNorm}()},
 \code{\link{xfNorm}()}
