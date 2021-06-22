@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Standard 1D NMR Preprocessing — preprocessing" />
-<meta property="og:description" content="Preprocessing NMR spectra is an important step in progressing data analysis, making the results more accurate and robust. This function ultimately takes the arguments of X and ppm as the NMR data and modifies them based on the other arguments." />
+<meta property="og:description" content="preprocessing() is a function aimed at streamlining the preprocessing stage of analysing NMR spectra. It harnesses the power of the package metabom8 to quickly and easily process spectra." />
 
 
 
@@ -109,16 +109,16 @@
     </div>
 
     <div class="ref-description">
-    <p>Preprocessing NMR spectra is an important step in progressing data analysis, making the results more accurate and robust. This function ultimately takes the arguments of X and ppm as the NMR data and modifies them based on the other arguments.</p>
+    <p><code>preprocessing()</code> is a function aimed at streamlining the preprocessing stage of analysing NMR spectra. It harnesses the power of the package <code>metabom8</code> to quickly and easily process spectra.</p>
     </div>
 
     <pre class="usage"><span class='fu'>preprocessing</span><span class='op'>(</span>
   <span class='va'>X</span>,
   <span class='va'>ppm</span>,
   <span class='va'>meta</span>,
-  flip <span class='op'>=</span> <span class='cn'>T</span>,
-  cali <span class='op'>=</span> <span class='cn'>T</span>,
   baseline <span class='op'>=</span> <span class='cn'>T</span>,
+  flip <span class='op'>=</span> <span class='cn'>F</span>,
+  cali <span class='op'>=</span> <span class='cn'>F</span>,
   calibrant <span class='op'>=</span> <span class='st'>"tsp"</span>,
   lineWid <span class='op'>=</span> <span class='fl'>1</span>,
   lowerCutoff <span class='op'>=</span> <span class='fl'>0.25</span>,
@@ -132,51 +132,51 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>X</th>
-      <td><p>A matrix containing the NMR spectral data, the rows containing all values of a single experiment and the columns contain values per chemical shift variables.</p></td>
+      <td><p>A matrix containing the non-preprocessed NMR spectral data. The rows should containing all values of a single experiment, and the columns, the values of the chemical shift variables.</p></td>
     </tr>
     <tr>
       <th>ppm</th>
-      <td><p>An array of the chemical shift variables the same length as X.</p></td>
+      <td><p>An array of the chemical shift variables, column matched to X.</p></td>
     </tr>
     <tr>
       <th>meta</th>
       <td><p>The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and line width calculation.</p></td>
     </tr>
     <tr>
+      <th>baseline</th>
+      <td><p>This argument calls on <code><a href='https://rdrr.io/pkg/metabom8/man/bline.html'>metabom8::bcor()</a></code>, a baseline correcting function to smooth the spectral baselines and remove the influence of broad peaks.</p></td>
+    </tr>
+    <tr>
       <th>flip</th>
-      <td><p>A function that checks the orientation of spectra. This is a particularly important function for spectra derived from a small number of scans; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.</p></td>
+      <td><p><strong>NOT CRUCIAL FOR STANDARDLY ACQUIRED SPECTRA</strong> This function checks the orientation of spectra. This is a particularly important function for spectra derived from a <strong>small number of scans</strong>; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.</p></td>
     </tr>
     <tr>
       <th>cali</th>
-      <td><p>This is a <strong>metabom8</strong> function that calibrates the spectra based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.</p></td>
-    </tr>
-    <tr>
-      <th>baseline</th>
-      <td><p>This function calls on the <strong>metabom8</strong> function <strong>bcor</strong> to flatten and correct the baseline; baseline correction.</p></td>
+      <td><p>This calls on the <code>metabom8</code> function <code><a href='https://rdrr.io/pkg/metabom8/man/calibrate.html'>metabom8::calibrate()</a></code> which ensures peaks are aligned  based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.</p></td>
     </tr>
     <tr>
       <th>calibrant</th>
-      <td><p>This is the signal you wish to use as the calibrant. This signal must be compatible with the metabom8 function. For urine spectra, tsp is the main calibrant.</p></td>
+      <td><p>This is the signal you wish to use as the calibrant. This signal must be compatible with <code><a href='https://rdrr.io/pkg/metabom8/man/calibrate.html'>metabom8::calibrate()</a></code>. For urine spectra, <em>tsp</em> is the main calibrant.</p></td>
     </tr>
     <tr>
       <th>lineWid</th>
-      <td><p>This function is part of the <strong>metabom8</strong> function <strong>lw</strong> The maximum line width of peaks that should be filtered for. 1.0 is default and standard in NMR spectra.</p></td>
+      <td><p>This argument provides import for <code><a href='https://rdrr.io/pkg/metabom8/man/lw.html'>metabom8::lw()</a></code>, a function that calculates the line width of peaks. Spectra with peaks that have small line widths have sharper and more precise results which is more desirable. A maximum cutoff of 1 ensures spectra contain robust results. Consider omitting spectra with line widths over 1.</p></td>
     </tr>
     <tr>
       <th>lowerCutoff</th>
-      <td><p>The ppm value from where the lowest limit of the spectra will be trimmed/cutoff at.</p></td>
+      <td><p>A single floating point number defining the ppm value that the lower limit of the spectra are trimmed to.</p></td>
     </tr>
     <tr>
       <th>waterCutoff</th>
-      <td><p>The upper ppm value from which the water region will be cut to.</p></td>
+      <td><p>The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to c(4.5,5)</p></td>
     </tr>
     <tr>
       <th>ureaCutoff</th>
-      <td><p>The upper ppm value from which the urea region will be cut to.</p></td>
+      <td><p>The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to c(5.6,6)</p></td>
     </tr>
     <tr>
       <th>upperCutoff</th>
-      <td><p>The ppm value from where the highest limit of the spectra will be trimmed/cutoff at.</p></td>
+      <td><p>A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.</p></td>
     </tr>
     </table>
 
@@ -190,11 +190,10 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>preprocessing()</code> is powered by the metabom8 package and is simply a tool to harness and streamline functions of metabom8 when preprocessing NMR spectra.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The Pipeline</h3>
+    <p><code>preprocessing()</code> is powered by the <code>metabom8</code> package and is simply a tool to harness and streamline functions in <code>metabom8</code> when preprocessing NMR spectra.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The Pipeline</h3>
 
 
-<p>This function streamlines the preprocessing of NMR urine spectra by combining a range of functions.
-It:</p><ol>
+<p>This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. It:</p><ol>
 <li><p>Orientates the spectra correctly,</p></li>
 <li><p>Calibrates the spectra by a specific peak,</p></li>
 <li><p>Calculates the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,</p></li>
@@ -209,10 +208,11 @@ It:</p><ol>
     <p><a href='mailto:kylebario1@gmail.com'>kylebario1@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>preProcessed</span> <span class='op'>&lt;-</span> <span class='fu'>preprocessing</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, <span class='va'>meta</span>, <span class='fl'>0.5</span>, <span class='fl'>9.5</span>, <span class='fl'>4.7</span>,<span class='fl'>4.85</span>, <span class='fl'>5.6</span>,<span class='fl'>6</span><span class='op'>)</span>
-<span class='va'>preProcessed</span> <span class='op'>&lt;-</span> <span class='fu'>preprocessing</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, <span class='va'>meta</span>, flip <span class='op'>=</span> <span class='cn'>FALSE</span>, cali <span class='op'>=</span> <span class='cn'>FALSE</span>, baseline <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='fl'>0.5</span>, <span class='fl'>9.5</span>, <span class='fl'>4.7</span>,<span class='fl'>4.85</span>, <span class='fl'>5.6</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>preProcessed</span> <span class='op'>&lt;-</span> <span class='fu'>preprocessing</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, <span class='va'>meta</span>, baseline <span class='op'>=</span> <span class='cn'>T</span>, flip <span class='op'>=</span> <span class='cn'>F</span>, cali <span class='op'>=</span> <span class='cn'>F</span>, linewidth <span class='op'>=</span> <span class='fl'>0.8</span>, lowerCutoff <span class='op'>=</span> <span class='fl'>0.5</span>, upperCutoff <span class='op'>=</span> <span class='fl'>9.5</span>, waterCutoff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4.7</span>,<span class='fl'>4.85</span><span class='op'>)</span>, ureaCutoff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5.6</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F,     linewidth = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,         4.85), ureaCutoff = c(5.6, 6)): unused argument (linewidth = 0.8)</span></div><div class='input'><span class='va'>X</span> <span class='op'>&lt;-</span> <span class='va'>preProcessed</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'preProcessed' not found</span></div><div class='input'><span class='va'>ppm</span> <span class='op'>&lt;-</span> <span class='va'>preProcessed</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'preProcessed' not found</span></div><div class='input'><span class='va'>DfX</span> <span class='op'>&lt;-</span> <span class='va'>preProcessed</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'preProcessed' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

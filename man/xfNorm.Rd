@@ -9,17 +9,24 @@ xfNorm(X, xfactor)
 \arguments{
 \item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
 
-\item{xfactor}{A numerical array of values that correspond to the dilution coefficients of the spectra}
+\item{xfactor}{A numerical array of values that correspond to the dilution coefficients of the spectra. Must be row-matched to the provided X matrix.}
 }
 \value{
 This function returns a list of the normalised X matrix and a numerical array of the corresponding dilution factors
 }
 \description{
-One of the best ways to normalise urine spectra is by obtaining information about the dilution of the sample from an external source such as freezing point osmilality. The result from the external source can be used to scale spectra and give an over-all accurate result.
+This function utilises an array of dilution coefficients acquired externally to normalise spectra.
 }
-\details{
+\section{How It Works:}{
+All the intensities of a spectrum are divided by its external dilution coefficient.
+\subsection{Advantages:}{
+\itemize{
+\item Reliable: dilution estimations from external sources such as freezing-point depression osmometry are highly accurate, reducing the error in normalisation.
 Normalisation based on an external factor is a more robust method of normalisation for urine spectra especially using the gold standard of dilution measurement - freezing-point depression osmometry - but this requires more effort and time compared to other normalisation methods like PQN.
 }
+}
+}
+
 \examples{
 \dontrun{
   Xn <- xfNorm(X, osmo)

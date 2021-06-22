@@ -2,7 +2,7 @@
 % Please edit documentation in R/roiNorm.R
 \name{roiNorm}
 \alias{roiNorm}
-\title{Region of Interest Normalisation (ROI)}
+\title{Region of Interest Normalisation}
 \usage{
 roiNorm(X, ppm, shift = c(3, 3.1))
 }
@@ -14,21 +14,41 @@ roiNorm(X, ppm, shift = c(3, 3.1))
 \item{shift}{The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).}
 }
 \value{
-this function returns a list of the normalised X matrix and a numerical array of the corresponding dilution factors.
+This function returns a list of the normalised X matrix and a numerical array of the corresponding dilution factors.
 }
 \description{
-This function, \code{\link[=roiNorm]{roiNorm()}}, normalises the spectra based on a specific area of the spectra. This is helpful when one region is constant across all spectra.
+This function normalises the spectra based on a specific area of the spectra. This is helpful when one region is constant across all spectra.
 }
 \details{
-http://dx.doi.org/10.1007/s11306-018-1400-6
+\subsection{How It Works:}{
+\enumerate{
+\item This function takes the values of the shift argument and finds the integral (or area) of the peak in that chemical shift region in an experimental spectra.
+\item Each intensity in that experimental spectra is then divided by that integral to scale it.
+This method works much like how \code{\link[=taNorm]{taNorm()}} and \code{\link[=creNorm]{creNorm()}} do, except instead of using an entire spectrum's integral or the creatinine peak specifically, you are able to use what ever ppm region you wish.
+}
+}
+
+\subsection{Advantages:}{
+\itemize{
+\item Region of Interest Normalisation (ROI) gives the data analyst more control over what region will be used which can be advantageous.
+}
+}
+
+\subsection{Limitations:}{
+\itemize{
+\item ROI is also subject to the flaws that impact creatinine normalisation (\code{\link[=creNorm]{creNorm()}}) in that, whatever factors that create variation in the region one chooses, will also impact the entire spectrum's state.
+\item Reference-based normalisations may provide more robust normalisation.
+}
+}
 }
 \examples{
-\dontrun{
-  Xn <- roiNorm(X, ppm, shift = c(2,2.3))
-  roiDilf <- Xn[[2]]
-  Xn <- Xn[[1]]}
+Xro <- roiNorm(X, ppm, shift = c(2,2.3))
+Xroi <- Xro[[1]]
+roiDilf <- Xro[[2]]
 }
 \seealso{
+A description of Region of Interest Normalisation can be found in this paper: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
+
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
 \code{\link{taNorm}()}

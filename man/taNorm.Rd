@@ -13,18 +13,43 @@ taNorm(X)
 A list of the normalised X matrix and a numerical array of the corresponding dilution factors
 }
 \description{
-\code{\link[=taNorm]{taNorm()}} finds the total integral of the spectra and divides each spectra by its integral.
+Total area normalisation (TA) scales spectra so that they all have a total integral of one
 }
 \details{
-Total area normalisation (TA) was once considered the gold standard in NMR spectra normalisation.
-TA is useful for spectra that have similar peaks. If spectra differ a lot from each other - for instance, some have large peaks created by drug metabolites, etc. - then the total area will not be a suitable normalisation method.
-TA is also referred to as constant sum or integral normalisation
+\subsection{How It Works:}{
+\enumerate{
+\item The integral of each experimental spectra in X is calculated
+\item Each intensity of a spectrum is divided by it's integral which reduces it's total area to one
+}
+}
+
+\subsection{Background Information:}{
+\itemize{
+\item TA was once considered the gold standard in NMR spectra normalisation.
+\item TA is also referred to as constant sum or integral normalisation
+\item TA is useful for spectra that have similar peaks.
+}
+}
+
+\subsection{Advantages:}{
+\itemize{
+\item TA is a straightforward normalisation method with limited computational requirements making it quick and uncomplicated.
+\item Combining both TA and another normalisation method could also provide more robust results.
+}
+}
+
+\subsection{Limitations:}{
+\itemize{
+\item Large variation in the peaks present in a spectra severly impact TA's performance.
+\item For instance, some spectra have large peaks created by drug metabolites, etc., which increase the total area of the spectrum.
+\item This large total area will then dramatically down scale spectra and give misleading results.
+}
+}
 }
 \examples{
-\dontrun{
-    Xn <- taNorm(X)
-    taDilf <- Xn[[2]]
-    Xn <- Xn[[1]]}
+Xt <- taNorm(X)
+Xta <- Xt[[1]]
+taDilf <- Xt[[2]]
 }
 \seealso{
 \url{https://doi.org/10.1021/ac051632c}

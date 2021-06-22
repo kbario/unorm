@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Total Area Normalisation — taNorm" />
-<meta property="og:description" content="taNorm() finds the total integral of the spectra and divides each spectra by its integral." />
+<meta property="og:description" content="Total area normalisation (TA) scales spectra so that they all have a total integral of one" />
 
 
 
@@ -109,7 +109,7 @@
     </div>
 
     <div class="ref-description">
-    <p><code>taNorm()</code> finds the total integral of the spectra and divides each spectra by its integral.</p>
+    <p>Total area normalisation (TA) scales spectra so that they all have a total integral of one</p>
     </div>
 
     <pre class="usage"><span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span></pre>
@@ -128,9 +128,41 @@
     <p>A list of the normalised X matrix and a numerical array of the corresponding dilution factors</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Total area normalisation (TA) was once considered the gold standard in NMR spectra normalisation.
-TA is useful for spectra that have similar peaks. If spectra differ a lot from each other - for instance, some have large peaks created by drug metabolites, etc. - then the total area will not be a suitable normalisation method.
-TA is also referred to as constant sum or integral normalisation</p>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>How It Works:</h3>
+
+<ol>
+<li><p>The integral of each experimental spectra in X is calculated</p></li>
+<li><p>Each intensity of a spectrum is divided by it's integral which reduces it's total area to one</p></li>
+</ol>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Background Information:</h3>
+
+<ul>
+<li><p>TA was once considered the gold standard in NMR spectra normalisation.</p></li>
+<li><p>TA is also referred to as constant sum or integral normalisation</p></li>
+<li><p>TA is useful for spectra that have similar peaks.</p></li>
+</ul>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Advantages:</h3>
+
+<ul>
+<li><p>TA is a straightforward normalisation method with limited computational requirements making it quick and uncomplicated.</p></li>
+<li><p>Combining both TA and another normalisation method could also provide more robust results.</p></li>
+</ul>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Limitations:</h3>
+
+<ul>
+<li><p>Large variation in the peaks present in a spectra severly impact TA's performance.</p></li>
+<li><p>For instance, some spectra have large peaks created by drug metabolites, etc., which increase the total area of the spectrum.</p></li>
+<li><p>This large total area will then dramatically down scale spectra and give misleading results.</p></li>
+</ul>
+
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://doi.org/10.1021/ac051632c'>https://doi.org/10.1021/ac051632c</a></p>
@@ -142,11 +174,10 @@ TA is also referred to as constant sum or integral normalisation</p>
     <p><a href='mailto:kylebario1@gmail.com'>kylebario1@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-    <span class='va'>Xn</span> <span class='op'>&lt;-</span> <span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>
-    <span class='va'>taDilf</span> <span class='op'>&lt;-</span> <span class='va'>Xn</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
-    <span class='va'>Xn</span> <span class='op'>&lt;-</span> <span class='va'>Xn</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>Xt</span> <span class='op'>&lt;-</span> <span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in apply(X, 1, sum): object 'X' not found</span></div><div class='input'><span class='va'>Xta</span> <span class='op'>&lt;-</span> <span class='va'>Xt</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'Xt' not found</span></div><div class='input'><span class='va'>taDilf</span> <span class='op'>&lt;-</span> <span class='va'>Xt</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'Xt' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

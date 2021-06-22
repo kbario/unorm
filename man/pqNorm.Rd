@@ -2,27 +2,37 @@
 % Please edit documentation in R/pqNorm.R
 \name{pqNorm}
 \alias{pqNorm}
-\title{Probabilistic Quotient Normalisation (PQN)}
+\title{Probabilistic Quotient Normalisation}
 \usage{
-pqNorm(X)
+pqNorm(X, ppm, shift = c(0.5, 8.5))
 }
 \arguments{
-\item{X}{The numerical matrix containing the NMR data. The rows contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
+\item{X}{The numerical matrix containing the NMR data you wish to normalise. \strong{This should be a preprocessed matrix} with baseline correction, tsp calibration and non-quantitative region removal performed on it. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
+
+\item{ppm}{An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.}
+
+\item{shift}{The concatenated ppm values that define the lower and upper bounds of the region PQN should be performed on. Regions containing noise are not useful and ideally should be omitted.}
 }
 \value{
-The output of this function is a list containing the normalised version of X and a numerical array of the corresponding dilution factors calculated by the function.
+The output of this function is a list containing:
+\enumerate{
+\item The normalised version of X in the first element and
+\item A numerical array of the corresponding dilution factors calculated by the function.
+}
 }
 \description{
-PQN is currently the gold standard normalisation method use to transform NMR spectra.
+PQN is currently the gold standard method used to normalise NMR spectra.
 }
 \details{
 \subsection{How It Works:}{
 \itemize{
 \item PQN works by normalising experimental spectra in the provided X matrix in relation to a reference spectrum.
+}
+\enumerate{
 \item \code{\link[=pqNorm]{pqNorm()}} creates the reference automatically by calculating the median spectrum of X as outlined in the initial methods paper (see 'See also')
-\item \code{\link[=pqNorm]{pqNorm()}} derives a quotient for each ppm value in a experimental spectrum by dividing it's intensities with that of the reference spectrum's.
-\item The most frequently occurring quotient is calculated and is said to be the dilution coefficient (\code{dilf}) of that spectrum.
-\item The sample is then scaled with this dilf and will be comparable with all other spectra normalised with the reference spectrum.
+\item \code{\link[=pqNorm]{pqNorm()}} derives a quotient for each ppm value within the limits of shift in a experimental spectrum by dividing it's intensities with that of the reference spectrum's.
+\item The most frequently occurring (median) quotient is calculated and is said to be the dilution coefficient (\code{dilf}) of that spectrum.
+\item The sample is then scaled with this \code{dilf} and will be comparable with all other spectra normalised with the reference spectrum.
 }
 }
 
@@ -34,18 +44,24 @@ PQN is currently the gold standard normalisation method use to transform NMR spe
 }
 }
 
+\subsection{Advantages:}{
+\itemize{
+\item PQN is not impacted by outlining signals in the way that total area normalisation (\code{\link[=taNorm]{taNorm()}}) is because it aims to find the most frequently occuring (median) \code{dilf}.
+\item PQN is not reliant on one signal such as creatinine normalisation (\code{\link[=creNorm]{creNorm()}}) meaning that any factors that impact that one signal have less weight and don't affect the calculation of the \code{dilf} as much.
+}
+}
+
 \subsection{Limitations:}{
 \itemize{
 \item PQN's biggest limitation is that it operates on the assumption that the majority of the spectra will stay constant so hugely varying spectra may be suboptimally normalised.
+\item PQN is also vulnerable to peak shift because it compares intensities of the same ppm variable. If a peak is left- or right-shifted, the apex of one signal will not be compared against the apex of another and thus produce convoluted results.
 }
 }
 }
 \examples{
-\donttest{
-Xn <- pqNorm(X)
-pqnDilf <- Xn[[2]]
-Xn <- t(Xn[[1]])
-}
+Xpq <- pqNorm(X)
+Xpqn <- Xpq[[1]])
+pqnDilf <- Xpq[[2]]
 }
 \seealso{
 The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}
