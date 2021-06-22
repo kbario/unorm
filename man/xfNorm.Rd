@@ -12,26 +12,44 @@ xfNorm(X, xfactor)
 \item{xfactor}{A numerical array of values that correspond to the dilution coefficients of the spectra. Must be row-matched to the provided X matrix.}
 }
 \value{
-This function returns a list of the normalised X matrix and a numerical array of the corresponding dilution factors
+This function returns a list with:
+\enumerate{
+\item The normalised X matrix in the first list element, and
+\item A numerical array of the corresponding dilution factors in the second.
+}
+\itemize{
+\item Following the example below will extract the results quickly and easily.
+}
 }
 \description{
-This function utilises an array of dilution coefficients acquired externally to normalise spectra.
+This function utilises an array of dilution coefficients acquired externally to normalise the spectra.
 }
-\section{How It Works:}{
-All the intensities of a spectrum are divided by its external dilution coefficient.
-\subsection{Advantages:}{
-\itemize{
-\item Reliable: dilution estimations from external sources such as freezing-point depression osmometry are highly accurate, reducing the error in normalisation.
-Normalisation based on an external factor is a more robust method of normalisation for urine spectra especially using the gold standard of dilution measurement - freezing-point depression osmometry - but this requires more effort and time compared to other normalisation methods like PQN.
-}
+\details{
+\subsection{How It Works:}{
+\enumerate{
+\item All the intensities of a spectrum are divided by its external dilution coefficient.
+\item This is done to all spectra with their corresponding dilution factors
 }
 }
 
+\subsection{Advantages:}{
+\itemize{
+\item Reliable: dilution estimations from external sources such as freezing-point depression osmometry are highly accurate, reducing the error in normalisation.
+\item Computationally, this is not as intense as other normalisation methods like \code{\link[=pqNorm]{pqNorm()}} and \code{\link[=hmNorm]{hmNorm()}} and will take limited power to perform
+}
+}
+
+\subsection{Limitations:}{
+\itemize{
+\item This method requires having a machine to provide the external measure of dilution such as a freezing-point depression osmometer.
+\item Acquiring data on dilution with a manual freezing-point depression osmometer is a long and tedious process with each sample taking on average 5 minutes. Automatic osmometers are available but are expensive so this method is limited by logistics of actually acquiring the data.
+}
+}
+}
 \examples{
-\dontrun{
-  Xn <- xfNorm(X, osmo)
-  xfDilf <- Xn[[2]]
-  Xn <- Xn[[1]]}
+Xf <- xfNorm(X, osmo)
+Xxf <- Xf[[1]]
+xfDilf <- Xf[[2]]
 }
 \seealso{
 \url{https://doi.org/10.1021/ac051632c}

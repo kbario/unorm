@@ -10,7 +10,14 @@ taNorm(X)
 \item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
 }
 \value{
-A list of the normalised X matrix and a numerical array of the corresponding dilution factors
+A list of
+\enumerate{
+\item The normalised X matrix in the first list element, and
+\item A numerical array of the corresponding dilution factors.
+}
+\itemize{
+\item Following the example below will extract the results quickly and easily.
+}
 }
 \description{
 Total area normalisation (TA) scales spectra so that they all have a total integral of one

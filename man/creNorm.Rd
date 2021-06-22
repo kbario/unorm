@@ -7,35 +7,59 @@
 creNorm(X, ppm, cre3 = c(3.043, 3.055), cre4 = c(4.05, 4.07))
 }
 \arguments{
-\item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
+\item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables.}
 
-\item{ppm}{A numerical array holding the chemical shift values of the X matrix}
+\item{ppm}{A numerical array holding the chemical shift values of the X matrix.}
 
-\item{cre3}{A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 3.05 starts and ends}
+\item{cre3}{A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 3.05 starts and ends.}
 
-\item{cre4}{A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 4.05 starts and ends}
+\item{cre4}{A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 4.05 starts and ends.}
 }
 \value{
-A list of the normalised X matrix, a numerical array of the corresponding dilution factors, and ratio of the creatinine signals (ideally should equal 0.667)
+A list of:
+\enumerate{
+\item The normalised X matrix,
+\item A numerical array of the corresponding dilution factors, and
+\item The ratio of the creatinine signals (ideally should equal 0.667).
+}
+\itemize{
+\item Following the example below will extract the results quickly and easily.
+}
 }
 \description{
 Creatinine Normalisation (CN) is a useful method much like region of interest normalisation that can normalise spectra based on the total area of the creatinine signal at the chemical shift 3.05ppm.
 }
 \details{
-#Limitations:
+\subsection{How It Works:}{
+\enumerate{
+\item For each experimental spectra, the integral (total area) of the region defined by the bounds in the argument \code{cre3} is calculated.
+\item Each intensity in that spectra is then divided by the integral. This is iterated over for all spectra.
+}
+}
+
+\subsection{Advantages:}{
 \itemize{
-\item While useful, there are complicating factors associated with CN's use such as inter- and intra-individual creatinine signal fluctuation which hinders accurate normalisation.
+\item CN is computationally light and is not as difficult as other normalisations like \code{\link[=pqNorm]{pqNorm()}}
+\item Can be useful for people who have not done any physical exercise recently or of similar age, gender and muscle mass.
+}
+}
+
+\subsection{Limitations:}{
+\itemize{
+\item Complications arise from inter- and intra-individual creatinine signal fluctuation caused by exercise (which causes muscle breakdown and creatinine production) when using CN.
 \item CN relies on the idea that creatinine concentrations do not change in urine samples, the only changes to creatinine signal are created by effects of dilution but this is incorrect.
-\item Creatinine concentrations fluctuate depending on a person's physiology and behaviour so use CN consciously.
+\item Creatinine concentrations fluctuate depending on a person's physiology and behaviour so use CN consciously. Consider using in conjunction with a reference-based normalisation like \code{\link[=pqNorm]{pqNorm()}}.
+}
 }
 }
 \examples{
-\dontrun{
-  Xn <- creNorm(X)
-  creDilf <- Xn[[2]]
-  Xn <- Xn[[1]]}
+Xcn <- creNorm(X)
+Xcre <- Xcn[[1]]
+creDilf <- Xcn[[2]]
 }
 \seealso{
+More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
+
 Other {Attribute-Based}: 
 \code{\link{roiNorm}()},
 \code{\link{taNorm}()}

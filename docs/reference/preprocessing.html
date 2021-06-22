@@ -168,11 +168,11 @@
     </tr>
     <tr>
       <th>waterCutoff</th>
-      <td><p>The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to c(4.5,5)</p></td>
+      <td><p>The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to <code><a href='https://rdrr.io/r/base/c.html'>c(4.5,5)</a></code></p></td>
     </tr>
     <tr>
       <th>ureaCutoff</th>
-      <td><p>The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to c(5.6,6)</p></td>
+      <td><p>The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to <code><a href='https://rdrr.io/r/base/c.html'>c(5.6,6)</a></code></p></td>
     </tr>
     <tr>
       <th>upperCutoff</th>
@@ -185,15 +185,18 @@
     <p>This function returns a list with:</p><ol>
 <li><p>The processed X matrix in the first element,</p></li>
 <li><p>The processed ppm array in the second element, and</p></li>
-<li><p>The line width results in a data frame in the third element</p></li>
+<li><p>The line width results in a data frame in the third element.</p></li>
 </ol>
+<ul>
+<li><p>Following the example below will extract the results quickly and easily.</p></li>
+</ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>preprocessing()</code> is powered by the <code>metabom8</code> package and is simply a tool to harness and streamline functions in <code>metabom8</code> when preprocessing NMR spectra.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The Pipeline</h3>
+    <p><code>preprocessing()</code> is powered by the <code>metabom8</code> package and is simply a tool to harness and streamline functions in <code>metabom8</code> when preprocessing NMR spectra, not replace them.</p>
+    <h2 class="hasAnchor" id="the-pipeline"><a class="anchor" href="#the-pipeline"></a>The Pipeline</h2>
 
-
-<p>This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. It:</p><ol>
+    <p>This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. It:</p><ol>
 <li><p>Orientates the spectra correctly,</p></li>
 <li><p>Calibrates the spectra by a specific peak,</p></li>
 <li><p>Calculates the line widths of the peaks and returns a warning with the spectra that exceed the specified threshold,</p></li>
@@ -201,7 +204,6 @@
 <li><p>Corrects the baseline of the spectra using asymmetric least squares</p></li>
 <li><p>Verifies that the resulting X, ppm and meta objects match appropriately.</p></li>
 </ol>
-
 
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 

@@ -16,31 +16,70 @@ hmNorm(
 )
 }
 \arguments{
-\item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
+\item{X}{A numerical matrix containing the NMR spectra to be normalised. Rows should be the spectra and columns being the chemical shift variables}
 
-\item{ppm}{A numerical array holding the chemical shift values of the X matrix}
+\item{ppm}{A numerical array holding the chemical shift values of the X matrix. Should be column matched to X provide.}
+
+\item{noi}{The concatenated ppm values defining the lower and upper chemical shift values of the noise. There should be \strong{no} signal between these chemical shift values. Also be sure to have not cut out these regions of noise in the \code{\link[=preprocessing]{preprocessing()}} function.}
+
+\item{intensity_binwidth}{This argument dictates the width of the bins. The average span of intensities is from \code{10}-\code{30}, meaning that an \code{intensity_binwidth} of \code{0.1} would give you 200 bins.}
+
+\item{alpha_from}{\code{alpha} is the scaling factor that the experiment histograms will be scaled with. \code{alpha_from} defines what the lowest value of \code{alpha} will be. Can be as low as \code{0.1} but \code{0.5} is default. Consider how much dilution variation there is in your samples before setting \code{alpha_from} extremely low, the more \code{alpha}s to test, the longer the computation time will be.}
+
+\item{alpha_to}{This defines the largest value of \code{alpha}. Default is \verb{1.5.} As above, consider the dilution variation of the samples. The larger \code{alpha_to} is the longer the computation time.}
+
+\item{alpha_n}{The number of \code{alpha}s you wish to test. \code{alpha_n}s default is \code{101} which will give you \code{alpha}s incrementing by \verb{0.5.} The larger \code{alpha_n}, the longer the computing will take and more computing power you will need.}
+
+\item{use_median}{This argument dictates whether the function will calculate the median and use that as the reference spectrum or not. If set to \code{FALSE}, the first sample will be used as the reference. This practice is outlined in the methods paper (see 'See also')}
 }
 \value{
-A list with the normalised X matrix and an array of the corresponding dilution factors.
+A list with:
+\enumerate{
+\item The normalised X matrix in the first list element, and
+\item An array of the corresponding dilution factors.
+}
+\itemize{
+\item Following the example below will extract the results quickly and easily.
+}
 }
 \description{
-\code{\link[=hmNorm]{hmNorm()}} is a reference based normalisation that aims to match the histogram created from a experimental spectra with that made from a reference spectra.
+Histogram Matching (HM) is a reference based normalisation that aims to match the histogram created from a experimental spectra with that made from a reference spectra.
 }
 \details{
-#Limitations:
+\subsection{How It Works:}{
+\enumerate{
+\item A more complex normalisation method compared to others in this package, HM creates a histogram of the intensities of an experimental spectrum.
+\item This area of this histogram subtracted from that of a reference histogram, calculated from a median spectrum.
+\item The experimental spectra is scaled by a factor \code{alpha} which alters the intensities and a new histogram is made and step 2. is repeated.
+\item The aim is to minimise the difference between the reference histogram and the experiment histogram and the alpha value that acheives this minimum is the dilution coefficient.
+\item This is iterated over for all experimetal spectra
+}
+}
+
+\subsection{Advantages:}{
 \itemize{
-\item Histogram matching (HM) overcomes issues like peak shift that impact methods such as PQN, however, HM has limitations caused by differently shaped histograms.
-\item Because not all histograms will have the same level of skewness or kurtosis, not all matchings will be ideal which limits this methods applicability.
+\item HM is not affected by peak shift like PQN (\code{\link[=pqNorm]{pqNorm()}}) is because it does not take into account the chemical shift of the intensity, on the value of the intensity.
+\item HM also is not as impaacted by noise because noise is removed before histograms are produced (this is not touched on in the above section)
+}
+}
+
+\subsection{Limitations:}{
+\itemize{
+\item Not all histograms are created equal, some will have more kurtosis or skewness which limits the degree to which differences can be minimised.
+\item Studies have also found that HM does not handle noise well and does not recover signal like many other normalisation methods do. (see 'See also')
+}
 }
 }
 \examples{
-\dontrun{
- histMod <- hmNorm(X, ppm)
- hmDilf <- histMod[[2]]
- Xn <- histMod[[1]]}
+ Xh <- hmNorm(X, ppm)
+ Xhm <- Xh[[1]]
+ hmDilf <- Xh[[2]]
 }
 \seealso{
-The methods paper for HM can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
+\itemize{
+\item The methods paper for HM can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
+\item The paper discussing HM limitations with noise can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
+}
 
 Other {Reference-Based}: 
 \code{\link{pqNorm}()},

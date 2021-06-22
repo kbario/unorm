@@ -1,0 +1,96 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# unorm
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The main goal of unorm is to streamline preprocessing and normalising NMR spectra ready for data analysis. Specifically, because urine samples produce such varied NMR results, normalisation is crucial and thus this package offers a range of normalisation methods and resources to choose which method suits your needs.
+
+There are a number of normalisation methods available in unorm. PQN, Creatinine, Total Area, Region of Interest and External Factor normalisation plus Histogram matching
+
+## Installation
+
+You can install the released version of unorm from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("unorm")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("kylebario/unorm")
+```
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(unorm)
+library(metabom8)
+# using the metabom8 function `read1d_proc`, read in the NMR data
+read1d_proc(path = '...', exp_type = list(exp = 'PROF_URINE_NOESY'))
+# using the streamlining function `preprocessing()` preprocess X and ppm
+preproc <- preprocessing(X, ppm, baseline = T, lineWid = 1, lowerCutoff = 0.5, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 9.5)
+# rename X and ppm to preserve original data
+X_og <- X
+ppm_og <- ppm
+# extract the processed X and ppm plus the line width information in DfX
+X <- preproc[[1]]
+ppm <- preproc[[2]]
+DfX <- preproc[[3]]
+# use the function pqNorm() to normalise your preprocessed X and ppm variable
+Xpq <- pqNorm(X,ppm)
+# extract the normalised X matrix from the first list element
+Xpqn <- Xpq[[1]]
+# and extract the calculated pqn dilution coefficients/factors (dilf) from the second list element
+pqnDilf <- Xpq[[2]]
+# voila, you have read-in, preprocessed and normalised NMR spectra
+
+# want to see how one normalisation compares to another? run another normalisation on the processed data and compare dilfs
+# try histogram matching (HM). For this we will need to rerun the preprocessing 
+# because we cut out all the noise, but HM needs a region of noise for calculation
+preproc <- preprocessing(X, ppm, baseline = T, lineWid = 1, lowerCutoff = 0.5, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 11)
+# rename these as 
+X_plus <- preproc[[1]]
+ppm_plus <- preproc[[2]]
+DfX_plus <- preproc[[3]]
+# set noise region to 10-11 ppm, binwidth to 0.1, alpha_from to 0.2, alpha_to to 2 and alpha_n to 181. we don't want to use the median so set that to False 
+Xhist <- hmNorm(X_plus, ppm_plus, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.2, alpha_to = 2, alpha_n = 181, use_median = F)
+# the output is again the normalised X and corresponding dilution factors so extract the from the list Xhist
+Xhm <- Xhist[[1]]
+hmDilf <- Xhist[[2]]
+# now you can compare the dilution factors.
+plot(pqnDilf, hmDilf)
+```
+
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+
+```{r cars}
+summary(cars)
+```
+
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
+
+You can also embed plots, for example:
+
+```{r pressure, echo = FALSE}
+plot(pressure)
+```
+
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

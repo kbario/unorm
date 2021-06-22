@@ -6,3 +6,5 @@
 ^docs$
 ^pkgdown$
 >>>>>>> 111289ecd790675ab4e3930d075cb8825f040819
+^LICENSE\.md$
+^README\.Rmd$

@@ -19,15 +19,17 @@ The output of this function is a list containing:
 \item The normalised version of X in the first element and
 \item A numerical array of the corresponding dilution factors calculated by the function.
 }
+\itemize{
+\item Following the example below will extract the results quickly and easily.
+}
 }
 \description{
 PQN is currently the gold standard method used to normalise NMR spectra.
 }
 \details{
 \subsection{How It Works:}{
-\itemize{
-\item PQN works by normalising experimental spectra in the provided X matrix in relation to a reference spectrum.
-}
+
+PQN works by normalising experimental spectra in the provided X matrix in relation to a reference spectrum.
 \enumerate{
 \item \code{\link[=pqNorm]{pqNorm()}} creates the reference automatically by calculating the median spectrum of X as outlined in the initial methods paper (see 'See also')
 \item \code{\link[=pqNorm]{pqNorm()}} derives a quotient for each ppm value within the limits of shift in a experimental spectrum by dividing it's intensities with that of the reference spectrum's.
@@ -41,6 +43,7 @@ PQN is currently the gold standard method used to normalise NMR spectra.
 \item PQN is currently the gold standard for normalising NMR spectra.
 \item Multiple studies have tested its validity.
 \item PQN reliably normalises spectra and handles large amounts of noise.
+\item \strong{Using \code{\link[=pqNorm]{pqNorm()}} on urine spectra will give best results out of the all methods except \code{\link[=xfNorm]{xfNorm()}}}
 }
 }
 

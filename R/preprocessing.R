@@ -1,7 +1,7 @@
 #' @title Standard 1D NMR Preprocessing
 #' @description [preprocessing()] is a function aimed at streamlining the preprocessing stage of analysing NMR spectra. It harnesses the power of the package `metabom8` to quickly and easily process spectra.
-#' @details [preprocessing()] is powered by the `metabom8` package and is simply a tool to harness and streamline functions in `metabom8` when preprocessing NMR spectra.
-#' ## The Pipeline
+#' @details [preprocessing()] is powered by the `metabom8` package and is simply a tool to harness and streamline functions in `metabom8` when preprocessing NMR spectra, not replace them.
+#' # The Pipeline
 #' This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. It:
 #' 1. Orientates the spectra correctly,
 #' 2. Calibrates the spectra by a specific peak,
@@ -19,13 +19,14 @@
 #' @param baseline This argument calls on [metabom8::bcor()], a baseline correcting function to smooth the spectral baselines and remove the influence of broad peaks.
 #' @param lowerCutoff A single floating point number defining the ppm value that the lower limit of the spectra are trimmed to.
 #' @param upperCutoff A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.
-#' @param waterCutoff The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to c(4.5,5)
-#' @param ureaCutoff The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to c(5.6,6)
+#' @param waterCutoff The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to `c(4.5,5)`
+#' @param ureaCutoff The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to `c(5.6,6)`
 #' @importFrom metabom8 calibrate lw get_idx bcor
 #' @return This function returns a list with:
 #' 1. The processed X matrix in the first element,
 #' 2. The processed ppm array in the second element, and
-#' 3. The line width results in a data frame in the third element
+#' 3. The line width results in a data frame in the third element.
+#' * Following the example below will extract the results quickly and easily.
 #' @export
 #' @author \email{kylebario1@@gmail.com}
 #' @family {preproc}

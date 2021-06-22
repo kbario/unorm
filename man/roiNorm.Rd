@@ -14,7 +14,14 @@ roiNorm(X, ppm, shift = c(3, 3.1))
 \item{shift}{The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).}
 }
 \value{
-This function returns a list of the normalised X matrix and a numerical array of the corresponding dilution factors.
+This function returns a list with:
+\enumerate{
+\item The normalised X matrix, and
+\item A numerical array of the corresponding dilution factors.
+}
+\itemize{
+\item Following the example below will extract the results quickly and easily.
+}
 }
 \description{
 This function normalises the spectra based on a specific area of the spectra. This is helpful when one region is constant across all spectra.

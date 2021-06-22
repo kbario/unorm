@@ -7,7 +7,7 @@ Authors@R: c(person("Kyle","Bario", email = "kylebario@gmail.com", role = c("aut
 Description: unorm is a package designed to normalise nuclear magnetic resonance (NMR) spectrospy spectra through a variety of methods.
   This package could be useful to anyone working with urine data derived from samples with dilution variations and contains a number of commonly used functions such as PQN and Total Area (a.k.a. Constant Sum or Integral) Normalisation.
   This package also contains a preprocessing function that streamlines baseline correction, non-quantative region removal, spectral calibration and orientation, and linewidth checking using the power of Metabom8.
-License: FOSS
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:

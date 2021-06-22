@@ -38,9 +38,9 @@ preprocessing(
 
 \item{lowerCutoff}{A single floating point number defining the ppm value that the lower limit of the spectra are trimmed to.}
 
-\item{waterCutoff}{The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to c(4.5,5)}
+\item{waterCutoff}{The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to \code{c(4.5,5)}}
 
-\item{ureaCutoff}{The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to c(5.6,6)}
+\item{ureaCutoff}{The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to \code{c(5.6,6)}}
 
 \item{upperCutoff}{A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.}
 }
@@ -49,16 +49,19 @@ This function returns a list with:
 \enumerate{
 \item The processed X matrix in the first element,
 \item The processed ppm array in the second element, and
-\item The line width results in a data frame in the third element
+\item The line width results in a data frame in the third element.
+}
+\itemize{
+\item Following the example below will extract the results quickly and easily.
 }
 }
 \description{
 \code{\link[=preprocessing]{preprocessing()}} is a function aimed at streamlining the preprocessing stage of analysing NMR spectra. It harnesses the power of the package \code{metabom8} to quickly and easily process spectra.
 }
 \details{
-\code{\link[=preprocessing]{preprocessing()}} is powered by the \code{metabom8} package and is simply a tool to harness and streamline functions in \code{metabom8} when preprocessing NMR spectra.
-\subsection{The Pipeline}{
-
+\code{\link[=preprocessing]{preprocessing()}} is powered by the \code{metabom8} package and is simply a tool to harness and streamline functions in \code{metabom8} when preprocessing NMR spectra, not replace them.
+}
+\section{The Pipeline}{
 This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. It:
 \enumerate{
 \item Orientates the spectra correctly,
@@ -69,7 +72,7 @@ This function streamlines the preprocessing of NMR urine spectra by combining a 
 \item Verifies that the resulting X, ppm and meta objects match appropriately.
 }
 }
-}
+
 \examples{
 preProcessed <- preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F, linewidth = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,4.85), ureaCutoff = c(5.6,6))
 X <- preProcessed[[1]]
