@@ -34,33 +34,54 @@
 #' pqnDilf <- Xn[[2]]
 #' @importFrom metabom8 bcor get_idx
 #' @importFrom graphics hist
+#' @importFrom stats sd
 #' @export
 
-pqNorm <- function(X, ppm, shift = c(0.5,8.5), use_ta = F, dilf_calc_method = 'mode'){
+pqNorm <- function(X, ppm, shift = c(0.5,9.5), noise = c(9.5,11), use_ta = F, dilf_calc_method = 'combination', precision = 0.1){
   if (use_ta){
-    Xta <- t(sapply(1:nrow(X), function(x){
+    X <- t(sapply(1:nrow(X), function(x){
       (X[x,])/(sum(X[x,]))
     }))
-  } else {
-    Xta <- X
   }
   idx <- get_idx(shift, ppm)
-  Xc <- Xta[, idx]
-  Xm <- apply(Xc, 2, median)
+  Xm <- apply(X, 2, median)
+  mrm <- 5*sd(Xm[get_idx(noise, ppm)])+(mean((Xm[get_idx(noise, ppm)]), trim = 0.05))
+  Xm <- Xm[idx]
+  Xm[Xm<=mrm] = NA
   dilf <- sapply(1:nrow(X), function(y){
-    Xt <- Xc[y,]
-    quo <- (Xt/Xm)
+    Xc <- X[y,]
+    int_rm <- 10*sd(Xc[get_idx(noise, ppm)])+mean(Xc[get_idx(noise, ppm)], trim = .05)
+    Xc[Xc<=int_rm]=NA
+    Xc <- Xc[idx]
+    quo <- (Xc/Xm)
     if (dilf_calc_method == 'median'){
-      d <- median(quo)
+      d <- median(quo, na.rm = T)
     } else if (dilf_calc_method == 'mode'){
-
+      ends <- precision/2
+      if (min(quo, na.rm = T)<ends){
+        h <- hist(quo, breaks = c(0, seq(from = ends, to = (ceiling(max(quo, na.rm = T))+ends), by = precision)),plot = F)#, xlim = c(0,5))
+        d <- h$mids[which.max(h$counts)]
+      } else {
+        h <- hist(quo, breaks = seq(from = ends, to = (ceiling(max(quo, na.rm = T))+ends), by = precision), plot = F)#, xlim = c(0,5))
+        d <- h$mids[which.max(h$counts)]
+      }
+    } else if (dilf_calc_method == 'combination'){
+      me <- median(quo, na.rm = T)
+      if (min(quo, na.rm = T)<ends){
+        h <- hist(quo, breaks = c(0, seq(from = ends, to = (ceiling(max(quo, na.rm = T))+ends), by = precision)),plot = F)#, xlim = c(0,5))
+        mo <- h$mids[which.max(h$counts)]
+      } else {
+        h <- hist(quo, breaks = seq(from = ends, to = (ceiling(max(quo, na.rm = T))+ends), by = precision), plot = F)#, xlim = c(0,5))
+        mo <- h$mids[which.max(h$counts)]
+      }
+      d <- (me+mo)/2
     }
     return(d)
   })
   Xn <- t(sapply(1:nrow(X), function(z){
       X[z,]/dilf[z]
   }))
-  return(list(Xn, dilf))
+  return(list(Xpqn = Xn, pqnDilf = dilf))
 }
 
 
