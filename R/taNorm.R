@@ -24,9 +24,9 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @family {Attribute-Based}
 #' @examples
-#' Xt <- taNorm(X)
-#' Xta <- Xt[[1]]
-#' taDilf <- Xt[[2]]
+#' Xn <- taNorm(X)
+#' Xta <- Xn[[1]]
+#' taDilf <- Xn[[2]]
 #' @export
 
 taNorm <- function(X){

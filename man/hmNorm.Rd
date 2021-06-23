@@ -71,9 +71,9 @@ Histogram Matching (HM) is a reference based normalisation that aims to match th
 }
 }
 \examples{
- Xh <- hmNorm(X, ppm)
- Xhm <- Xh[[1]]
- hmDilf <- Xh[[2]]
+ Xn <- hmNorm(X, ppm)
+ Xhm <- Xn[[1]]
+ hmDilf <- Xn[[2]]
 }
 \seealso{
 \itemize{

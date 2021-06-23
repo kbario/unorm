@@ -40,13 +40,13 @@ devtools::install_github("kylebario/unorm")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r basic use}
 library(unorm)
 library(metabom8)
 # using the metabom8 function `read1d_proc`, read in the NMR data
-read1d_proc(path = '...', exp_type = list(exp = 'PROF_URINE_NOESY'))
+read1d_proc(path = './data', exp_type = list(exp = 'PROF_URINE_NOESY_240720'))
 # using the streamlining function `preprocessing()` preprocess X and ppm
-preproc <- preprocessing(X, ppm, baseline = T, lineWid = 1, lowerCutoff = 0.5, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 9.5)
+preproc <- preprocessing(X, ppm, meta, baseline = T, lineWid = 1, lowerCutoff = 0.5, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 9.5)
 # rename X and ppm to preserve original data
 X_og <- X
 ppm_og <- ppm
@@ -61,36 +61,60 @@ Xpqn <- Xpq[[1]]
 # and extract the calculated pqn dilution coefficients/factors (dilf) from the second list element
 pqnDilf <- Xpq[[2]]
 # voila, you have read-in, preprocessed and normalised NMR spectra
-
-# want to see how one normalisation compares to another? run another normalisation on the processed data and compare dilfs
-# try histogram matching (HM). For this we will need to rerun the preprocessing 
-# because we cut out all the noise, but HM needs a region of noise for calculation
-preproc <- preprocessing(X, ppm, baseline = T, lineWid = 1, lowerCutoff = 0.5, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 11)
-# rename these as 
-X_plus <- preproc[[1]]
-ppm_plus <- preproc[[2]]
-DfX_plus <- preproc[[3]]
-# set noise region to 10-11 ppm, binwidth to 0.1, alpha_from to 0.2, alpha_to to 2 and alpha_n to 181. we don't want to use the median so set that to False 
-Xhist <- hmNorm(X_plus, ppm_plus, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.2, alpha_to = 2, alpha_n = 181, use_median = F)
-# the output is again the normalised X and corresponding dilution factors so extract the from the list Xhist
-Xhm <- Xhist[[1]]
-hmDilf <- Xhist[[2]]
-# now you can compare the dilution factors.
-plot(pqnDilf, hmDilf)
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
+```{r histogram matching}
+# want to see how one normalisation compares to another? run another normalisation on the processed data and compare dilfs
+library(unorm)
+library(metabom8)
+read1d_proc(path = './data', exp_type = list(exp = 'PROF_URINE_NOESY_240720'))
+# try histogram matching (HM). For this we will need to rerun the preprocessing because we cut out all the noise, but HM needs a region of noise for calculation
+preproc <- preprocessing(X, ppm, meta, baseline = T, lineWid = 1, lowerCutoff = 0.5, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 11.5)
+# rename X and ppm to preserve original data
+X_og <- X
+ppm_og <- ppm
+# rename these as 
+X <- preproc[[1]]
+ppm <- preproc[[2]]
+DfX <- preproc[[3]]
+# set noise region to 10-11 ppm, bin width to 0.1, alpha_from to 0.2, alpha_to to 2 and alpha_n to 181. we don't want to use the median so set that to False 
+Xhist <- hmNorm(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.2, alpha_to = 2, alpha_n = 181, use_median = F)
+# the output is again the normalised X and corresponding dilution factors so extract the from the list Xhist
+Xhm <- Xhist[[1]]
+hmDilf <- Xhist[[2]]
 ```
 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
 
 You can also embed plots, for example:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r compare dilfs, echo = FALSE}
+# now you can compare the dilution factors.
+# load the two packages
+library(unorm)
+library(metabom8)
+# read in the data
+read1d_proc(path = './data', exp_type = list(exp = 'PROF_URINE_NOESY_240720'))
+# processes it
+preproc <- preprocessing(X, ppm, meta, baseline = T, lineWid = 1, lowerCutoff = 0.5, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 11.5)
+# extract the variables
+X <- preproc[[1]]
+ppm <- preproc[[2]]
+DfX <- preproc[[3]]
+# create the histogram matched normalised spectra
+Xhist <- hmNorm(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.2, alpha_to = 2, alpha_n = 181, use_median = F)
+# extract the variables
+Xhm <- Xhist[[1]]
+hmDilf <- Xhist[[2]]
+# normalise X with PQN
+Xpq <- pqNorm(X,ppm)
+# extract the variables
+Xpqn <- Xpq[[1]]
+pqnDilf <- Xpq[[2]]
+# plot the dilfs against each other
+plot(pqnDilf, hmDilf)
 ```
 
 In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

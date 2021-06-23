@@ -1,0 +1,23 @@
+##TITLE= Audit trail, TopSpin 3.6.2
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmrsu
+$$ C:/Bruker/TopSpin3.6.2/Raspberry_WS2R1_KB_01092020/11/audita.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2020-09-01 22:11:32.124 +0800>,<nmrsu>,<IVDr01>,<go4>,<TopSpin 3.6.2>,
+      <created by zg
+	started at 2020-09-01 22:07:15.981 +0800,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       03 03 7D 3B D2 04 9C 9B CF 71 BD D5 A6 62 A0 C2
+       data hash MD5: 8K * 40
+       2D D4 AF CA 95 F4 19 88 AE 99 90 BE 99 87 A1 E4>)
+(   2,<2020-09-01 22:11:32.187 +0800>,<nmrsu>,<IVDr01>,<audit>,<TopSpin 3.6.2>,
+      <user comment:
+       ICON-NMR User ID: nmrsu
+       data hash MD5: 8K * 40
+       2D D4 AF CA 95 F4 19 88 AE 99 90 BE 99 87 A1 E4>)
+##END=
+
+$$ hash MD5
+$$ CF EA 98 A9 41 6E 89 11 C7 B9 8B 85 2E 3B 98 F9

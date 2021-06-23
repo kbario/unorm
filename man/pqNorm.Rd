@@ -4,7 +4,7 @@
 \alias{pqNorm}
 \title{Probabilistic Quotient Normalisation}
 \usage{
-pqNorm(X, ppm, shift = c(0.5, 8.5))
+pqNorm(X, ppm, shift = c(0.5, 8.5), use_ta = F, dilf_calc_method = "mode")
 }
 \arguments{
 \item{X}{The numerical matrix containing the NMR data you wish to normalise. \strong{This should be a preprocessed matrix} with baseline correction, tsp calibration and non-quantitative region removal performed on it. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
@@ -62,9 +62,9 @@ PQN works by normalising experimental spectra in the provided X matrix in relati
 }
 }
 \examples{
-Xpq <- pqNorm(X)
-Xpqn <- Xpq[[1]])
-pqnDilf <- Xpq[[2]]
+Xn <- pqNorm(X)
+Xpqn <- Xn[[1]]
+pqnDilf <- Xn[[2]]
 }
 \seealso{
 The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}

@@ -24,9 +24,9 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @seealso More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
 #' @examples
-#' Xcn <- creNorm(X)
-#' Xcre <- Xcn[[1]]
-#' creDilf <- Xcn[[2]]
+#' Xn <- creNorm(X)
+#' Xcre <- Xn[[1]]
+#' creDilf <- Xn[[2]]
 #' @export
 #' @importFrom metabom8 get_idx
 

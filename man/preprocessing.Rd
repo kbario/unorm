@@ -74,10 +74,10 @@ This function streamlines the preprocessing of NMR urine spectra by combining a 
 }
 
 \examples{
-preProcessed <- preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F, linewidth = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,4.85), ureaCutoff = c(5.6,6))
-X <- preProcessed[[1]]
-ppm <- preProcessed[[2]]
-DfX <- preProcessed[[3]]
+preProcessed <- preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F, linewid = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,4.85), ureaCutoff = c(5.6,6))
+X <- preProcessed$X
+ppm <- preProcessed$ppm
+DfX <- preProcessed$lineWidth
 }
 \author{
 \email{kylebario1@gmail.com}

@@ -29,24 +29,32 @@
 #' @seealso The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#' Xpq <- pqNorm(X)
-#' Xpqn <- Xpq[[1]])
-#' pqnDilf <- Xpq[[2]]
+#' Xn <- pqNorm(X)
+#' Xpqn <- Xn[[1]]
+#' pqnDilf <- Xn[[2]]
 #' @importFrom metabom8 bcor get_idx
 #' @importFrom graphics hist
 #' @export
 
-pqNorm <- function(X, ppm, shift = c(0.5,8.5)){
-  Xta <- t(sapply(1:nrow(X), function(x){
-    (X[x,])/(sum(X[x,]))
-  }))
+pqNorm <- function(X, ppm, shift = c(0.5,8.5), use_ta = F, dilf_calc_method = 'mode'){
+  if (use_ta){
+    Xta <- t(sapply(1:nrow(X), function(x){
+      (X[x,])/(sum(X[x,]))
+    }))
+  } else {
+    Xta <- X
+  }
   idx <- get_idx(shift, ppm)
   Xc <- Xta[, idx]
   Xm <- apply(Xc, 2, median)
   dilf <- sapply(1:nrow(X), function(y){
     Xt <- Xc[y,]
     quo <- (Xt/Xm)
-    d <- median(quo)
+    if (dilf_calc_method == 'median'){
+      d <- median(quo)
+    } else if (dilf_calc_method == 'mode'){
+
+    }
     return(d)
   })
   Xn <- t(sapply(1:nrow(X), function(z){

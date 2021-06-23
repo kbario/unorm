@@ -1,0 +1,32 @@
+##TITLE= Audit trail, TopSpin 3.6.2
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmrsu
+$$ C:/Bruker/TopSpin3.6.2/Raspberry_F2R1_KB_01092020/10/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2020-09-01 19:45:34.949 +0800>,<nmrsu>,<IVDr01>,<go4>,<TopSpin 3.6.2>,
+      <created by zg
+	started at 2020-09-01 19:37:49.645 +0800,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       03 03 7D 3B D2 04 9C 9B CF 71 BD D5 A6 62 A0 C2
+       data hash MD5: 64K
+       D3 10 2B 13 97 60 B2 DE B8 8D 81 69 B1 4D D8 F2>)
+(   2,<2020-09-01 19:45:34.995 +0800>,<nmrsu>,<IVDr01>,<audit>,<TopSpin 3.6.2>,
+      <user comment:
+       ICON-NMR User ID: nmrsu
+       data hash MD5: 64K
+       D3 10 2B 13 97 60 B2 DE B8 8D 81 69 B1 4D D8 F2>)
+(   3,<2020-09-01 19:45:35.199 +0800>,<nmrsu>,<IVDr01>,<proc1d>,<TopSpin 3.6.2>,
+      <Start of raw data processing
+       efp LB = 0.3 FT_mod = 6 PKNL = 1 PHC0 = 0 PHC1 = 0 SI = 128K 
+       data hash MD5: 128K
+       96 91 7A 63 3C 9E 6F 86 65 11 66 53 D0 BE 63 5F>)
+(   4,<2020-09-01 19:45:36.105 +0800>,<nmrsu>,<IVDr01>,<proc1d>,<TopSpin 3.6.2>,
+      <pk PHC0 = 112.11 PHC1 = 0 
+       data hash MD5: 128K
+       85 12 83 FE A9 04 8B 37 C0 E0 AA F5 6E FA FD 51>)
+##END=
+
+$$ hash MD5
+$$ F8 5A B8 8D 59 2A 04 9A 0A 9B 73 0E 2F E4 BC 2C

@@ -54,9 +54,9 @@ Total area normalisation (TA) scales spectra so that they all have a total integ
 }
 }
 \examples{
-Xt <- taNorm(X)
-Xta <- Xt[[1]]
-taDilf <- Xt[[2]]
+Xn <- taNorm(X)
+Xta <- Xn[[1]]
+taDilf <- Xn[[2]]
 }
 \seealso{
 \url{https://doi.org/10.1021/ac051632c}

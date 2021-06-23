@@ -31,9 +31,9 @@
 #' * The paper discussing HM limitations with noise can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#'  Xh <- hmNorm(X, ppm)
-#'  Xhm <- Xh[[1]]
-#'  hmDilf <- Xh[[2]]
+#'  Xn <- hmNorm(X, ppm)
+#'  Xhm <- Xn[[1]]
+#'  hmDilf <- Xn[[2]]
 #' @importFrom stats sd
 #' @importFrom metabom8 get_idx
 #' @importFrom graphics hist

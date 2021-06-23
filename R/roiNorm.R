@@ -21,9 +21,9 @@
 #' @seealso A description of Region of Interest Normalisation can be found in this paper: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#' Xro <- roiNorm(X, ppm, shift = c(2,2.3))
-#' Xroi <- Xro[[1]]
-#' roiDilf <- Xro[[2]]
+#' Xn <- roiNorm(X, ppm, shift = c(2,2.3))
+#' Xroi <- Xn[[1]]
+#' roiDilf <- Xn[[2]]
 #' @importFrom metabom8 get_idx
 #' @export
 

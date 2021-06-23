@@ -1,0 +1,23 @@
+##TITLE= Parameter file, TopSpin 3.6.2
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 42	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmrsu
+$$ 2020-09-02 00:01:38.770 +0800  nmrsu@IVDr01
+$$ C:/Bruker/TopSpin3.6.2/Raspberry_Fol3R1_KB_01092020_TP1/11/acqu2s
+$$ process C:\Bruker\TopSpin3.6.2\prog\mod\go4.exe
+##$ACQT0= 0
+##$BF1= 600.4
+##$FnMODE= 1
+##$NUC1= <1H>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 40
+##$O1= 2822.607
+##$ProjAngle= 0
+##$SFO1= 600.402822607
+##$SW= 0.155958992612718
+##$SW_h= 93.6382193756204
+##$TD= 40
+##END=
