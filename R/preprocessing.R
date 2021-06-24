@@ -31,10 +31,10 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @family {preproc}
 #' @examples
-#' preProcessed <- preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F, linewid = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,4.85), ureaCutoff = c(5.6,6))
-#' X <- preProcessed$X
-#' ppm <- preProcessed$ppm
-#' DfX <- preProcessed$lineWidth
+#' prepro <- preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F, linewid = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,4.85), ureaCutoff = c(5.6,6))
+#' X <- prepro$X
+#' ppm <- prepro$ppm
+#' DfX <- prepro$lineWidth
 
 preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowerCutoff = 0.25, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 9.5){
   #relabel X and ppm

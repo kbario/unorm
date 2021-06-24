@@ -21,9 +21,9 @@
 #' @seealso A description of Region of Interest Normalisation can be found in this paper: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#' Xn <- roiNorm(X, ppm, shift = c(2,2.3))
-#' Xroi <- Xn[[1]]
-#' roiDilf <- Xn[[2]]
+#' roy <- roiNorm(X, ppm, shift = c(2,2.3))
+#' Xn <- roy$Xn
+#' dilf <- roy$dilf
 #' @importFrom metabom8 get_idx
 #' @export
 
@@ -35,5 +35,5 @@ roiNorm <- function(X, ppm, shift = c(3,3.1)){
   dilf <- sapply(1:nrow(X), function(y){
     (sum(X[y,i]))
   })
-  return(list(Xn, dilf))
+  return(list(Xn = Xn, dilf = dilf))
 }

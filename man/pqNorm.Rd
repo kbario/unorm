@@ -4,7 +4,15 @@
 \alias{pqNorm}
 \title{Probabilistic Quotient Normalisation}
 \usage{
-pqNorm(X, ppm, shift = c(0.5, 8.5), use_ta = F, dilf_calc_method = "mode")
+pqNorm(
+  X,
+  ppm,
+  shift = c(0.5, 9.5),
+  noise = c(9.5, 11),
+  use_ta = F,
+  uv_used = "mode",
+  width = 0.05
+)
 }
 \arguments{
 \item{X}{The numerical matrix containing the NMR data you wish to normalise. \strong{This should be a preprocessed matrix} with baseline correction, tsp calibration and non-quantitative region removal performed on it. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
@@ -12,6 +20,12 @@ pqNorm(X, ppm, shift = c(0.5, 8.5), use_ta = F, dilf_calc_method = "mode")
 \item{ppm}{An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.}
 
 \item{shift}{The concatenated ppm values that define the lower and upper bounds of the region PQN should be performed on. Regions containing noise are not useful and ideally should be omitted.}
+
+\item{use_ta}{Requires a boolean \code{TRUE} or \code{FALSE} if total area normalisation should be performed on the spectra before PQN is.}
+
+\item{uv_used}{PQN utilises finding the median or the mode, which are both \emph{U}ni\emph{v}ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use.}
+
+\item{width}{Represents the bandwidth used in the 'mode' method. Only required when using \code{uv_used = 'mode'}. Default = 0.1. Look at the help section of \code{\link[stats:density]{stats::density()}} for more information.}
 }
 \value{
 The output of this function is a list containing:
@@ -33,7 +47,7 @@ PQN works by normalising experimental spectra in the provided X matrix in relati
 \enumerate{
 \item \code{\link[=pqNorm]{pqNorm()}} creates the reference automatically by calculating the median spectrum of X as outlined in the initial methods paper (see 'See also')
 \item \code{\link[=pqNorm]{pqNorm()}} derives a quotient for each ppm value within the limits of shift in a experimental spectrum by dividing it's intensities with that of the reference spectrum's.
-\item The most frequently occurring (median) quotient is calculated and is said to be the dilution coefficient (\code{dilf}) of that spectrum.
+\item The most frequently occurring (your choice of median or mode) quotient is calculated and is said to be the dilution coefficient (\code{dilf}) of that spectrum.
 \item The sample is then scaled with this \code{dilf} and will be comparable with all other spectra normalised with the reference spectrum.
 }
 }
@@ -62,9 +76,9 @@ PQN works by normalising experimental spectra in the provided X matrix in relati
 }
 }
 \examples{
-Xn <- pqNorm(X)
-Xpqn <- Xn[[1]]
-pqnDilf <- Xn[[2]]
+pq <- pqNorm(X)
+Xn <- pq$Xn
+dilf <- pq$dilf
 }
 \seealso{
 The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}

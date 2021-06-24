@@ -53,9 +53,10 @@ Creatinine Normalisation (CN) is a useful method much like region of interest no
 }
 }
 \examples{
-Xn <- creNorm(X)
-Xcre <- Xn[[1]]
-creDilf <- Xn[[2]]
+cre <- creNorm(X)
+Xn <- cre$Xn
+dilf <- cre$dilf
+creRatio <- cre$ratio
 }
 \seealso{
 More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}

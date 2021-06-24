@@ -24,9 +24,9 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @family {Attribute-Based}
 #' @examples
-#' Xn <- taNorm(X)
-#' Xta <- Xn[[1]]
-#' taDilf <- Xn[[2]]
+#' ta <- taNorm(X)
+#' Xn <- ta$Xn
+#' dilf <- ta$dilf
 #' @export
 
 taNorm <- function(X){
@@ -34,5 +34,5 @@ taNorm <- function(X){
   Xta <- t(sapply(1:nrow(X), function(x){
     X[x, ]/Xa[x]
   }))
-  return(list(Xa, Xta))
+  return(list(Xn = Xa, dilf = Xta))
 }

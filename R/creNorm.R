@@ -24,9 +24,10 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @seealso More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
 #' @examples
-#' Xn <- creNorm(X)
-#' Xcre <- Xn[[1]]
-#' creDilf <- Xn[[2]]
+#' cre <- creNorm(X)
+#' Xn <- cre$Xn
+#' dilf <- cre$dilf
+#' creRatio <- cre$ratio
 #' @export
 #' @importFrom metabom8 get_idx
 
@@ -39,5 +40,5 @@ creNorm <- function(X, ppm, cre3 = c(3.043, 3.055), cre4 = c(4.05,4.07)){
   Xn <- sapply(1:nrow(X), function(i){
     X[i,]/cre_a3[i]
   })
-  return(list(Xn, cre_a3, ratio))
+  return(list(Xn = Xn, dilf = cre_a3, ratio = ratio))
 }

@@ -20,9 +20,9 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @family {Reference-Based}
 #' @examples
-#' Xn <- xfNorm(X, osmo)
-#' Xxf <- Xn[[1]]
-#' xfDilf <- Xn[[2]]
+#' xf <- xfNorm(X, osmo)
+#' Xn <- xf$Xn
+#' dilf <- xf$dilf
 #' @export
 
 xfNorm <- function(X, xfactor){
@@ -30,5 +30,5 @@ xfNorm <- function(X, xfactor){
     X[x, ]/xfactor[x]
   }))
   dilf <- xfactor
-  return(list(Xn, dilf))
+  return(list(Xn = Xn, dilf = dilf))
 }
