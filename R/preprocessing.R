@@ -12,15 +12,15 @@
 #' @param ppm An array of the chemical shift variables, column matched to X.
 #' @param X A matrix containing the non-preprocessed NMR spectral data. The rows should containing all values of a single experiment, and the columns, the values of the chemical shift variables.
 #' @param meta The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and line width calculation.
-#' @param flip **NOT CRUCIAL FOR STANDARDLY ACQUIRED SPECTRA** This function checks the orientation of spectra. This is a particularly important function for spectra derived from a **small number of scans**; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.
-#' @param cali This calls on the `metabom8` function [metabom8::calibrate()] which ensures peaks are aligned  based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.
+#' @param flip Default is set to `FALSE`. **NOT CRUCIAL FOR STANDARDLY ACQUIRED SPECTRA** This function checks the orientation of spectra. This is a particularly important function for spectra derived from a **small number of scans**; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.
+#' @param cali Default is set to `FALSE`. This calls on the `metabom8` function [metabom8::calibrate()] which ensures peaks are aligned  based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.
 #' @param calibrant This is the signal you wish to use as the calibrant. This signal must be compatible with [metabom8::calibrate()]. For urine spectra, *tsp* is the main calibrant.
 #' @param lineWid This argument provides import for [metabom8::lw()], a function that calculates the line width of peaks. Spectra with peaks that have small line widths have sharper and more precise results which is more desirable. A maximum cutoff of 1 ensures spectra contain robust results. Consider omitting spectra with line widths over 1.
-#' @param baseline This argument calls on [metabom8::bcor()], a baseline correcting function to smooth the spectral baselines and remove the influence of broad peaks.
-#' @param lowerCutoff A single floating point number defining the ppm value that the lower limit of the spectra are trimmed to.
-#' @param upperCutoff A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.
-#' @param waterCutoff The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to `c(4.5,5)`
-#' @param ureaCutoff The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to `c(5.6,6)`
+#' @param baseline Default is set to `TRUE`. This argument calls on [metabom8::bcor()], a baseline correcting function to smooth the spectral baselines and remove the influence of broad peaks.
+#' @param lowCut A single floating point number defining the ppm value that the lower limit of the spectra are trimmed to.
+#' @param uppCut A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.
+#' @param watCut The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to `c(4.5,5)`
+#' @param ureCut The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to `c(5.6,6)`
 #' @importFrom metabom8 calibrate lw get_idx bcor
 #' @return This function returns a list with:
 #' 1. The processed X matrix in the first element,
@@ -31,12 +31,12 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @family {preproc}
 #' @examples
-#' preProcessed <- preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F, linewid = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,4.85), ureaCutoff = c(5.6,6))
-#' X <- preProcessed$X
-#' ppm <- preProcessed$ppm
-#' DfX <- preProcessed$lineWidth
+#' prepro <- preprocessing(X, ppm, meta, baseline = T, linewid = 0.8, lowCut = 0.5, uppCut = 9.5, watCut = c(4.7,4.85), ureCut = c(5.6,6))
+#' X <- prepro$X
+#' ppm <- prepro$ppm
+#' DfX <- prepro$lineWidth
 
-preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowerCutoff = 0.25, waterCutoff = c(4.5,5), ureaCutoff = c(5.6,6), upperCutoff = 9.5){
+preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5){
   #relabel X and ppm
   X0 <- X
   ppm0 <- ppm
@@ -92,7 +92,7 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
 
   #remove regions
   cat('\033[0;34mRemoving non-quantative regions... ')
-  idx_rm <- c(get_idx(range = c(min(ppm), lowerCutoff), ppm), get_idx(range = waterCutoff, ppm), get_idx(range = ureaCutoff, ppm), get_idx(range = c(upperCutoff, max(ppm)), ppm))
+  idx_rm <- c(get_idx(range = c(min(ppm), lowCut), ppm), get_idx(range = watCut, ppm), get_idx(range = ureCut, ppm), get_idx(range = c(uppCut, max(ppm)), ppm))
   # remove these indexes
   Xr <- Xc[,-idx_rm]
   ppm <- ppm[-idx_rm]

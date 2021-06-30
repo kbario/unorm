@@ -13,10 +13,10 @@ preprocessing(
   cali = F,
   calibrant = "tsp",
   lineWid = 1,
-  lowerCutoff = 0.25,
-  waterCutoff = c(4.5, 5),
-  ureaCutoff = c(5.6, 6),
-  upperCutoff = 9.5
+  lowCut = 0.25,
+  watCut = c(4.5, 5),
+  ureCut = c(5.6, 6),
+  uppCut = 9.5
 )
 }
 \arguments{
@@ -26,23 +26,23 @@ preprocessing(
 
 \item{meta}{The matrix of metadata pertaining to the X matrix. This is crucial for the TSP calibration and line width calculation.}
 
-\item{baseline}{This argument calls on \code{\link[metabom8:bline]{metabom8::bcor()}}, a baseline correcting function to smooth the spectral baselines and remove the influence of broad peaks.}
+\item{baseline}{Default is set to \code{TRUE}. This argument calls on \code{\link[metabom8:bline]{metabom8::bcor()}}, a baseline correcting function to smooth the spectral baselines and remove the influence of broad peaks.}
 
-\item{flip}{\strong{NOT CRUCIAL FOR STANDARDLY ACQUIRED SPECTRA} This function checks the orientation of spectra. This is a particularly important function for spectra derived from a \strong{small number of scans}; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.}
+\item{flip}{Default is set to \code{FALSE}. \strong{NOT CRUCIAL FOR STANDARDLY ACQUIRED SPECTRA} This function checks the orientation of spectra. This is a particularly important function for spectra derived from a \strong{small number of scans}; the NMR orientates spectra based on what side of the y-axis has the most signal and water has a very large impact on this and without a large amount of metabolite signal on the correct side of the spectra (as seen in spectra derived from small scans) the spectra will be orientated the wrong way.}
 
-\item{cali}{This calls on the \code{metabom8} function \code{\link[metabom8:calibrate]{metabom8::calibrate()}} which ensures peaks are aligned  based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.}
+\item{cali}{Default is set to \code{FALSE}. This calls on the \code{metabom8} function \code{\link[metabom8:calibrate]{metabom8::calibrate()}} which ensures peaks are aligned  based on the TSP signal. Calibration is standardly performed by the NMR but this can be performed again for certainty.}
 
 \item{calibrant}{This is the signal you wish to use as the calibrant. This signal must be compatible with \code{\link[metabom8:calibrate]{metabom8::calibrate()}}. For urine spectra, \emph{tsp} is the main calibrant.}
 
 \item{lineWid}{This argument provides import for \code{\link[metabom8:lw]{metabom8::lw()}}, a function that calculates the line width of peaks. Spectra with peaks that have small line widths have sharper and more precise results which is more desirable. A maximum cutoff of 1 ensures spectra contain robust results. Consider omitting spectra with line widths over 1.}
 
-\item{lowerCutoff}{A single floating point number defining the ppm value that the lower limit of the spectra are trimmed to.}
+\item{lowCut}{A single floating point number defining the ppm value that the lower limit of the spectra are trimmed to.}
 
-\item{waterCutoff}{The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to \code{c(4.5,5)}}
+\item{watCut}{The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to \code{c(4.5,5)}}
 
-\item{ureaCutoff}{The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to \code{c(5.6,6)}}
+\item{ureCut}{The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to \code{c(5.6,6)}}
 
-\item{upperCutoff}{A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.}
+\item{uppCut}{A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.}
 }
 \value{
 This function returns a list with:
@@ -74,10 +74,10 @@ This function streamlines the preprocessing of NMR urine spectra by combining a 
 }
 
 \examples{
-preProcessed <- preprocessing(X, ppm, meta, baseline = T, flip = F, cali = F, linewid = 0.8, lowerCutoff = 0.5, upperCutoff = 9.5, waterCutoff = c(4.7,4.85), ureaCutoff = c(5.6,6))
-X <- preProcessed$X
-ppm <- preProcessed$ppm
-DfX <- preProcessed$lineWidth
+prepro <- preprocessing(X, ppm, meta, baseline = T, linewid = 0.8, lowCut = 0.5, uppCut = 9.5, watCut = c(4.7,4.85), ureCut = c(5.6,6))
+X <- prepro$X
+ppm <- prepro$ppm
+DfX <- prepro$lineWidth
 }
 \author{
 \email{kylebario1@gmail.com}

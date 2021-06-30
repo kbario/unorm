@@ -31,12 +31,13 @@
 #' * The paper discussing HM limitations with noise can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#'  Xn <- hmNorm(X, ppm)
-#'  Xhm <- Xn[[1]]
-#'  hmDilf <- Xn[[2]]
+#'  hm <- hmNorm(X, ppm)
+#'  Xn <- hm$Xn
+#'  dilf <- hm$alpha
 #' @importFrom stats sd
 #' @importFrom metabom8 get_idx
 #' @importFrom graphics hist
+#' @importFrom stats median
 #' @export
 
 hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.5, alpha_to = 1.5, alpha_n = 101, use_median = F){
@@ -89,5 +90,5 @@ hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from 
   Xn <- t(sapply(1:nrow(X), function(l){
     X[l,]/alpha_min[l]
   }))
-  return(list(Xn,alpha_min))
+  return(list(Xn = Xn, alpha = alpha_min))
 }
