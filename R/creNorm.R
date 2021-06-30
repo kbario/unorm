@@ -24,7 +24,7 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @seealso More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
 #' @examples
-#' cre <- creNorm(X)
+#' cre <- creNorm(X, ppm)
 #' Xn <- cre$Xn
 #' dilf <- cre$dilf
 #' creRatio <- cre$ratio

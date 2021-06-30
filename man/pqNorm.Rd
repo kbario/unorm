@@ -11,7 +11,7 @@ pqNorm(
   noise = c(9.5, 11),
   use_ta = F,
   uv_used = "mode",
-  width = 0.05
+  width = 0.7
 )
 }
 \arguments{
@@ -20,6 +20,8 @@ pqNorm(
 \item{ppm}{An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.}
 
 \item{shift}{The concatenated ppm values that define the lower and upper bounds of the region PQN should be performed on. Regions containing noise are not useful and ideally should be omitted.}
+
+\item{noise}{Requires the concatenated ppm values that define the lower and upper noise regions}
 
 \item{use_ta}{Requires a boolean \code{TRUE} or \code{FALSE} if total area normalisation should be performed on the spectra before PQN is.}
 

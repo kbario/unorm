@@ -25,6 +25,8 @@
 #' @param use_ta Requires a boolean `TRUE` or `FALSE` if total area normalisation should be performed on the spectra before PQN is.
 #' @param uv_used PQN utilises finding the median or the mode, which are both *U*ni*v*ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use.
 #' @param width Represents the bandwidth used in the 'mode' method. Only required when using `uv_used = 'mode'`. Default = 0.1. Look at the help section of [stats::density()] for more information.
+#' @param noise Requires the concatenated ppm values that define the lower and upper noise regions
+#' @param binning Determines if the data should be binned before performing the normalisation and takes either a `TRUE` or `FALSE` statement.
 #' @return The output of this function is a list containing:
 #' 1. The normalised version of X in the first element and
 #' 2. A numerical array of the corresponding dilution factors calculated by the function.
@@ -36,10 +38,10 @@
 #' Xn <- pq$Xn
 #' dilf <- pq$dilf
 #' @importFrom metabom8 get_idx
-#' @importFrom stats sd density
+#' @importFrom stats sd density median
 #' @export
 
-pqNorm <- function(X, ppm, shift = c(0.5,9.5), noise = c(9.5,11), use_ta = F, uv_used = 'mode', width = 0.05){
+pqNorm <- function(X, ppm, binning = T, use_ta = F, uv_used = 'mode', width = 0.7 ,shift = c(0.5,9.5), noise = c(9.5,11)){
   if (use_ta){
     X <- t(sapply(1:nrow(X), function(x){
       (X[x,])/(sum(X[x,]))

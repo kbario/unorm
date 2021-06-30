@@ -37,6 +37,7 @@
 #' @importFrom stats sd
 #' @importFrom metabom8 get_idx
 #' @importFrom graphics hist
+#' @importFrom stats median
 #' @export
 
 hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.5, alpha_to = 1.5, alpha_n = 101, use_median = F){

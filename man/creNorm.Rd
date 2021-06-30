@@ -53,7 +53,7 @@ Creatinine Normalisation (CN) is a useful method much like region of interest no
 }
 }
 \examples{
-cre <- creNorm(X)
+cre <- creNorm(X, ppm)
 Xn <- cre$Xn
 dilf <- cre$dilf
 creRatio <- cre$ratio
