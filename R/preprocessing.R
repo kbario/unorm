@@ -34,7 +34,9 @@
 #' prepro <- preprocessing(X, ppm, meta, baseline = T, linewid = 0.8, lowCut = 0.5, uppCut = 9.5, watCut = c(4.7,4.85), ureCut = c(5.6,6))
 #' X <- prepro$X
 #' ppm <- prepro$ppm
-#' DfX <- prepro$lineWidth
+#' linewidth <- prepro$lineWidth
+#' Xo <- prepro$Xo
+#' ppmo <- prepre$ppmo
 
 preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5){
   #relabel X and ppm
@@ -108,7 +110,6 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
     X <- Xr
   }
 
-
   #check meta and X have same rows
   cat('\033[0;34mChecking that X and meta rows match... ')
   if (dim(meta)[1]==dim(X)[1]){
@@ -123,5 +124,5 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
   } else {
     stop('X columns and ppm do not match.\n')
   }
-  return(list(X = X, ppm = ppm, lineWidth = DfX))
+  return(list(X = X, ppm = ppm, lineWidth = DfX, Xo = X0, ppmo = ppm0))
 }

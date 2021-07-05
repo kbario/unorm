@@ -32,13 +32,17 @@
 #' @importFrom metabom8 get_idx
 
 creNorm <- function(X, ppm, cre3 = c(3.043, 3.055), cre4 = c(4.05,4.07)){
+  cat('\033[0;34mCalculating Dilfs... ')
   i3 <- get_idx(cre3, ppm)
   i4 <- get_idx(cre4, ppm)
-  cre_a3 <- apply(X[,i3], 1, sum)
+  cre_a3 <- unname(apply(X[,i3], 1, sum))
   cre_a4 <- apply(X[,i4], 1, sum)
   ratio <- cre_a4/cre_a3
+  cat('\033[1;32mDone.\n')
+  cat('\033[0;34mCalculating Xn... ')
   Xn <- sapply(1:nrow(X), function(i){
     X[i,]/cre_a3[i]
   })
+  cat('\033[1;32mDone.\n')
   return(list(Xn = Xn, dilf = cre_a3, ratio = ratio))
 }

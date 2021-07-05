@@ -1,129 +1,44 @@
-<<<<<<< HEAD
+#' @title Quantile Normalisation
+#' @description A method of NMR spectral normalisation where the maximum intensities
+#' @details ### How It Works:
+#' ### Advantages:
+#' ### Limitations:
+#' @family {Attribute-Based}
+#' @param X A numerical matrix containing the NMR spectra to be normalised. Rows should be the spectra and columns being the chemical shift variables
+#' @return This function returns a list with:
+#' 1. The normalised X matrix based on the calculated dilf in the first element,
+#' 2. The quantile normalised X matrix in the second element, and
+#' 3. The dilf calculated in the third element.
+#' @seealso The methods paper that describes quantile normalisation: \url{https://doi.org/10.1007/s11306-011-0350-z}
+#' @author \email{kylebario1@@gmail.com}
+#' @examples
+#' Xqn <- qNorm(X)
+#' Xn <- Xqn$Xn
+#' Xq <- Xqn$Xq
+#' qDilf <- Xqn$dilf
+#' @export
+
 qNorm <- function(X){
+  cat('\033[0;34mCalculating Xq... ')
   Xs <- t(apply(X, 1, sort))
   Xr <- t(apply(X, 1, rank))
   Xm <- apply(Xs, 2, mean)
   Xq <- t(sapply(1:nrow(X), function(x){
     Xm[Xr[x,]]
   }))
+  cat('\033[1;32mDone.\n')
   Xsum <- t(apply(X, 1, sum))
   Xqsum <- t(apply(Xq, 1, sum))
+  cat('\033[0;34mCalculating Dilfs... ')
   dilf <- sapply(1:nrow(X), function(h){
-    Xsum[h]/Xqsum[h]})
+    Xsum[h]/Xqsum[h]
+    })
+  cat('\033[1;32mDone.\n')
+  cat('\033[0;34mCalculating Xn... ')
   Xn <- t(sapply(1:nrow(X), function(x){
     X[x,]/dilf[x]
   }))
-  return(list(Xn = Xn, dilf = dilf))
+  cat('\033[1;32mDone.\n')
+  return(list(Xn = Xn, Xq = Xq, dilf = dilf))
 }
-
-Xq <- qNorm(X)
-
-binning <- function(X, ppm, ppm_range = c(0.5, 9.5), width = 0.1, hop = 'ppm', npoint){
-  s <- ppm_range[1]
-  nbins <- ((ppm_range[2])-(ppm_range[1]))/width
-  sq <- seq(from = ppm_range[1], to = ppm_range[2], by = width)
-  idxs <- sapply(1:nbins, function(x){
-    y = x+1
-    i <- get_idx(c(sq[x], sq[y]), ppm)
-    return(i)
-  })
-  Xb <- t(sapply(1:nrow(X), function(x){
-    sapply(1:nbins, function(y){
-      z <- idxs[[y]]
-      sum(X[x,z])
-    })
-  }))
-  return(Xb)
-}
-Xb <- binning(X, ppm, ppm_range = c(0.5,9.5), width = 0.1)
-
-
-Xm <- apply(Xs, 2, mean)
-
-
-
-
-
-aa <- c(1:9)
-bb <- c(9:1)
-aa[bb]
-aa <- Xo[1,]
-Xm[aa]
-Xo[1,Xm]
-=======
-#' @title Quantile Normalisation
-#' @description A method of NMR spectral normalisation
-#' @details ### How It Works:
-#' ### Advantages:
-#' ### Limitations:
-#' @family {}
-#' @param
-#' @param
-#' @return
-#' @seealso
-#' @author
-#' @examples
-#' @importFrom
-#' @export
-#'
-
-qNorm <- function(X){
-  Xs <- t(apply(X, 1, sort))
-  Xo <- t(apply(X, 1, order))
-
-}
-
-xs <- Xs[1,]
-bins <- seq(min(xs), max(xs), by = 500)
-
-xsbin <- cut(xs,breaks = bins)
-cs <- table(xsbin)
-
-cum <- sapply(1:length(cs), function(x){
-  pr <- (sum(cs[1:x]))/(sum(cs))
-  return(pr)
-})
-
-# smaller
-xs <- Xs[1,]
-cs <- table(cut(xs,breaks = seq(min(xs), max(xs), by = 500)))
-cdef <- sapply(1:length(cs), function(x){
-  pr <- (sum(cs[1:x]))/(sum(cs))
-  return(pr)
-})
-
-
-cd <- function(X, num = 2){sapply(1:num, function(x){
-  maxx <- max(Xs)
-  minn <- min(Xs)
-  xs <- Xs[x,]
-  cs <- table(cut(xs,breaks = seq(minn, maxx, by = 500)))
-  cdef <- sapply(1:length(cs), function(x){
-    pr <- (sum(cs[1:x]))/(sum(cs))
-    return(pr)
-    })
-  return(cdef)
-})}
-
-cdef <- cd(Xs, 2)
-
-plot(cdef[,1], cdef[,2])
-
-
->>>>>>> bcb70e7b762c995c9c0a8b482864d64e011f50dc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

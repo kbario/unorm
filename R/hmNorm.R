@@ -16,11 +16,11 @@
 #' @family {Reference-Based}
 #' @param X A numerical matrix containing the NMR spectra to be normalised. Rows should be the spectra and columns being the chemical shift variables
 #' @param ppm A numerical array holding the chemical shift values of the X matrix. Should be column matched to X provide.
-#' @param noi The concatenated ppm values defining the lower and upper chemical shift values of the noise. There should be **no** signal between these chemical shift values. Also be sure to have not cut out these regions of noise in the [preprocessing()] function.
-#' @param intensity_binwidth This argument dictates the width of the bins. The average span of intensities is from `10`-`30`, meaning that an `intensity_binwidth` of `0.1` would give you 200 bins.
-#' @param alpha_from `alpha` is the scaling factor that the experiment histograms will be scaled with. `alpha_from` defines what the lowest value of `alpha` will be. Can be as low as `0.1` but `0.5` is default. Consider how much dilution variation there is in your samples before setting `alpha_from` extremely low, the more `alpha`s to test, the longer the computation time will be.
-#' @param alpha_to This defines the largest value of `alpha`. Default is `1.5.` As above, consider the dilution variation of the samples. The larger `alpha_to` is the longer the computation time.
-#' @param alpha_n The number of `alpha`s you wish to test. `alpha_n`s default is `101` which will give you `alpha`s incrementing by `0.5.` The larger `alpha_n`, the longer the computing will take and more computing power you will need.
+#' @param noi The array of maximum noise estimations produced from the function [noise()] or provided by the user. Must match X rows.
+#' @param int_binwid This argument dictates the width of the bins. The average span of intensities is from `10`-`30`, meaning that an `intensity_binwidth` of `0.1` would give you 200 bins.
+#' @param a_from `alpha` is the scaling factor that the experiment histograms will be scaled with. `alpha_from` defines what the lowest value of `alpha` will be. Can be as low as `0.1` but `0.5` is default. Consider how much dilution variation there is in your samples before setting `alpha_from` extremely low, the more `alpha`s to test, the longer the computation time will be.
+#' @param a_to This defines the largest value of `alpha`. Default is `1.5.` As above, consider the dilution variation of the samples. The larger `alpha_to` is the longer the computation time.
+#' @param a_size The number of `alpha`s you wish to test. `alpha_n`s default is `101` which will give you `alpha`s incrementing by `0.5.` The larger `alpha_n`, the longer the computing will take and more computing power you will need.
 #' @param use_median This argument dictates whether the function will calculate the median and use that as the reference spectrum or not. If set to `FALSE`, the first sample will be used as the reference. This practice is outlined in the methods paper (see 'See also')
 #' @return A list with:
 #' 1. The normalised X matrix in the first list element, and
@@ -40,23 +40,24 @@
 #' @importFrom stats median
 #' @export
 
-hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from = 0.5, alpha_to = 1.5, alpha_n = 101, use_median = F){
-  std <- apply(X[,get_idx(noi, ppm)], 1, function(i){
-    sd(i)
-  })
-  alpha <- seq(from = alpha_from, to = alpha_to, length.out = alpha_n)
+hmNorm <- function(X, ppm, noi, int_binwid = 0.1, a_from = 0.5, a_to = 1.5, a_size = 0.1, use_median = F){
+  cat('\033[0;34mPrepping the spectra\n')
+  alpha <- seq(from = a_from, to = a_to, by = a_size)
   Xstar <- t(sapply(1:nrow(X), function(j){
-    out = X[j, ]
-    out[(X[j,] <= std[j]*5)] = NA
-    return(out)
+    Xc = X[j,]
+    n <- noi[j]
+    Xc[(Xc <= n)] = NA
+    return(Xc)
   }))
   Xstar_small <- Xstar*alpha[1]
   Zsmall <- log2(abs(Xstar_small)+1)
-  Xstar_big <- Xstar*alpha[alpha_n]
+  Xstar_big <- Xstar*alpha[length(alpha)]
   Zbig <- log2(abs(Xstar_big)+1)
-  width <- ((max(Zbig, na.rm = T)-min(Zsmall, na.rm = T))/intensity_binwidth)
+  width <- ((max(Zbig, na.rm = T)-min(Zsmall, na.rm = T))/int_binwid)
   br <- seq(from = min(Zsmall, na.rm = T), to = max(Zbig, na.rm = T), length.out = width)
   if (use_median){
+    cat('\033[0;34mUsing the median spectra as reference\n')
+    cat('\033[0;34mCalculating the alphas... ')
     Xstar_median <- apply(Xstar, 2, median)
     Zmedian <- log2(abs(Xstar_median)+1)
     Hmedian <- hist(Zmedian, breaks = br, plot = F)
@@ -69,8 +70,11 @@ hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from 
         return(ss)
       })
     })
+    cat('\033[1;32mDone.\n')
     matching <- t(matching)
   } else {
+    cat('\033[0;34mUsing the first spectra as reference\n')
+    cat('\033[0;34mCalculating alphas... ')
     Zt <- log2(abs(Xstar[1,])+1)
     Htarget <- hist(Zt, breaks = br, plot = F)
     matching <- sapply(1:nrow(X), function(i){
@@ -82,13 +86,18 @@ hmNorm <- function(X, ppm, noi = c(10,11), intensity_binwidth = 0.1, alpha_from 
         return(ss)
       })
     })
+    cat('\033[1;32mDone.\n')
     matching <- t(matching)
   }
+  cat('\033[0;34mCalculating Dilfs... ')
   alpha_min <- sapply(1:nrow(X), function(k){
     (alpha[which.min(matching[k,])])
   })
+  cat('\033[1;32mDone.\n')
+  cat('\033[0;34mCalculating Xn... ')
   Xn <- t(sapply(1:nrow(X), function(l){
     X[l,]/alpha_min[l]
   }))
-  return(list(Xn = Xn, alpha = alpha_min))
+  cat('\033[1;32mDone.\n')
+  return(list(Xn = Xn, dilf = alpha_min))
 }

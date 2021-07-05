@@ -29,11 +29,15 @@
 
 roiNorm <- function(X, ppm, shift = c(3,3.1)){
   i <- get_idx(shift, ppm)
-  Xn <- t(sapply(1:nrow(X), function(x){
-    (X[x,])/(sum(X[x,i]))
-  }))
+  cat('\033[0;34mCalculating Dilfs... ')
   dilf <- sapply(1:nrow(X), function(y){
     (sum(X[y,i]))
   })
+  cat('\033[1;32mDone.\n')
+  cat('\033[0;34mCalculating Xn... ')
+  Xn <- t(sapply(1:nrow(X), function(x){
+    (X[x,])/(sum(X[x,i]))
+  }))
+  cat('\033[1;32mDone.\n')
   return(list(Xn = Xn, dilf = dilf))
 }

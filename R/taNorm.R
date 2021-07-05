@@ -30,9 +30,13 @@
 #' @export
 
 taNorm <- function(X){
-  Xa <- apply(X, 1, sum)
+  cat('\033[0;34mCalculating Dilfs... ')
+  Xa <- unname(apply(X, 1, sum))
+  cat('\033[1;32mDone.\n')
+  cat('\033[0;34mCalculating Xn... ')
   Xta <- t(sapply(1:nrow(X), function(x){
     X[x, ]/Xa[x]
   }))
-  return(list(Xn = Xa, dilf = Xta))
+  cat('\033[1;32mDone.\n')
+  return(list(Xn = Xta, dilf = Xa))
 }

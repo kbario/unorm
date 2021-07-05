@@ -21,12 +21,10 @@
 #' @family {Reference-Based}
 #' @param X The numerical matrix containing the NMR data you wish to normalise. **This should be a preprocessed matrix** with baseline correction, tsp calibration and non-quantitative region removal performed on it. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.
 #' @param ppm An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.
-#' @param shift The concatenated ppm values that define the lower and upper bounds of the region PQN should be performed on. Regions containing noise are not useful and ideally should be omitted.
+#' @param noi Takes an array that is row matched to the X matrix you are normalising with the values equaling the maximum noise estimation for each spectra respectively.
 #' @param use_ta Requires a boolean `TRUE` or `FALSE` if total area normalisation should be performed on the spectra before PQN is.
-#' @param uv_used PQN utilises finding the median or the mode, which are both *U*ni*v*ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use.
+#' @param uv_used PQN utilises finding the median or the mode, which are both *U*ni*v*ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use. Default = 'mode'
 #' @param width Represents the bandwidth used in the 'mode' method. Only required when using `uv_used = 'mode'`. Default = 0.1. Look at the help section of [stats::density()] for more information.
-#' @param noise Requires the concatenated ppm values that define the lower and upper noise regions
-#' @param binning Determines if the data should be binned before performing the normalisation and takes either a `TRUE` or `FALSE` statement.
 #' @return The output of this function is a list containing:
 #' 1. The normalised version of X in the first element and
 #' 2. A numerical array of the corresponding dilution factors calculated by the function.
@@ -41,22 +39,26 @@
 #' @importFrom stats sd density median
 #' @export
 
-pqNorm <- function(X, ppm, binning = T, use_ta = F, uv_used = 'mode', width = 0.7 ,shift = c(0.5,9.5), noise = c(9.5,11)){
+pqNorm <- function(X, ppm, noi, use_ta = F, uv_used = 'mode', width){
   if (use_ta){
+    cat('\033[0;34mPerforming Total Area Normalisation...')
     X <- t(sapply(1:nrow(X), function(x){
       (X[x,])/(sum(X[x,]))
     }))
+    cat('\033[1;32mDone.\n')
   }
-  idx <- get_idx(shift, ppm)
+  idx <- get_idx(c(0.25,9.5), ppm)
+  cat('\033[0;34mCreating Reference Spectra...')
   Xm <- apply(X, 2, median)
-  mrm <- 5*sd(Xm[get_idx(noise, ppm)])+(mean((Xm[get_idx(noise, ppm)]), trim = 0.05))
   Xm <- Xm[idx]
-  Xm[Xm<=mrm] = NA
+  m_noi <- median(noi)
+  Xm[Xm<=m_noi] = NA
+  cat('\033[1;32mDone.\n')
+  cat('\033[0;34mCalculating Dilfs... ')
   dilf <- sapply(1:nrow(X), function(y){
-    Xc <- X[y,]
-    int_rm <- 5*sd(Xc[get_idx(noise, ppm)])+mean(Xc[get_idx(noise, ppm)], trim = .05)
-    Xc[Xc<=int_rm]=NA
-    Xc <- Xc[idx]
+    Xc <- X[y,idx]
+    n <- noi[y]
+    Xc[Xc<=n] = NA
     quo <- (Xc/Xm)
     if (uv_used == 'median'){
       d <- median(quo, na.rm = T)
@@ -66,9 +68,12 @@ pqNorm <- function(X, ppm, binning = T, use_ta = F, uv_used = 'mode', width = 0.
     }
     return(d)
   })
+  cat('\033[1;32mDone.\n')
+  cat('\033[0;34mNormalising X... ')
   Xn <- t(sapply(1:nrow(X), function(z){
       X[z,]/dilf[z]
   }))
+  cat('\033[1;32mDone.\n')
   return(list(Xn = Xn, dilf = dilf))
 }
 

@@ -26,9 +26,11 @@
 #' @export
 
 xfNorm <- function(X, xfactor){
+  cat('\033[0;34mCalculating Xn... ')
   Xn <- t(sapply(1:nrow(X), function(x){
     X[x, ]/xfactor[x]
   }))
+  cat('\033[1;32mDone.\n')
   dilf <- xfactor
   return(list(Xn = Xn, dilf = dilf))
 }
