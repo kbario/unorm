@@ -85,7 +85,7 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
   if (all(lwB)){
     cat('\033[1;32mAll spectra have linewidths under', lineWid, '\n')
   } else {
-    cat('\033[1;31mThere are', length(which(lwB==FALSE)), 'spectra with line-widths greater than ',lineWid,'\n')
+    cat('\033[1;31m', length(which(lwB==FALSE)), 'spectra have line-widths over ',lineWid,'\n')
     cat('\033[1;33mCheck list element one for further information.\n')
   }
   DfX <- data.frame(lwd = lwd, lwB = lwB)

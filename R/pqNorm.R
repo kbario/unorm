@@ -51,8 +51,6 @@ pqNorm <- function(X, ppm, noi, use_ta = F, uv_used = 'mode', width){
   cat('\033[0;34mCreating Reference Spectra...')
   Xm <- apply(X, 2, median)
   Xm <- Xm[idx]
-  m_noi <- median(noi)
-  Xm[Xm<=m_noi] = NA
   cat('\033[1;32mDone.\n')
   cat('\033[0;34mCalculating Dilfs... ')
   dilf <- sapply(1:nrow(X), function(y){
