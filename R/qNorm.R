@@ -27,18 +27,24 @@ qNorm <- function(X){
     Xm[Xr[x,]]
   }))
   cat('\033[1;32mDone.\n')
-  Xsum <- t(apply(X, 1, sum))
-  Xqsum <- t(apply(Xq, 1, sum))
   cat('\033[0;34mCalculating Dilfs... ')
-  dilf <- sapply(1:nrow(X), function(h){
-    Xsum[h]/Xqsum[h]
+  dilf <- sapply(1:nrow(Xs), function(i){
+    r <- sapply(1:length(Xm), function(j){
+      abs(Xs[i,j])-abs(Xm[j])
     })
+    d <- sum(r)
+    return(d)
+  })
+  m <- mean(dilf)
+  s <- sd(dilf)
+  Dilfs <- (dilf-m)/s
+  Dilfs <- exp(Dilfs)
   cat('\033[1;32mDone.\n')
   cat('\033[0;34mCalculating Xn... ')
   Xn <- t(sapply(1:nrow(X), function(x){
-    X[x,]/dilf[x]
+    X[x,]/Dilfs[x]
   }))
   cat('\033[1;32mDone.\n')
-  return(list(Xn = Xn, Xq = Xq, dilf = dilf))
+  return(list(Xn = Xn, dilf = Dilfs))
 }
 
