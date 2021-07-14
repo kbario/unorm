@@ -41,14 +41,14 @@
 
 pqNorm <- function(X, ppm, noi, use_ta = F, uv_used = 'mode', width){
   if (use_ta){
-    cat('\033[0;34mPerforming Total Area Normalisation...')
+    cat('\033[0;34mPerforming Total Area Normalisation... ')
     X <- t(sapply(1:nrow(X), function(x){
       (X[x,])/(sum(X[x,]))
     }))
     cat('\033[1;32mDone.\n')
   }
   idx <- get_idx(c(0.25,9.5), ppm)
-  cat('\033[0;34mCreating Reference Spectra...')
+  cat('\033[0;34mCreating Reference Spectra... ')
   Xm <- apply(X, 2, median)
   Xm <- Xm[idx]
   cat('\033[1;32mDone.\n')

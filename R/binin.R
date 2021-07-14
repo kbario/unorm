@@ -1,6 +1,6 @@
 #binning data by 0.01 ppm
 
-binin <- function(X, ppm, bin_wit = 0.005, ppm_lim = c(0.5, 12)){
+binin <- function(X, ppm, bin_wit = 0.01){
   haf_bin <- 0.01/2
   low <- ppm_lim[1]-haf_bin
   upp <- ppm_lim[2]+haf_bin
@@ -23,3 +23,9 @@ binin <- function(X, ppm, bin_wit = 0.005, ppm_lim = c(0.5, 12)){
   return(list(Xb = Xb, ppm_mids = mids))
 }
 
+npoints= 1030
+iid = floor(length(ppm)/npoints)
+iid = floor(length(ppm_new)/step)
+ybin = rep(seq(iid), each = step)
+bed <- approxfun(ppm, X[1,])
+bed(ppm_new)

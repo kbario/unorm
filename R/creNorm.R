@@ -31,18 +31,30 @@
 #' @export
 #' @importFrom metabom8 get_idx
 
-creNorm <- function(X, ppm, cre3 = c(3.043, 3.055), cre4 = c(4.05,4.07)){
+creNorm <- function(X, ppm, cre3 = c(3.043, 3.055), cre4 = c(4.05,4.07), err = 2){
   cat('\033[0;34mCalculating Dilfs... ')
   i3 <- get_idx(cre3, ppm)
   i4 <- get_idx(cre4, ppm)
-  cre_a3 <- unname(apply(X[,i3], 1, sum))
-  cre_a4 <- apply(X[,i4], 1, sum)
-  ratio <- cre_a4/cre_a3
+  a3 <- unname(apply(X[,i3], 1, sum))
+  a4 <- unname(apply(X[,i4], 1, sum))
+  r <- a4/a3
   cat('\033[1;32mDone.\n')
+  cat('\033[0;34mChecking creatinine peak ratios... ')
+  er <- ((2/3)/100)*err
+  lo <- (2/3)-er
+  up <- (2/3)+er
+  if(all(r<=up & r>=lo)){
+    cat('\033[1;32mAll within limits.\n')
+  } else{
+    cat('\033[1;31mspec', which(r>=up | r<=lo), 'are outside error limits.\n\033[1;33mRefer to dilf data frame for more information.\n')
+  }
+  e <- as.array(r<=up & r>=lo)
+  df <- data.frame(a3, r, e)
+  colnames(df) <- c('dilf', 'ratio', paste('ratio within a', err, '% error margin'))
   cat('\033[0;34mCalculating Xn... ')
   Xn <- sapply(1:nrow(X), function(i){
-    X[i,]/cre_a3[i]
+    X[i,]/a3[i]
   })
   cat('\033[1;32mDone.\n')
-  return(list(Xn = Xn, dilf = cre_a3, ratio = ratio))
+  return(list(Xn = Xn, dilf = df))
 }

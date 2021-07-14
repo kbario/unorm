@@ -28,7 +28,8 @@ qNorm <- function(X){
   }))
   cat('\033[1;32mDone.\n')
   cat('\033[0;34mCalculating Dilfs... ')
-  dilf <- sapply(1:nrow(Xs), function(i){
+  sXm <- sum(Xm)
+  dilf_quant_notabs <- sapply(1:nrow(Xs), function(i){
     r <- sapply(1:length(Xm), function(j){
       abs(Xs[i,j])-abs(Xm[j])
     })
@@ -48,3 +49,7 @@ qNorm <- function(X){
   return(list(Xn = Xn, dilf = Dilfs))
 }
 
+
+
+
+logosmo <- log(osmoNew$Result)
