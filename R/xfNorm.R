@@ -26,11 +26,13 @@
 #' @export
 
 xfNorm <- function(X, xfactor){
-  cat('\033[0;34mCalculating Xn... ')
+  cat('\033[0;34mNormalising X... \033[0m')
   Xn <- t(sapply(1:nrow(X), function(x){
     X[x, ]/xfactor[x]
   }))
-  cat('\033[1;32mDone.\n')
+  rownames(Xn) <- rownames(X)
+  cat('\033[1;32mDone.\n\033[0m')
   dilf <- xfactor
-  return(list(Xn = Xn, dilf = dilf))
+  assign("X_xf", Xn, envir = .GlobalEnv)
+  assign("dilf_xf", dilf, envir = .GlobalEnv)
 }

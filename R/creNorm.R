@@ -31,30 +31,74 @@
 #' @export
 #' @importFrom metabom8 get_idx
 
-creNorm <- function(X, ppm, cre3 = c(3.043, 3.055), cre4 = c(4.05,4.07), err = 2){
-  cat('\033[0;34mCalculating Dilfs... ')
-  i3 <- get_idx(cre3, ppm)
-  i4 <- get_idx(cre4, ppm)
-  a3 <- unname(apply(X[,i3], 1, sum))
-  a4 <- unname(apply(X[,i4], 1, sum))
-  r <- a4/a3
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mChecking creatinine peak ratios... ')
-  er <- ((2/3)/100)*err
-  lo <- (2/3)-er
-  up <- (2/3)+er
-  if(all(r<=up & r>=lo)){
-    cat('\033[1;32mAll within limits.\n')
-  } else{
-    cat('\033[1;31mspec', which(r>=up | r<=lo), 'are outside error limits.\n\033[1;33mRefer to dilf data frame for more information.\n')
+creNorm <- function(X, ppm = NULL, cre3 = c(3, 3.1), cre4 = c(4, 4.1), err = 5){
+  if (is.null(dim(X))){
+    if (is.null(length(X))){
+      stop("Please provide a valid X variable. X is neither a matrix or an array")
+    }
+    if (is.null(ppm)){
+      stop("Please provide a X-matched ppm. None was provided and ppm cannot be determined from a single spectrum")
+    }
+    cat('\033[0;34mCalculating Dilfs... \033[0m')
+    i3 <- shift_pickr(X, ppm, cre3, 0.005)
+    i4 <- shift_pickr(X, ppm, cre4, 0.005)
+    a3 <- sum(X[i3])
+    a4 <- sum(X[i4])
+    r <- a4/a3
+    cat('\033[1;32mDone.\n\033[0m')
+    cat('\033[0;34mChecking creatinine peak ratio... \033[0m')
+    er <- ((2/3)/100)*err
+    lo <- (2/3)-er
+    up <- (2/3)+er
+    if(r<=up & r>=lo){
+      cat('\033[1;32mRatio is within limit.\n\033[0m')
+    } else{
+      cat('\033[1;31mThe provided spectra is outside of the error limit.\n\033[1;33mRefer to Df_cre for more information.\n\033[0m')
+    }
+    e <- as.array(r<=up & r>=lo)
+    df <- data.frame(a3, r, e)
+    colnames(df) <- c('dilf', 'ratio', paste('ratio within a', err, '% error margin'))
+    cat('\033[0;34mNormalising X... \033[0m')
+    Xn <- X/a3
+    rownames(Xn) <- rownames(X)
+    cat('\033[1;32mDone.\n\033[0m')
+    assign("X_cre", Xn, envir = .GlobalEnv)
+    assign("dilf_cre", a3, envir = .GlobalEnv)
+    assign("Df_cre", df, envir = .GlobalEnv)
   }
-  e <- as.array(r<=up & r>=lo)
-  df <- data.frame(a3, r, e)
-  colnames(df) <- c('dilf', 'ratio', paste('ratio within a', err, '% error margin'))
-  cat('\033[0;34mCalculating Xn... ')
-  Xn <- sapply(1:nrow(X), function(i){
-    X[i,]/a3[i]
-  })
-  cat('\033[1;32mDone.\n')
-  return(list(Xn = Xn, dilf = df))
+  if (!is.null(dim(X))){
+    cat('\033[0;34mCalculating Dilfs... \033[0m')
+    if (is.null(ppm)){
+      p <- as.numeric(colnames(X))
+    } else {
+      p <- ppm
+    }
+    i3 <- shift_pickr(X, ppm, cre3, 0.005)
+    i4 <- shift_pickr(X, ppm, cre4, 0.005)
+    a3 <- sapply(1:nrow(X), function(i){sum(X[i,i3])})
+    a4 <- sapply(1:nrow(X), function(i){sum(X[i,i4])})
+    r <- a4/a3
+    cat('\033[1;32mDone.\n\033[0m')
+    cat('\033[0;34mChecking creatinine peak ratios... \033[0m')
+    er <- ((2/3)/100)*err
+    lo <- (2/3)-er
+    up <- (2/3)+er
+    if(all(r<=up & r>=lo)){
+      cat('\033[1;32mAll within limits.\n\033[0m')
+    } else{
+      cat('\033[1;31mspec', which(r>=up | r<=lo), 'are outside error limits.\n\033[1;33mRefer to Df_cre for more information.\n\033[0m')
+    }
+    e <- as.array(r<=up & r>=lo)
+    df <- data.frame(a3, r, e)
+    colnames(df) <- c('dilf', 'ratio', paste('ratio within a', err, '% error margin'))
+    cat('\033[0;34mNormalising X... \033[0m')
+    Xn <- t(sapply(1:nrow(X), function(i){
+      X[i,]/a3[i]
+    }))
+    rownames(Xn) <- rownames(X)
+    cat('\033[1;32mDone.\n\033[0m')
+    assign("X_cre", Xn, envir = .GlobalEnv)
+    assign("dilf_cre", a3, envir = .GlobalEnv)
+    assign("Df_cre", df, envir = .GlobalEnv)
+  }
 }

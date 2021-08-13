@@ -35,14 +35,16 @@
 #'  Xn <- hm$Xn
 #'  dilf <- hm$alpha
 #' @importFrom stats sd
-#' @importFrom metabom8 get_idx
 #' @importFrom graphics hist
 #' @importFrom stats median
 #' @export
 
-hmNorm <- function(X, ppm, noi, int_binwid = 0.1, a_from = 0.5, a_to = 1.5, a_size = 0.1, use_median = F){
-  cat('\033[0;34mPrepping the spectra\n')
-  alpha <- seq(from = a_from, to = a_to, by = a_size)
+hmNorm <- function(X, noi, int_binwid = 0.1, a_fts = c(0.5,1.5,0.1), use_median = NULL){
+  if (is.null(use_median)){
+    stop("Please define which reference to use. To use median: use_median = T; to use first spectra: use_median = F.")
+  }
+  cat('\033[0;34mPrepping the spectra\n\033[0m')
+  alpha <- seq(from = a_fts[1], to = a_fts[2], by = a_fts[3])
   Xstar <- t(sapply(1:nrow(X), function(j){
     Xc = X[j,]
     n <- noi[j]
@@ -56,12 +58,12 @@ hmNorm <- function(X, ppm, noi, int_binwid = 0.1, a_from = 0.5, a_to = 1.5, a_si
   width <- ((max(Zbig, na.rm = T)-min(Zsmall, na.rm = T))/int_binwid)
   br <- seq(from = min(Zsmall, na.rm = T), to = max(Zbig, na.rm = T), length.out = width)
   if (use_median){
-    cat('\033[0;34mUsing the median spectra as reference\n')
-    cat('\033[0;34mCalculating the alphas... ')
+    cat('\033[0;34mUsing the median spectra as reference\n\033[0m')
+    cat('\033[0;34mCalculating the alphas... \033[0m')
     Xstar_median <- apply(Xstar, 2, median)
     Zmedian <- log2(abs(Xstar_median)+1)
     Hmedian <- hist(Zmedian, breaks = br, plot = F)
-    matching <- sapply(1:nrow(X), function(i){
+    matching <- t(sapply(1:nrow(X), function(i){
       sapply(1:length(alpha), function(j){
         star_new <- Xstar[i,]*alpha[j]
         z <- log2(abs(star_new)+1)
@@ -69,15 +71,14 @@ hmNorm <- function(X, ppm, noi, int_binwid = 0.1, a_from = 0.5, a_to = 1.5, a_si
         ss <- sum(((Hmedian$counts-H$counts)^2))
         return(ss)
       })
-    })
-    cat('\033[1;32mDone.\n')
-    matching <- t(matching)
+    }))
+    cat('\033[1;32mDone.\n\033[0m')
   } else {
-    cat('\033[0;34mUsing the first spectra as reference\n')
-    cat('\033[0;34mCalculating alphas... ')
+    cat('\033[0;34mUsing the first spectra as reference\n\033[0m')
+    cat('\033[0;34mCalculating alphas... \033[0m')
     Zt <- log2(abs(Xstar[1,])+1)
     Htarget <- hist(Zt, breaks = br, plot = F)
-    matching <- sapply(1:nrow(X), function(i){
+    matching <- t(sapply(1:nrow(X), function(i){
       sapply(1:length(alpha), function(j){
         star_new <- Xstar[i,]*alpha[j]
         z <- log2(abs(star_new)+1)
@@ -85,19 +86,19 @@ hmNorm <- function(X, ppm, noi, int_binwid = 0.1, a_from = 0.5, a_to = 1.5, a_si
         ss <- sum(((Htarget$counts-H$counts)^2))
         return(ss)
       })
-    })
-    cat('\033[1;32mDone.\n')
-    matching <- t(matching)
+    }))
+    cat('\033[1;32mDone.\n\033[0m')
   }
-  cat('\033[0;34mCalculating Dilfs... ')
+  cat('\033[0;34mCalculating Dilfs... \033[0m')
   alpha_min <- sapply(1:nrow(X), function(k){
     (alpha[which.min(matching[k,])])
   })
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mCalculating Xn... ')
+  cat('\033[1;32mDone.\n\033[0m')
+  cat('\033[0;34mNormalising X... \033[0m')
   Xn <- t(sapply(1:nrow(X), function(l){
     X[l,]/alpha_min[l]
   }))
-  cat('\033[1;32mDone.\n')
-  return(list(Xn = Xn, dilf = alpha_min))
+  cat('\033[1;32mDone.\n\033[0m')
+  assign("X_hm", Xn, envir = .GlobalEnv)
+  assign("dilf_hm", alpha_min, envir = .GlobalEnv)
 }

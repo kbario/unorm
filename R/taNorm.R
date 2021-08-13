@@ -29,14 +29,21 @@
 #' dilf <- ta$dilf
 #' @export
 
-taNorm <- function(X){
-  cat('\033[0;34mCalculating Dilfs... ')
-  Xa <- unname(apply(X, 1, sum))
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mCalculating Xn... ')
-  Xta <- t(sapply(1:nrow(X), function(x){
+taNorm <- function(X, noi){
+  cat('\033[0;34mCalculating Dilfs... \033[0m')
+  Xs <- t(sapply(1:nrow(X), function(i){
+    x <- X[i,]
+    x[x<noi[i]]=0
+    return(x)
+  }))
+  Xa <- unname(apply(Xs, 1, sum))
+  cat('\033[1;32mDone.\n\033[0m')
+  cat('\033[0;34mNormalising X... \033[0m')
+  Xta <- t(sapply(1:nrow(Xs), function(x){
     X[x, ]/Xa[x]
   }))
-  cat('\033[1;32mDone.\n')
-  return(list(Xn = Xta, dilf = Xa))
+  rownames(Xta) <- rownames(X)
+  cat('\033[1;32mDone.\n\033[0m')
+  assign("X_ta", Xta, envir = .GlobalEnv)
+  assign("dilf_ta", Xa, envir = .GlobalEnv)
 }

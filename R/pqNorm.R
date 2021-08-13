@@ -39,43 +39,86 @@
 #' @importFrom stats sd density median
 #' @export
 
-pqNorm <- function(X, ppm, noi, use_ta = F, uv_used = 'mode', width){
+pqNorm <- function(X, noi, use_ta = F, uv_used = 'mode', calc_region = c(0.5,9.5), bin_width = 0.01){
+  if (is.null(use_ta)){
+    stop("use_ta was left blank. Please specify if you would like to normalise the spectra with Total Area prior to PQN with T or F.")
+  }
+  if (is.null(uv_used)){
+    stop("uv_used was left blank. Please specify which univariate variable you want to use to calculate the dilf. 'mode' and 'median' accepted.")
+  }
+  if (!uv_used == 'mode' & !uv_used == 'median'){
+    stop("uv_used not specified correctly. Only 'mode' and 'median' are accepted.")
+  }
+  if (!names(noi)[1]==rownames(X)[1] | !all(!is.na(match(names(noi), rownames(X)))) | !all(diff(match(names(noi), rownames(X)))==1)){
+    if (length(noi) < nrow(X)){
+      stop("noi does not contain as many values as X has spectra. To continue use uNorm::noise() to calculate noise estimations for your X.")
+    }
+    cat("\033[1;33mThe provided X and noi arguements do not match. Attempting to match them now... \033[0m")
+    ma <- match(rownames(X),names(noi))
+    noi_matched <- noi[ma]
+    if (all(names(noi_matched)==rownames(X))){
+      assign('noi_matched', noi_matched, envir = .GlobalEnv)
+      cat('\033[1;32mDone.\n\033[0;34mFind noi_matched in the global environment.\033[0m')
+    }
+    if (!all(names(noi_matched)==rownames(X))){
+      cat('\n\033[0;31mX and noi could not be matched. Please match them before applying PQN.\n\033[0m')
+    }
+  }
   if (use_ta){
-    cat('\033[0;34mPerforming Total Area Normalisation... ')
+    cat('\033[0;34mPerforming Total Area Normalisation... \033[0m')
     X <- t(sapply(1:nrow(X), function(x){
       (X[x,])/(sum(X[x,]))
     }))
-    cat('\033[1;32mDone.\n')
+    cat('\033[1;32mDone.\n\033[0m')
   }
-  idx <- get_idx(c(0.25,9.5), ppm)
-  cat('\033[0;34mCreating Reference Spectra... ')
-  Xm <- apply(X, 2, median)
-  Xm <- Xm[idx]
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mCalculating Dilfs... ')
-  dilf <- sapply(1:nrow(X), function(y){
-    Xc <- X[y,idx]
-    n <- noi[y]
-    Xc[Xc<=n] = NA
-    quo <- (Xc/Xm)
-    if (uv_used == 'median'){
-      d <- median(quo, na.rm = T)
-    } else if (uv_used == 'mode'){
-      den <- density(quo[!is.na(quo)], bw = width)
-      d <- den$x[which.max(den$y)]
-    }
-    return(d)
-  })
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mNormalising X... ')
-  Xn <- t(sapply(1:nrow(X), function(z){
-      X[z,]/dilf[z]
+  p <- as.numeric(colnames(X))
+  cat('\033[0;34mPreparing Spectra and Reference...\n\033[0m')
+  idx <- get_idx(c(calc_region[1],calc_region[2]), p)
+  cat('\033[0;34mSelecting ppm and Removing Noise... \033[0m')
+  Xs <- t(sapply(1:nrow(X), function(i){
+    n <- noi[i]
+    Xs <- X[i,idx]
+    Xs[Xs<n]=0
+    return(Xs)
   }))
+  cat('\033[1;32mDone.\n\033[0m')
+  cat('\033[0;34mBinning... \033[0m')
+  Xsb <- binning(Xs, p[idx], width = bin_width)
+  cat('\033[1;32mDone.\n\033[0m')
+  cat('\033[0;34mCalculating Reference Spectrum... \033[0m')
+  Xm <- apply(Xsb, 2, median)
   cat('\033[1;32mDone.\n')
-  return(list(Xn = Xn, dilf = dilf))
+  cat('\033[0;34mCalculating Dilfs... \033[0m')
+  q <- t(sapply(1:nrow(Xsb), function(j){
+      Xsb[j,]/Xm
+  }))
+  if (uv_used == "mode"){
+    cat('\033[0;34mUsing the Mode... \033[0m')
+    dilf <- sapply(1:nrow(q), function(y){
+      i <- q[y,]
+      den <- density(i[!is.nan(i) & !is.infinite(i) & !is.na(i)])
+      dilf <- 10^(den$x[which.max(den$y)])
+      return(dilf)
+    })
+  }
+  if (uv_used == "median"){
+    cat('\033[0;34mUsing the Median... \033[0m')
+    dilf <- sapply(1:nrow(q), function(z){
+      i <- q[z,]
+      dilf <- median(i, na.rm = T)
+      return(dilf)
+    })#
+
+  }
+  cat('\033[1;32mDone.\n\033[0m')
+  cat('\033[0;34mNormalising X... \033[0m')
+  Xn <- t(sapply(1:nrow(X), function(a){
+    X[a,]/dilf[a]
+  }))
+  rownames(Xn) <- rownames(X)
+  cat('\033[1;32mDone.\n\033[0m')
+  assign("X_pqn", Xn, envir = .GlobalEnv)
+  assign("dilf_pqn", dilf, envir = .GlobalEnv)
+  assign('X_pqn_median', Xm, envir = .GlobalEnv)
+  assign('X_pqn_binned', Xsb, envir = .GlobalEnv)
 }
-
-
-
-
-

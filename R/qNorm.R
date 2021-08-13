@@ -19,37 +19,16 @@
 #' @export
 
 qNorm <- function(X){
-  cat('\033[0;34mCalculating Xq... ')
+  cat('\033[0;34mCalculating Quantile Means... \033[0m')
   Xs <- t(apply(X, 1, sort))
   Xr <- t(apply(X, 1, rank))
   Xm <- apply(Xs, 2, mean)
-  Xq <- t(sapply(1:nrow(X), function(x){
-    Xm[Xr[x,]]
+  cat('\033[1;32mDone.\n\033[0m')
+  cat('\033[0;34mReassigning Intensity Values... \033[0m')
+  Xq <- t(sapply(1:nrow(Xr), function(i){
+    Xm[Xr[i,]]
   }))
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mCalculating Dilfs... ')
-  sXm <- sum(Xm)
-  dilf_quant_notabs <- sapply(1:nrow(Xs), function(i){
-    r <- sapply(1:length(Xm), function(j){
-      abs(Xs[i,j])-abs(Xm[j])
-    })
-    d <- sum(r)
-    return(d)
-  })
-  m <- mean(dilf)
-  s <- sd(dilf)
-  Dilfs <- (dilf-m)/s
-  Dilfs <- exp(Dilfs)
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mCalculating Xn... ')
-  Xn <- t(sapply(1:nrow(X), function(x){
-    X[x,]/Dilfs[x]
-  }))
-  cat('\033[1;32mDone.\n')
-  return(list(Xn = Xn, dilf = Dilfs))
+  rownames(Xq) <- rownames(X)
+  cat('\033[1;32mDone.\n\033[0m')
+  assign("X_q", Xq, envir = .GlobalEnv)
 }
-
-
-
-
-logosmo <- log(osmoNew$Result)

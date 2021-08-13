@@ -40,89 +40,92 @@
 
 preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5){
   #relabel X and ppm
-  X0 <- X
-  ppm0 <- ppm
+  X_OG <- X
+  ppm_OG <- ppm
 
   #flip disorientated spectra
   if (flip){
-    cat('\033[0;34mFlipping the spectra... ')
+    cat('\033[0;34mFlipping the spectra... \033[0m')
     Xf <- flip(X, ppm)
-    cat('\033[1;32mDone.\n')
+    cat('\033[1;32mDone.\n\033[0m')
   } else {
-    cat("\033[1;33mSpectra haven't been checked for orientation.\n")
+    cat("\033[1;33mSpectra haven't been checked for orientation.\n\033[0m")
     Xf <- X
   }
 
   #calibrate spectra to tsp
   if (cali){
-    cat('\033[0;34mChecking if calibration is required... ')
-    if (all(meta$p_SREF_mod==1)){
-      Xc <- Xf
-      cat('\033[1;32mThey\'re all good.\n')
-    } else {
-      cat('\033[0;33mCalibration is required,\n')
       cat('\033[0;34mCalibrating to', calibrant,"... ")
       Xc <- calibrate(Xf, ppm, type = calibrant)
-      cat('\033[1;32mDone.\n')
-    }
-  } else {
-    cat('\033[0;34mChecking if calibration isn\'t required... ')
+      cat('\033[1;32mDone.\n\033[0m')
+    } else {
+    cat('\033[0;34mChecking that calibration isn\'t required... \033[0m')
     if (all(meta$p_SREF_mod==1)){
       Xc <- Xf
-      cat('\033[1;32mThey\'re all good.\n')
+      cat('\033[1;32mThey\'re all good.\n\033[0m')
     } else {
-      cat('\033[1;31mCalibration is required\n')
+      cat('\033[1;33mCalibration is required\n\033[0m')
       cat('\033[0;34mCalibrating to', calibrant,"... ")
       Xc <- calibrate(Xf, ppm, type = calibrant)
-      cat('\033[1;32mDone.\n')
+      cat('\033[1;32mDone.\n\033[0m')
     }
   }
 
   # calculate the line width as quality control
-  cat('\033[0;34mChecking line width of spectra... ')
+  cat('\033[0;34mChecking line width of spectra... \033[0m')
   lwd <- lw(Xc,ppm,shift = c(-0.1,0.1), sf = meta$a_SFO1)
   lwB <- lwd<lineWid
   if (all(lwB)){
-    cat('\033[1;32mAll spectra have linewidths under', lineWid, '\n')
+    cat('\033[1;32mAll spectra have linewidths under', lineWid, '\n\033[0m')
   } else {
-    cat('\033[1;31m', length(which(lwB==FALSE)), 'spectra have line-widths over ',lineWid,'\n')
-    cat('\033[1;33mCheck list element one for further information.\n')
+    cat('\033[1;31m', length(which(lwB==FALSE)), 'spectra have line-widths over',lineWid,'.\n')
+    cat('\033[1;33mCheck Df_ppro for more information.\n\033[0m')
   }
   DfX <- data.frame(lwd = lwd, lwB = lwB)
   DfX$names <- 1:(length(rownames(X)))
   DfX$orig_names <- rownames(X)
 
+  #calculating the noise
+  cat('\033[0;34mCalculating Noise Estimations... \033[0m')
+  noi <- noise(X_OG, ppm_OG, shift = c(9.5,11), sd_mult = 5)
+  cat('\033[1;32mDone.\n\033[0m')
+
   #remove regions
-  cat('\033[0;34mRemoving non-quantative regions... ')
+  cat('\033[0;34mRemoving non-quantative regions... \033[0m')
   idx_rm <- c(get_idx(range = c(min(ppm), lowCut), ppm), get_idx(range = watCut, ppm), get_idx(range = ureCut, ppm), get_idx(range = c(uppCut, max(ppm)), ppm))
   # remove these indexes
   Xr <- Xc[,-idx_rm]
   ppm <- ppm[-idx_rm]
-  cat('\033[1;32mDone.\n')
+  cat('\033[1;32mDone.\n\033[0m')
 
   # baseline correct the spectra
   if (baseline){
-    cat('\033[0;34mPerforming baseline correction... ')
+    cat('\033[0;34mPerforming baseline correction... \033[0m')
     X <- bcor(Xr)
-    cat('\033[1;32mDone.\n')
+    cat('\033[1;32mDone.\n\033[0m')
   }else{
-    cat('\033[1;33mNo baseline performed.\n')
+    cat('\033[1;33mNo baseline performed.\n\033[0m')
     X <- Xr
   }
 
   #check meta and X have same rows
-  cat('\033[0;34mChecking that X and meta rows match... ')
+  cat('\033[0;34mChecking that X and meta rows match... \033[0m')
   if (dim(meta)[1]==dim(X)[1]){
-    cat('\033[1;32mDone.\n')
+    cat('\033[1;32mDone.\n\033[0m')
   } else {
     stop('The number of spectra in X and meta do not match.\n')
   }
   #check X and ppm have same columns
-  cat('\033[0;34mChecking that ppm length and X columns match... ')
+  cat('\033[0;34mChecking that ppm length and X columns match... \033[0m')
   if (dim(X)[2]==length(ppm)){
-    cat('\033[1;32mDone.\n')
+    cat('\033[1;32mDone.\n\033[0m')
   } else {
     stop('X columns and ppm do not match.\n')
   }
-  return(list(X = X, ppm = ppm, lineWidth = DfX, Xo = X0, ppmo = ppm0))
+  assign("X", X, envir = .GlobalEnv)
+  assign("ppm", ppm, envir = .GlobalEnv)
+  assign("Df_ppro", DfX, envir = .GlobalEnv)
+  assign("noi", noi, envir = .GlobalEnv)
+  assign("X_OG", X_OG, envir = .GlobalEnv)
+  assign("ppm_OG", ppm_OG, envir = .GlobalEnv)
 }

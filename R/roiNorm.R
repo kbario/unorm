@@ -27,17 +27,20 @@
 #' @importFrom metabom8 get_idx
 #' @export
 
-roiNorm <- function(X, ppm, shift = c(3,3.1)){
-  i <- get_idx(shift, ppm)
-  cat('\033[0;34mCalculating Dilfs... ')
+roiNorm <- function(X, shift = c(2.5,2.75)){
+  p <- as.numeric(colnames(X))
+  i <- get_idx(shift, p)
+  cat('\033[0;34mCalculating Dilfs... \033[0m')
   dilf <- sapply(1:nrow(X), function(y){
     (sum(X[y,i]))
   })
-  cat('\033[1;32mDone.\n')
-  cat('\033[0;34mCalculating Xn... ')
+  cat('\033[1;32mDone.\n\033[0m')
+  cat('\033[0;34mNormalising X... \033[0m')
   Xn <- t(sapply(1:nrow(X), function(x){
     (X[x,])/(sum(X[x,i]))
   }))
-  cat('\033[1;32mDone.\n')
-  return(list(Xn = Xn, dilf = dilf))
+  rownames(Xn) <- rownames(X)
+  cat('\033[1;32mDone.\n\033[0m')
+  assign("X_roi", Xn, envir = .GlobalEnv)
+  assign("dilf_roi", dilf, envir = .GlobalEnv)
 }
