@@ -39,66 +39,84 @@
 #' @importFrom stats median
 #' @export
 
-hmNorm <- function(X, noi, int_binwid = 0.1, a_fts = c(0.5,1.5,0.1), use_median = NULL){
+hmNorm <- function(X, noi, int_binwid = 0.1, alpha = c(0.1, 2), use_median = NULL, tol = 1e-5){
   if (is.null(use_median)){
     stop("Please define which reference to use. To use median: use_median = T; to use first spectra: use_median = F.")
   }
   cat('\033[0;34mPrepping the spectra\n\033[0m')
-  alpha <- seq(from = a_fts[1], to = a_fts[2], by = a_fts[3])
-  Xstar <- t(sapply(1:nrow(X), function(j){
-    Xc = X[j,]
+  Xs <- t(sapply(1:nrow(X), function(j){
+    Xc <- X[j,]
     n <- noi[j]
     Xc[(Xc <= n)] = NA
     return(Xc)
   }))
-  Xstar_small <- Xstar*alpha[1]
-  Zsmall <- log2(abs(Xstar_small)+1)
-  Xstar_big <- Xstar*alpha[length(alpha)]
-  Zbig <- log2(abs(Xstar_big)+1)
-  width <- ((max(Zbig, na.rm = T)-min(Zsmall, na.rm = T))/int_binwid)
-  br <- seq(from = min(Zsmall, na.rm = T), to = max(Zbig, na.rm = T), length.out = width)
+  Zs <- log2((Xs*alpha[1])+1)
+  Zb <- log2((Xs*alpha[2])+1)
+  br <- seq(from = min(Zs, na.rm = T), to = max(Zb, na.rm = T), length.out = ((max(Zb, na.rm = T)-min(Zs, na.rm = T))/int_binwid))
   if (use_median){
     cat('\033[0;34mUsing the median spectra as reference\n\033[0m')
-    cat('\033[0;34mCalculating the alphas... \033[0m')
-    Xstar_median <- apply(Xstar, 2, median)
-    Zmedian <- log2(abs(Xstar_median)+1)
-    Hmedian <- hist(Zmedian, breaks = br, plot = F)
-    matching <- t(sapply(1:nrow(X), function(i){
-      sapply(1:length(alpha), function(j){
-        star_new <- Xstar[i,]*alpha[j]
-        z <- log2(abs(star_new)+1)
-        H <- hist(z, breaks = br, plot = F)
-        ss <- sum(((Hmedian$counts-H$counts)^2))
-        return(ss)
-      })
-    }))
+    cat('\033[0;34mCalculating the dilfs... \033[0m')
+    Xsm <- apply(Xs, 2, median)
+    Zm <- log2(Xsm+1)
+    m <- table(cut(Zm, breaks = br))
+    dilfs <- sapply(1:nrow(Xs), function(i){
+      a <- alpha[1]
+      b <- alpha[2]
+      gr <- (sqrt(5)+1)/2
+      c <- b-(b-a)/gr
+      d <- a+(b-a)/gr
+      while(abs(b-a)>tol){
+        cs <- table(cut(log2(Xs[i,]*c), breaks = br))
+        fc <- sum((m-cs)^2)
+        ds <- table(cut(log2(Xs[i,]*d), breaks = br))
+        fd <- sum((m-ds)^2)
+        if (fc<fd){
+          b <- d
+        } else {
+          a <- c
+        }
+        c <- b-(b-a)/gr
+        d <- a+(b-a)/gr
+      }
+      return((b+a)/2)
+    })
     cat('\033[1;32mDone.\n\033[0m')
   } else {
     cat('\033[0;34mUsing the first spectra as reference\n\033[0m')
-    cat('\033[0;34mCalculating alphas... \033[0m')
-    Zt <- log2(abs(Xstar[1,])+1)
-    Htarget <- hist(Zt, breaks = br, plot = F)
-    matching <- t(sapply(1:nrow(X), function(i){
-      sapply(1:length(alpha), function(j){
-        star_new <- Xstar[i,]*alpha[j]
-        z <- log2(abs(star_new)+1)
-        H <- hist(z, breaks = br, plot = F)
-        ss <- sum(((Htarget$counts-H$counts)^2))
-        return(ss)
-      })
-    }))
+    cat('\033[0;34mCalculating dilfs... \033[0m')
+    m <- table(cut((log2(Xs[1,]+1)), breaks = br))
+    dilfs <- sapply(1:(nrow(Xs)), function(i){
+      if (i==1){
+        return(i)
+      } else {
+        a <- alpha[1]
+        b <- alpha[2]
+        gr <- (sqrt(5)+1)/2
+        c <- b-(b-a)/gr
+        d <- a+(b-a)/gr
+        while(abs(b-a)>tol){
+          cs <- table(cut(log2(Xs[i,]*c), breaks = br))
+          fc <- sum((m-cs)^2)
+          ds <- table(cut(log2(Xs[i,]*d), breaks = br))
+          fd <- sum((m-ds)^2)
+          if (fc<fd){
+            b <- d
+          } else {
+            a <- c
+          }
+          c <- b-(b-a)/gr
+          d <- a+(b-a)/gr
+        }
+      }
+      return((b+a)/2)
+    })
     cat('\033[1;32mDone.\n\033[0m')
   }
-  cat('\033[0;34mCalculating Dilfs... \033[0m')
-  alpha_min <- sapply(1:nrow(X), function(k){
-    (alpha[which.min(matching[k,])])
-  })
-  cat('\033[1;32mDone.\n\033[0m')
   cat('\033[0;34mNormalising X... \033[0m')
   Xn <- t(sapply(1:nrow(X), function(l){
-    X[l,]/alpha_min[l]
+    X[l,]/dilfs[l]
   }))
   cat('\033[1;32mDone.\n\033[0m')
   assign("X_hm", Xn, envir = .GlobalEnv)
-  assign("dilf_hm", alpha_min, envir = .GlobalEnv)
+  assign("dilf_hm", dilfs, envir = .GlobalEnv)
 }

@@ -96,7 +96,7 @@ pqNorm <- function(X, noi, use_ta = F, uv_used = 'mode', calc_region = c(0.5,9.5
     cat('\033[0;34mUsing the Mode... \033[0m')
     dilf <- sapply(1:nrow(q), function(y){
       i <- q[y,]
-      den <- density(i[!is.nan(i) & !is.infinite(i) & !is.na(i)])
+      den <- density(log10(i)[!is.nan(i) & !is.infinite(i) & !is.na(i)])
       dilf <- 10^(den$x[which.max(den$y)])
       return(dilf)
     })

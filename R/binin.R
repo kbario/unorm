@@ -23,7 +23,7 @@ binning <- function (X, ppm, width = NULL, npoints=NULL){
     ppm <- as.numeric(colnames(X))
   }
   else {
-    if (!.check_X_ppm(X, ppm))
+    if (!metabom8:::.check_X_ppm(X, ppm))
       stop("Non-matching dimensions X matrix and ppm vector or missing values in ppm.")
   }
   if (is.vector(X)) {
