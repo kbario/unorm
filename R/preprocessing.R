@@ -21,6 +21,7 @@
 #' @param uppCut A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.
 #' @param watCut The lower and upper ppm values concatenated, from which the water region will be trimmed and omitted. Water regions provide no important information and should be removed prior to data analysis. Default is set to `c(4.5,5)`
 #' @param ureCut The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to `c(5.6,6)`
+#' @param noi_sh The shift of the noise region used to calculate estimation of noise
 #' @importFrom metabom8 calibrate lw get_idx bcor
 #' @return This function returns a list with:
 #' 1. The processed X matrix in the first element,

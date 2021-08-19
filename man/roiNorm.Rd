@@ -4,14 +4,14 @@
 \alias{roiNorm}
 \title{Region of Interest Normalisation}
 \usage{
-roiNorm(X, ppm, shift = c(3, 3.1))
+roiNorm(X, shift = c(2.5, 2.75))
 }
 \arguments{
 \item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
 
-\item{ppm}{A numerical array holding the chemical shift values of the X matrix}
-
 \item{shift}{The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).}
+
+\item{ppm}{A numerical array holding the chemical shift values of the X matrix}
 }
 \value{
 This function returns a list with:
@@ -58,6 +58,8 @@ A description of Region of Interest Normalisation can be found in this paper: \u
 
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
+\code{\link{qNorm2}()},
+\code{\link{qNorm}()},
 \code{\link{taNorm}()}
 }
 \author{

@@ -6,26 +6,23 @@
 \usage{
 pqNorm(
   X,
-  ppm,
-  shift = c(0.5, 9.5),
-  noise = c(9.5, 11),
+  noi,
   use_ta = F,
   uv_used = "mode",
-  width = 0.7
+  calc_region = c(0.5, 9.5),
+  bin_width = 0.01
 )
 }
 \arguments{
 \item{X}{The numerical matrix containing the NMR data you wish to normalise. \strong{This should be a preprocessed matrix} with baseline correction, tsp calibration and non-quantitative region removal performed on it. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
 
-\item{ppm}{An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.}
-
-\item{shift}{The concatenated ppm values that define the lower and upper bounds of the region PQN should be performed on. Regions containing noise are not useful and ideally should be omitted.}
-
-\item{noise}{Requires the concatenated ppm values that define the lower and upper noise regions}
+\item{noi}{Takes an array that is row matched to the X matrix you are normalising with the values equaling the maximum noise estimation for each spectra respectively.}
 
 \item{use_ta}{Requires a boolean \code{TRUE} or \code{FALSE} if total area normalisation should be performed on the spectra before PQN is.}
 
-\item{uv_used}{PQN utilises finding the median or the mode, which are both \emph{U}ni\emph{v}ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use.}
+\item{uv_used}{PQN utilises finding the median or the mode, which are both \emph{U}ni\emph{v}ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use. Default = 'mode'}
+
+\item{ppm}{An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.}
 
 \item{width}{Represents the bandwidth used in the 'mode' method. Only required when using \code{uv_used = 'mode'}. Default = 0.1. Look at the help section of \code{\link[stats:density]{stats::density()}} for more information.}
 }

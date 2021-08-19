@@ -16,7 +16,8 @@ preprocessing(
   lowCut = 0.25,
   watCut = c(4.5, 5),
   ureCut = c(5.6, 6),
-  uppCut = 9.5
+  uppCut = 9.5,
+  noi_sh = c(9.5, 11)
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ preprocessing(
 \item{ureCut}{The lower and upper ppm values concatenated, from which the urea region will be trimmed and omitted. Urea regions also provide no important information and should be removed prior to data analysis. Default is set to \code{c(5.6,6)}}
 
 \item{uppCut}{A single floating point number defining the ppm value that the upper limit of the spectra are trimmed to.}
+
+\item{noi_sh}{The shift of the noise region used to calculate estimation of noise}
 }
 \value{
 This function returns a list with:
@@ -77,7 +80,14 @@ This function streamlines the preprocessing of NMR urine spectra by combining a 
 prepro <- preprocessing(X, ppm, meta, baseline = T, linewid = 0.8, lowCut = 0.5, uppCut = 9.5, watCut = c(4.7,4.85), ureCut = c(5.6,6))
 X <- prepro$X
 ppm <- prepro$ppm
-DfX <- prepro$lineWidth
+linewidth <- prepro$lineWidth
+Xo <- prepro$Xo
+ppmo <- prepre$ppmo
+}
+\seealso{
+Other {preproc}: 
+\code{\link{flip}()},
+\code{\link{noise}()}
 }
 \author{
 \email{kylebario1@gmail.com}

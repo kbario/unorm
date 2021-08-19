@@ -4,8 +4,30 @@
 \alias{flip}
 \title{flipping spectra}
 \usage{
-flip(X, ppm, sh = c(3, 3.1))
+flip(X, ppm, shift = c(3, 3.1))
+}
+\arguments{
+\item{X}{The numerical matrix containing the NMR data you wish to check for orientation. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.}
+
+\item{ppm}{An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.}
+
+\item{shift}{The concatenated ppm values that define the lower and upper bounds of the creatinine signal. Default is c(3,3.1)}
+}
+\value{
+Returns the original X matrix but with all values with the correct sign.
 }
 \description{
-NMR urine spectra that are produced from a small number of scans are often incorrectly orientated due to the water signal. This function looks at the creatinine signal (ppm = 3.05) which is in all urine spectra and see if the value is positive or negative. For negative valued spectra, they are mulitplied by -1 and flipped to the correct orientation.
+Spectra produced from experiments with small scans can often appear upside-down. This function corrects this.
 }
+\details{
+NMR urine spectra that are produced from a small number of scans are often incorrectly orientated due to the water signal. This function looks at the creatinine signal (ppm = 3.05) which is in all urine spectra to see if the value is positive or negative. For negative valued spectra, they are mulitplied by -1 and flipped to the correct orientation.
+}
+\seealso{
+Other {preproc}: 
+\code{\link{noise}()},
+\code{\link{preprocessing}()}
+}
+\author{
+\email{kylebario1@gmail.com}
+}
+\concept{{preproc}}

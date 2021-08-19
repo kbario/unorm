@@ -4,7 +4,7 @@
 \alias{creNorm}
 \title{Creatinine Normalisation}
 \usage{
-creNorm(X, ppm, cre3 = c(3.043, 3.055), cre4 = c(4.05, 4.07))
+creNorm(X, ppm = NULL, cre3 = c(3, 3.1), cre4 = c(4, 4.1), err = 5)
 }
 \arguments{
 \item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables.}
@@ -62,6 +62,8 @@ creRatio <- cre$ratio
 More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
 
 Other {Attribute-Based}: 
+\code{\link{qNorm2}()},
+\code{\link{qNorm}()},
 \code{\link{roiNorm}()},
 \code{\link{taNorm}()}
 }

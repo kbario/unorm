@@ -4,7 +4,7 @@
 \alias{taNorm}
 \title{Total Area Normalisation}
 \usage{
-taNorm(X)
+taNorm(X, noi)
 }
 \arguments{
 \item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
@@ -63,6 +63,8 @@ dilf <- ta$dilf
 
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
+\code{\link{qNorm2}()},
+\code{\link{qNorm}()},
 \code{\link{roiNorm}()}
 }
 \author{

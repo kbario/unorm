@@ -6,31 +6,29 @@
 \usage{
 hmNorm(
   X,
-  ppm,
-  noi = c(10, 11),
-  intensity_binwidth = 0.1,
-  alpha_from = 0.5,
-  alpha_to = 1.5,
-  alpha_n = 101,
-  use_median = F
+  noi,
+  int_binwid = 0.1,
+  alpha = c(0.1, 2),
+  use_median = NULL,
+  tol = 1e-05
 )
 }
 \arguments{
 \item{X}{A numerical matrix containing the NMR spectra to be normalised. Rows should be the spectra and columns being the chemical shift variables}
 
-\item{ppm}{A numerical array holding the chemical shift values of the X matrix. Should be column matched to X provide.}
+\item{noi}{The array of maximum noise estimations produced from the function \code{\link[=noise]{noise()}} or provided by the user. Must match X rows.}
 
-\item{noi}{The concatenated ppm values defining the lower and upper chemical shift values of the noise. There should be \strong{no} signal between these chemical shift values. Also be sure to have not cut out these regions of noise in the \code{\link[=preprocessing]{preprocessing()}} function.}
-
-\item{intensity_binwidth}{This argument dictates the width of the bins. The average span of intensities is from \code{10}-\code{30}, meaning that an \code{intensity_binwidth} of \code{0.1} would give you 200 bins.}
-
-\item{alpha_from}{\code{alpha} is the scaling factor that the experiment histograms will be scaled with. \code{alpha_from} defines what the lowest value of \code{alpha} will be. Can be as low as \code{0.1} but \code{0.5} is default. Consider how much dilution variation there is in your samples before setting \code{alpha_from} extremely low, the more \code{alpha}s to test, the longer the computation time will be.}
-
-\item{alpha_to}{This defines the largest value of \code{alpha}. Default is \verb{1.5.} As above, consider the dilution variation of the samples. The larger \code{alpha_to} is the longer the computation time.}
-
-\item{alpha_n}{The number of \code{alpha}s you wish to test. \code{alpha_n}s default is \code{101} which will give you \code{alpha}s incrementing by \verb{0.5.} The larger \code{alpha_n}, the longer the computing will take and more computing power you will need.}
+\item{int_binwid}{This argument dictates the width of the bins. The average span of intensities is from \code{10}-\code{30}, meaning that an \code{intensity_binwidth} of \code{0.1} would give you 200 bins.}
 
 \item{use_median}{This argument dictates whether the function will calculate the median and use that as the reference spectrum or not. If set to \code{FALSE}, the first sample will be used as the reference. This practice is outlined in the methods paper (see 'See also')}
+
+\item{ppm}{A numerical array holding the chemical shift values of the X matrix. Should be column matched to X provide.}
+
+\item{a_from}{\code{alpha} is the scaling factor that the experiment histograms will be scaled with. \code{alpha_from} defines what the lowest value of \code{alpha} will be. Can be as low as \code{0.1} but \code{0.5} is default. Consider how much dilution variation there is in your samples before setting \code{alpha_from} extremely low, the more \code{alpha}s to test, the longer the computation time will be.}
+
+\item{a_to}{This defines the largest value of \code{alpha}. Default is \verb{1.5.} As above, consider the dilution variation of the samples. The larger \code{alpha_to} is the longer the computation time.}
+
+\item{a_size}{The number of \code{alpha}s you wish to test. \code{alpha_n}s default is \code{101} which will give you \code{alpha}s incrementing by \verb{0.5.} The larger \code{alpha_n}, the longer the computing will take and more computing power you will need.}
 }
 \value{
 A list with:
