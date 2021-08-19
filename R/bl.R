@@ -12,7 +12,7 @@
 bl <- function(X, lambda = 1e+07, it_max = 30)
 {
   if (any(is.na(X))) {
-    message("Replacing NA's in X with zeros")
+    cat("\033[0;33mReplacing NA's in X with zeros... \033[0m")
     X[is.na(X)]=0
   }
   if (is.null(ncol(X))){
