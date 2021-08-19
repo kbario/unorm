@@ -97,7 +97,7 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
   # baseline correct the spectra
   if (baseline){
     cat('\033[0;34mPerforming baseline correction... \033[0m')
-    X <- bcor(Xr)
+    X <- bl(Xr)
     cat('\033[1;32mDone.\n\033[0m')
   }else{
     cat('\033[1;33mNo baseline performed.\n\033[0m')
