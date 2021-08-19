@@ -4,13 +4,19 @@
 \alias{shift_pickr}
 \title{Peak-Picking}
 \usage{
-shift_pickr(X, ppm = NULL, search = c(3, 3.1), pm = 0.005)
+shift_pickr(X, ppm = NULL, sh = c(3, 3.1), pm = 0.005)
 }
 \arguments{
-\item{shift}{}
+\item{X}{The X array or matrix you want to pick the peak of}
+
+\item{ppm}{The column matched ppm variable to your X}
+
+\item{sh}{The chemical \strong{sh}ift region you want to search}
+
+\item{pm}{The amount you want to add to each side of the peak}
 }
 \value{
-
+The ppm variables that match the peak you are searching for
 }
 \description{
 Peak-Picking

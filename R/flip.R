@@ -8,7 +8,6 @@
 #' @return Returns the original X matrix but with all values with the correct sign.
 #' @author \email{kylebario1@@gmail.com}
 #' @example
-#' Xf <- flip(X, ppm)
 #' @importFrom metabom8 get_idx
 #' @export
 
