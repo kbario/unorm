@@ -85,14 +85,9 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
   DfX$names <- 1:(length(rownames(X)))
   DfX$orig_names <- rownames(X)
 
-  #calculating the noise
-  cat('\033[0;34mCalculating Noise Estimations... \033[0m')
-  noi <- noise(X_OG, ppm_OG, shift = c(9.5,11), sd_mult = 5)
-  cat('\033[1;32mDone.\n\033[0m')
-
   #remove regions
   cat('\033[0;34mRemoving non-quantative regions... \033[0m')
-  idx_rm <- c(get_idx(range = c(min(ppm), lowCut), ppm), get_idx(range = watCut, ppm), get_idx(range = ureCut, ppm), get_idx(range = c(uppCut, max(ppm)), ppm))
+  idx_rm <- c(get_idx(range = c(min(ppm), lowCut), ppm), get_idx(range = watCut, ppm), get_idx(range = ureCut, ppm))
   # remove these indexes
   Xr <- Xc[,-idx_rm]
   ppm <- ppm[-idx_rm]
@@ -107,6 +102,14 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
     cat('\033[1;33mNo baseline performed.\n\033[0m')
     X <- Xr
   }
+
+  #calculating the noise
+  cat('\033[0;34mCalculating Noise Estimations... \033[0m')
+  noi <- noise(X, ppm, shift = c(9.5,11), sd_mult = 5)
+  cat('\033[1;32mDone.\n\033[0m')
+
+  X <- X[,-get_idx(range = c(uppCut, max(ppm)), ppm)]
+  ppm <- ppm[-get_idx(range = c(uppCut, max(ppm)), ppm)]
 
   #check meta and X have same rows
   cat('\033[0;34mChecking that X and meta rows match... \033[0m')
