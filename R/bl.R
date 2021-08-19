@@ -19,7 +19,7 @@ bl <- function(X, lambda = 1e+07, it_max = 30)
     X <- t(X)
   }
   Xb <- t(apply(X, 1, function(x) {
-    x - asysm(x, maxit = iter_max, lambda = lambda)
+    x - asysm(x, maxit = it_max, lambda = lambda)
   }))
   return(Xb)
 }
