@@ -38,7 +38,7 @@
 #' Xo <- prepro$Xo
 #' ppmo <- prepre$ppmo
 
-preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5){
+preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5, noi_sh = c(9.5, 11)){
   #relabel X and ppm
   X_OG <- X
   ppm_OG <- ppm
@@ -105,7 +105,7 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
 
   #calculating the noise
   cat('\033[0;34mCalculating Noise Estimations... \033[0m')
-  noi <- noise(X, ppm, shift = c(9.5,11), sd_mult = 5)
+  noi <- noise(X, ppm, shift = c(noi_sh[1], noi_sh[2]), sd_mult = 5)
   cat('\033[1;32mDone.\n\033[0m')
 
   X <- X[,-get_idx(range = c(uppCut, max(ppm)), ppm)]
