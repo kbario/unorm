@@ -6,7 +6,7 @@
 #' @param npoints num, desired number of bins per spectrum or NULL in case  \code{width} is specified
 #' @details #' Equidistant binning of spectra. Specify either \code{width} or \code{npoints} argument - if both are provided, \code{npoints} is used. Input argument \code{ppm} can be omitted if chemical shift information is encoded in the column names of the NMR matrix \code{X}.
 #' @return Numeric matrix with spectra in rows and chemical shift variables in columns.
-#' @import stats approxfun
+#' @importFrom stats approxfun
 #' @author Torben Kimhofer \email{torben.kimhofer@@murdoch.edu.au}
 #' @examples
 #' load(covid)

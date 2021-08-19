@@ -5,6 +5,7 @@
 #' @param it_max The maximum iterations before bl stops
 #'
 #' @return A matrix containing spectra with corrected baselines
+#' @importFrom ptw asysm
 #' @export
 #'
 #' @examples
