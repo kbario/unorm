@@ -68,13 +68,13 @@ creNorm <- function(X, ppm = NULL, cre3 = c(3, 3.1), cre4 = c(4, 4.1), err = 5){
   }
   if (!is.null(dim(X))){
     cat('\033[0;34mCalculating Dilfs... \033[0m')
-    #if (is.null(ppm)){
-     # p <- as.numeric(colnames(X))
-    #} else {
+    if (is.null(ppm)){
+      p <- as.numeric(colnames(X))
+    } else {
       p <- ppm
     #}
-    i3 <- shift_pickr(X, ppm, cre3, 0.005)
-    i4 <- shift_pickr(X, ppm, cre4, 0.005)
+    i3 <- shift_pickr(X, p, cre3, 0.005)
+    i4 <- shift_pickr(X, p, cre4, 0.005)
     a3 <- apply(X,1,function(i){sum(i[i3])})
     a4 <- apply(X,1,function(i){sum(i[i4])})
     r <- a3/a4
