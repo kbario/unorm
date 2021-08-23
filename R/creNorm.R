@@ -80,7 +80,7 @@ creNorm <- function(X, ppm = NULL, cre3 = c(3, 3.1), cre4 = c(4, 4.1), err = 5){
       a <- sum(X[i,j])
       return(a)
       })
-    a4 <- sapply(1:nrow(X),function(j){
+    a4 <- sapply(1:nrow(X),function(i){
       j <- i4[i,]
       a <- sum(X[i,j])
       return(a)
