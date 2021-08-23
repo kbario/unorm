@@ -72,7 +72,7 @@ creNorm <- function(X, ppm = NULL, cre3 = c(3, 3.1), cre4 = c(4, 4.1), err = 5){
       p <- as.numeric(colnames(X))
     } else {
       p <- ppm
-    #}
+    }
     i3 <- shift_pickr(X, p, cre3, 0.005)
     i4 <- shift_pickr(X, p, cre4, 0.005)
     a3 <- sapply(1:nrow(X),function(i){
