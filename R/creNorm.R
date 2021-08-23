@@ -75,14 +75,14 @@ creNorm <- function(X, ppm = NULL, cre3 = c(3, 3.1), cre4 = c(4, 4.1), err = 5){
     #}
     i3 <- shift_pickr(X, p, cre3, 0.005)
     i4 <- shift_pickr(X, p, cre4, 0.005)
-    a3 <- sapply(1:nrow(X),function(j){
-      i <- i3[i,]
-      a <- sum(X[j,i])
+    a3 <- sapply(1:nrow(X),function(i){
+      j <- i3[i,]
+      a <- sum(X[i,j])
       return(a)
       })
     a4 <- sapply(1:nrow(X),function(j){
-      i <- i4[i,]
-      a <- sum(X[j,i])
+      j <- i4[i,]
+      a <- sum(X[i,j])
       return(a)
     })
     r <- a3/a4
