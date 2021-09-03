@@ -1,7 +1,6 @@
 #' @title Maximum Noise Estimation
 #' @description This function estimates the maximum level of noise for each spectra in an X matrix. The output of this function can be used as the noi variable in both [pqNorm()] and [hmNorm()]
 #' @details This function uses a combination of the functions mean and sd to find the standard deviation of the noise region as well as it's mean. The standard deviation is multiplied by five to capture any extreme outliers and added to the mean noise level to produce an estimation of maximum noise. The output of this function is intended for use in both the [pqNorm()] and [hmNorm()] functions so they can remove the noise from the spectra and produce clear results.
-#' @family {preproc}
 #' @param X_OG The numerical matrix containing the NMR data you wish to estimate the noise of. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.
 #' @param ppm_OG An array of chemical shift variables. ppm should be column matched to the X matrix you using.
 #' @param shift The concatenated ppm values that define the lower and upper bounds of the noise region. Default is c(9.5,11)

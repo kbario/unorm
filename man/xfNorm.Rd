@@ -55,7 +55,8 @@ xfNorm(X, c(300, 300))
 
 Other {Reference-Based}: 
 \code{\link{hmNorm}()},
-\code{\link{pqNorm}()}
+\code{\link{pqNorm}()},
+\code{\link{qNorm2}()}
 }
 \author{
 \email{kylebario1@gmail.com}

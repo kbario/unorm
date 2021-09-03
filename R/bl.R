@@ -7,7 +7,7 @@
 #' @return A matrix containing spectra with corrected baselines
 #' @export
 #'
-#' @family {Data Minipulation}
+#' @family {Data_Manipulation}
 #'
 #' @examples
 #' path = system.file('extdata', package = 'unorm')

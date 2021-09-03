@@ -1,7 +1,7 @@
 #' @title Quantile Normalisation 2
 #' @description A method of NMR spectral normalisation where the maximum intensities
 #' @details The method orders spectral intensities smallest to largest and finds the mean of each 'quantile' (i.e., the mean of the maximum intensities, the mean of the 2nd maximum intensities). These means are then reassigned back to the ppm that first housed the maximum, 2nd maximum, etc., and PQN is performed on each spectrum using its quantile normalised self. The calculated dilution factor is then used to normalise the original spectrum to reduce manipulation of peak shapes.
-#' @family {Attribute-Based}
+#' @family {Reference-Based}
 #' @param X A numerical matrix containing the NMR spectra to be normalised. Rows should be the spectra and columns being the chemical shift variables
 #' @param uv_used The **u**ni**v**ariate measure **used** to calculate the dilution coefficient. `mode` or `median` are accepted
 #' @return This function returns a list with:

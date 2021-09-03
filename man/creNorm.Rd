@@ -70,7 +70,6 @@ cat(dilf_cre)
 More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
 
 Other {Attribute-Based}: 
-\code{\link{qNorm2}()},
 \code{\link{qNorm}()},
 \code{\link{roiNorm}()},
 \code{\link{taNorm}()},

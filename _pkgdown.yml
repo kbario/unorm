@@ -1,8 +1,16 @@
 reference:
 - title: Preprocessing Functions
-  desc: Preprocesses urine spectra for streamlined data analysis
+  desc: The streamlining function the combines all data manipulation and estimation functions into one
 - contents:
   - has_concept('preproc')
+- subtitle: Data Manipulation Functions
+  desc: The functions used in Preproc to maninpulate the spectra
+- contents:
+  - has_concept('Data_Manipulation')
+- subtitle: Estimation Functions
+  desc: Functions used to estimate properties of the spectra
+- contents:
+  - has_concept('estimation')
 - title: Normalisation Functions
 - subtitle: Reference-Based
   desc:  Normalises spectra in relation to a reference

@@ -78,6 +78,7 @@ cat(dilf_hm)
 
 Other {Reference-Based}: 
 \code{\link{pqNorm}()},
+\code{\link{qNorm2}()},
 \code{\link{xfNorm}()}
 }
 \author{

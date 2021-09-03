@@ -27,16 +27,11 @@ path = system.file('extdata', package = 'unorm')
 Xf <- flip(X, ppm)
 }
 \seealso{
-Other {preproc}: 
-\code{\link{noise}()}
-
-Other {Data Minipulation}: 
+Other {Data_Manipulation}: 
 \code{\link{binin}()},
-\code{\link{bl}()},
-\code{\link{preprocessing}()}
+\code{\link{bl}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
-\concept{{Data Minipulation}}
-\concept{{preproc}}
+\concept{{Data_Manipulation}}

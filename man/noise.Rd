@@ -30,9 +30,6 @@ noi <- noise(X, c(9.5,11))
 \seealso{
 Noise estimation methodology was adapted from histogram matching methods paper which can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 
-Other {preproc}: 
-\code{\link{flip}()}
-
 Other {estimation}: 
 \code{\link{shift_pickr}()}
 }
@@ -40,4 +37,3 @@ Other {estimation}:
 \email{kylebario1@gmail.com}
 }
 \concept{{estimation}}
-\concept{{preproc}}

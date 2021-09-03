@@ -112,7 +112,7 @@
     <p>Total area normalisation (TA) scales spectra so that they all have a total integral of one</p>
     </div>
 
-    <pre class="usage"><span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>noi</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -120,6 +120,10 @@
     <tr>
       <th>X</th>
       <td><p>A numerical matrix with rows being the spectra and columns being the chemical shift variables</p></td>
+    </tr>
+    <tr>
+      <th>noi</th>
+      <td><p>Takes an array that is row matched to the X matrix you are normalising with the values equaling the maximum noise estimation for each spectra respectively.</p></td>
     </tr>
     </table>
 
@@ -175,16 +179,20 @@
     <div class='dont-index'><p><a href='https://doi.org/10.1021/ac051632c'>https://doi.org/10.1021/ac051632c</a></p>
 <p>Other Attribute-Based: 
 <code><a href='creNorm.html'>creNorm</a>()</code>,
-<code><a href='roiNorm.html'>roiNorm</a>()</code></p></div>
+<code><a href='qNorm.html'>qNorm</a>()</code>,
+<code><a href='roiNorm.html'>roiNorm</a>()</code>,
+<code><a href='vecNorm.html'>vecNorm</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p><a href='mailto:kylebario1@gmail.com'>kylebario1@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='va'>ta</span> <span class='op'>&lt;-</span> <span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>
-<span class='va'>Xn</span> <span class='op'>&lt;-</span> <span class='va'>ta</span><span class='op'>$</span><span class='va'>Xn</span>
-<span class='va'>dilf</span> <span class='op'>&lt;-</span> <span class='va'>ta</span><span class='op'>$</span><span class='va'>dilf</span>
-</pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>noi</span><span class='op'>)</span>
+<span class='fu'>taNorm</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>noi</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'>Calculating Dilfs... </span><span style='color: #00BB00; font-weight: bold;'>Done.
+#&gt; </span><span style='color: #0000BB;'>Normalising X... </span><span style='color: #00BB00; font-weight: bold;'>Done.
+#&gt; </span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>dilf_ta</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 1260921231 664071027</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

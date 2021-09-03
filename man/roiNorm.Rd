@@ -56,7 +56,6 @@ A description of Region of Interest Normalisation can be found in this paper: \u
 
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
-\code{\link{qNorm2}()},
 \code{\link{qNorm}()},
 \code{\link{taNorm}()},
 \code{\link{vecNorm}()}

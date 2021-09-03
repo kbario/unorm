@@ -65,7 +65,6 @@ cat(dilf_ta)
 
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
-\code{\link{qNorm2}()},
 \code{\link{qNorm}()},
 \code{\link{roiNorm}()},
 \code{\link{vecNorm}()}

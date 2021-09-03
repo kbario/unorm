@@ -11,7 +11,7 @@
 #' @examples
 #' data(X, ppm)
 #' X_bin <- binin(X, ppm, npoints = 1000)
-#' @family {Data Minipulation}
+#' @family {Data_Manipulation}
 
 binin <- function (X, ppm, width = NULL, npoints=NULL){
   if (is.null(ppm) && (is.matrix(X) | is.data.frame(X)) &&

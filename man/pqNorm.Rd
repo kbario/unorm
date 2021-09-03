@@ -84,6 +84,7 @@ The methods paper first describing PQN can be found here: \url{https://doi.org/1
 
 Other {Reference-Based}: 
 \code{\link{hmNorm}()},
+\code{\link{qNorm2}()},
 \code{\link{xfNorm}()}
 }
 \author{

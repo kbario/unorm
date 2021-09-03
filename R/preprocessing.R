@@ -1,6 +1,6 @@
 #' @title Standard 1D NMR Preprocessing
-#' @description [preprocessing()] is a function aimed at streamlining the preprocessing stage of analysing NMR spectra. It harnesses the power of the package `metabom8` to quickly and easily process spectra.
-#' @details [preprocessing()] is powered by the `metabom8` package and is simply a tool to harness and streamline functions in `metabom8` when preprocessing NMR spectra, not replace them.
+#' @description [Preproc()] is a function aimed at streamlining the preprocessing stage of analysing NMR spectra. It harnesses the power of the package `metabom8` to quickly and easily process spectra.
+#' @details [Preproc()] is powered by the `metabom8` package and is simply a tool to harness and streamline functions in `metabom8` when preprocessing NMR spectra, not replace them.
 #' # The Pipeline
 #' This function streamlines the preprocessing of NMR urine spectra by combining a range of functions. It:
 #' 1. Orientates the spectra correctly,
@@ -30,11 +30,11 @@
 #' * Following the example below will extract the results quickly and easily.
 #' @export
 #' @author \email{kylebario1@@gmail.com}
-#' @family {Data Minipulation}
+#' @family {preproc}
 #' @examples
 #' path = system.file('extdata', package = 'unorm')
 
-preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5, noi_sh = c(9.5, 11)){
+Preproc <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5, noi_sh = c(9.5, 11)){
   #relabel X and ppm
   X_OG <- X
   ppm_OG <- ppm

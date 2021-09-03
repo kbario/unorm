@@ -32,7 +32,6 @@ The methods paper that describes quantile normalisation: \url{https://doi.org/10
 
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
-\code{\link{qNorm2}()},
 \code{\link{roiNorm}()},
 \code{\link{taNorm}()},
 \code{\link{vecNorm}()}

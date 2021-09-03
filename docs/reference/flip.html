@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="flipping spectra — flip" />
-<meta property="og:description" content="NMR urine spectra that are produced from a small number of scans are often incorrectly orientated due to the water signal. This function looks at the creatinine signal (ppm = 3.05) which is in all urine spectra and see if the value is positive or negative. For negative valued spectra, they are mulitplied by -1 and flipped to the correct orientation." />
+<meta property="og:description" content="Spectra produced from experiments with small scans can often appear upside-down. This function corrects this." />
 
 
 
@@ -109,13 +109,47 @@
     </div>
 
     <div class="ref-description">
-    <p>NMR urine spectra that are produced from a small number of scans are often incorrectly orientated due to the water signal. This function looks at the creatinine signal (ppm = 3.05) which is in all urine spectra and see if the value is positive or negative. For negative valued spectra, they are mulitplied by -1 and flipped to the correct orientation.</p>
+    <p>Spectra produced from experiments with small scans can often appear upside-down. This function corrects this.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flip</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, sh <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>3.1</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>flip</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span>, shift <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>3.1</span><span class='op'>)</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>X</th>
+      <td><p>The numerical matrix containing the NMR data you wish to check for orientation. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.</p></td>
+    </tr>
+    <tr>
+      <th>ppm</th>
+      <td><p>An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.</p></td>
+    </tr>
+    <tr>
+      <th>shift</th>
+      <td><p>The concatenated ppm values that define the lower and upper bounds of the creatinine signal. Default is c(3,3.1)</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>Returns the original X matrix but with all values with the correct sign.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>NMR urine spectra that are produced from a small number of scans are often incorrectly orientated due to the water signal. This function looks at the creatinine signal (ppm = 3.05) which is in all urine spectra to see if the value is positive or negative. For negative valued spectra, they are mulitplied by -1 and flipped to the correct orientation.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Data_Manipulation: 
+<code><a href='binin.html'>binin</a>()</code>,
+<code><a href='bl.html'>bl</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p><a href='mailto:kylebario1@gmail.com'>kylebario1@gmail.com</a></p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>path</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>'extdata'</span>, package <span class='op'>=</span> <span class='st'>'unorm'</span><span class='op'>)</span>
+<span class='va'>Xf</span> <span class='op'>&lt;-</span> <span class='fu'>flip</span><span class='op'>(</span><span class='va'>X</span>, <span class='va'>ppm</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

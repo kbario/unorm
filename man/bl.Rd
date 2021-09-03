@@ -24,9 +24,8 @@ path = system.file('extdata', package = 'unorm')
 X_bl <- bl(X)
 }
 \seealso{
-Other {Data Minipulation}: 
+Other {Data_Manipulation}: 
 \code{\link{binin}()},
-\code{\link{flip}()},
-\code{\link{preprocessing}()}
+\code{\link{flip}()}
 }
-\concept{{Data Minipulation}}
+\concept{{Data_Manipulation}}

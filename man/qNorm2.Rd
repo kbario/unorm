@@ -33,14 +33,12 @@ cat(dilf_q2)
 \seealso{
 The methods paper that describes quantile normalisation: \url{https://doi.org/10.1007/s11306-011-0350-z}
 
-Other {Attribute-Based}: 
-\code{\link{creNorm}()},
-\code{\link{qNorm}()},
-\code{\link{roiNorm}()},
-\code{\link{taNorm}()},
-\code{\link{vecNorm}()}
+Other {Reference-Based}: 
+\code{\link{hmNorm}()},
+\code{\link{pqNorm}()},
+\code{\link{xfNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
-\concept{{Attribute-Based}}
+\concept{{Reference-Based}}

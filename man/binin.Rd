@@ -29,12 +29,11 @@ data(X, ppm)
 X_bin <- binin(X, ppm, npoints = 1000)
 }
 \seealso{
-Other {Data Minipulation}: 
+Other {Data_Manipulation}: 
 \code{\link{bl}()},
-\code{\link{flip}()},
-\code{\link{preprocessing}()}
+\code{\link{flip}()}
 }
 \author{
 Torben Kimhofer \email{torben.kimhofer@murdoch.edu.au}
 }
-\concept{{Data Minipulation}}
+\concept{{Data_Manipulation}}

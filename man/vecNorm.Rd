@@ -28,7 +28,6 @@ The methods paper that describes this method of normalisation can be found here:
 
 Other {Attribute-Based}: 
 \code{\link{creNorm}()},
-\code{\link{qNorm2}()},
 \code{\link{qNorm}()},
 \code{\link{roiNorm}()},
 \code{\link{taNorm}()}
