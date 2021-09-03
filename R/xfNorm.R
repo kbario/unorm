@@ -20,9 +20,8 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @family {Reference-Based}
 #' @examples
-#' xf <- xfNorm(X, osmo)
-#' Xn <- xf$Xn
-#' dilf <- xf$dilf
+#' data(X)
+#' xfNorm(X, c(300, 300))
 #' @export
 
 xfNorm <- function(X, xfactor){

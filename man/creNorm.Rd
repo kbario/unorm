@@ -14,6 +14,8 @@ creNorm(X, ppm = NULL, cre3 = c(3, 3.1), cre4 = c(4, 4.1), err = 5)
 \item{cre3}{A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 3.05 starts and ends.}
 
 \item{cre4}{A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 4.05 starts and ends.}
+
+\item{err}{The level of error given when calculating the creatinine peak ratios. interperted as a percentage (i.e., 5 = 5\%)}
 }
 \value{
 A list of:
@@ -53,10 +55,16 @@ Creatinine Normalisation (CN) is a useful method much like region of interest no
 }
 }
 \examples{
-cre <- creNorm(X, ppm)
-Xn <- cre$Xn
-dilf <- cre$dilf
-creRatio <- cre$ratio
+# When X contains multiple spectra, ppm is not required
+data(X)
+creNorm(X)
+cat(dilf_cre)
+
+# When X has only one spectrum, ppm is required
+data(X, ppm)
+creNorm(X[1,], ppm)
+cat(dilf_cre)
+
 }
 \seealso{
 More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
@@ -65,7 +73,8 @@ Other {Attribute-Based}:
 \code{\link{qNorm2}()},
 \code{\link{qNorm}()},
 \code{\link{roiNorm}()},
-\code{\link{taNorm}()}
+\code{\link{taNorm}()},
+\code{\link{vecNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}

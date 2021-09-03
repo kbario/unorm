@@ -77,19 +77,15 @@ This function streamlines the preprocessing of NMR urine spectra by combining a 
 }
 
 \examples{
-prepro <- preprocessing(X, ppm, meta, baseline = T, linewid = 0.8, lowCut = 0.5, uppCut = 9.5, watCut = c(4.7,4.85), ureCut = c(5.6,6))
-X <- prepro$X
-ppm <- prepro$ppm
-linewidth <- prepro$lineWidth
-Xo <- prepro$Xo
-ppmo <- prepre$ppmo
+path = system.file('extdata', package = 'unorm')
 }
 \seealso{
-Other {preproc}: 
-\code{\link{flip}()},
-\code{\link{noise}()}
+Other {Data Minipulation}: 
+\code{\link{binin}()},
+\code{\link{bl}()},
+\code{\link{flip}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
-\concept{{preproc}}
+\concept{{Data Minipulation}}

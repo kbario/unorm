@@ -21,3 +21,15 @@ The ppm variables that match the peak you are searching for
 \description{
 Peak-Picking
 }
+\examples{
+data(X)
+idx <- shift_pickr(X[1,], ppm, sh = c(4,4.1), pm = 0.005)
+idx1 <- shift_pickr(X[2,], ppm, sh = c(4,4.1), pm = 0.01)
+plot(ppm[idx], X[1,idx], main = "Creatinine Peak 4.05", type = 'l', xlim = c(4.05, 4.07))
+points(ppm[idx1], X[2,idx1], type = 'l', col = 'red')
+}
+\seealso{
+Other {estimation}: 
+\code{\link{noise}()}
+}
+\concept{{estimation}}

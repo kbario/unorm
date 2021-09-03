@@ -8,6 +8,8 @@ taNorm(X, noi)
 }
 \arguments{
 \item{X}{A numerical matrix with rows being the spectra and columns being the chemical shift variables}
+
+\item{noi}{Takes an array that is row matched to the X matrix you are normalising with the values equaling the maximum noise estimation for each spectra respectively.}
 }
 \value{
 A list of
@@ -54,9 +56,9 @@ Total area normalisation (TA) scales spectra so that they all have a total integ
 }
 }
 \examples{
-ta <- taNorm(X)
-Xn <- ta$Xn
-dilf <- ta$dilf
+data(X, noi)
+taNorm(X, noi)
+cat(dilf_ta)
 }
 \seealso{
 \url{https://doi.org/10.1021/ac051632c}
@@ -65,7 +67,8 @@ Other {Attribute-Based}:
 \code{\link{creNorm}()},
 \code{\link{qNorm2}()},
 \code{\link{qNorm}()},
-\code{\link{roiNorm}()}
+\code{\link{roiNorm}()},
+\code{\link{vecNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}

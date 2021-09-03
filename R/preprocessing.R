@@ -30,14 +30,9 @@
 #' * Following the example below will extract the results quickly and easily.
 #' @export
 #' @author \email{kylebario1@@gmail.com}
-#' @family {preproc}
+#' @family {Data Minipulation}
 #' @examples
-#' prepro <- preprocessing(X, ppm, meta, baseline = T, linewid = 0.8, lowCut = 0.5, uppCut = 9.5, watCut = c(4.7,4.85), ureCut = c(5.6,6))
-#' X <- prepro$X
-#' ppm <- prepro$ppm
-#' linewidth <- prepro$lineWidth
-#' Xo <- prepro$Xo
-#' ppmo <- prepre$ppmo
+#' path = system.file('extdata', package = 'unorm')
 
 preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibrant = 'tsp', lineWid = 1.0, lowCut = 0.25, watCut = c(4.5,5), ureCut = c(5.6,6), uppCut = 9.5, noi_sh = c(9.5, 11)){
   #relabel X and ppm
@@ -56,7 +51,7 @@ preprocessing <- function(X, ppm, meta, baseline = T, flip = F, cali = F, calibr
 
   #calibrate spectra to tsp
   if (cali){
-      cat('\033[0;34mCalibrating to', calibrant,"... ")
+      cat('\033[0;34mCalibrating to ', calibrant,"... ", sep = '')
       Xc <- calibrate(Xf, ppm, type = calibrant)
       cat('\033[1;32mDone.\n\033[0m')
     } else {

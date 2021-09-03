@@ -19,3 +19,14 @@ A matrix containing spectra with corrected baselines
 \description{
 Baseline Correction
 }
+\examples{
+path = system.file('extdata', package = 'unorm')
+X_bl <- bl(X)
+}
+\seealso{
+Other {Data Minipulation}: 
+\code{\link{binin}()},
+\code{\link{flip}()},
+\code{\link{preprocessing}()}
+}
+\concept{{Data Minipulation}}

@@ -5,10 +5,13 @@
 #' @param it_max The maximum iterations before bl stops
 #'
 #' @return A matrix containing spectra with corrected baselines
-#' @importFrom ptw asysm
 #' @export
 #'
+#' @family {Data Minipulation}
+#'
 #' @examples
+#' path = system.file('extdata', package = 'unorm')
+#' X_bl <- bl(X)
 bl <- function(X, lambda = 1e+07, it_max = 30)
 {
   if (any(is.na(X))) {
@@ -19,7 +22,7 @@ bl <- function(X, lambda = 1e+07, it_max = 30)
     X <- t(X)
   }
   Xb <- t(apply(X, 1, function(x) {
-    x - asysm(x, maxit = it_max, lambda = lambda)
+    x - ptw::asysm(x, maxit = it_max, lambda = lambda)
   }))
   return(Xb)
 }

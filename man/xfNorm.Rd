@@ -47,9 +47,8 @@ This function utilises an array of dilution coefficients acquired externally to 
 }
 }
 \examples{
-xf <- xfNorm(X, osmo)
-Xn <- xf$Xn
-dilf <- xf$dilf
+data(X)
+xfNorm(X, c(300, 300))
 }
 \seealso{
 \url{https://doi.org/10.1021/ac051632c}

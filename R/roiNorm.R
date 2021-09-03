@@ -12,8 +12,7 @@
 #' * Reference-based normalisations may provide more robust normalisation.
 #' @family {Attribute-Based}
 #' @param X A numerical matrix with rows being the spectra and columns being the chemical shift variables
-#' @param ppm A numerical array holding the chemical shift values of the X matrix
-#' @param shift The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).
+#' @param sh The numerical values defining the lower and upper regions of the Region of Interest. default = c(3,3.1).
 #' @return This function returns a list with:
 #' 1. The normalised X matrix, and
 #' 2. A numerical array of the corresponding dilution factors.
@@ -21,15 +20,15 @@
 #' @seealso A description of Region of Interest Normalisation can be found in this paper: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#' roy <- roiNorm(X, ppm, shift = c(2,2.3))
-#' Xn <- roy$Xn
-#' dilf <- roy$dilf
+#' data(X)
+#' roiNorm(X, sh = c(1.5,2))
+#' cat(dilf_roi)
 #' @importFrom metabom8 get_idx
 #' @export
 
-roiNorm <- function(X, shift = c(2.5,2.75)){
+roiNorm <- function(X, sh = c(2.5,2.75)){
   p <- as.numeric(colnames(X))
-  i <- get_idx(shift, p)
+  i <- get_idx(sh, p)
   cat('\033[0;34mCalculating Dilfs... \033[0m')
   dilf <- sapply(1:nrow(X), function(y){
     (sum(X[y,i]))

@@ -7,8 +7,14 @@
 #'
 #' @return The ppm variables that match the peak you are searching for
 #' @export
+#' @family {estimation}
 #'
 #' @examples
+#' data(X)
+#' idx <- shift_pickr(X[1,], ppm, sh = c(4,4.1), pm = 0.005)
+#' idx1 <- shift_pickr(X[2,], ppm, sh = c(4,4.1), pm = 0.01)
+#' plot(ppm[idx], X[1,idx], main = "Creatinine Peak 4.05", type = 'l', xlim = c(4.05, 4.07))
+#' points(ppm[idx1], X[2,idx1], type = 'l', col = 'red')
 shift_pickr <- function(X, ppm = NULL, sh = c(3,3.1), pm = 0.005){
   if (is.null(dim(X)) & is.null(length(X))){
     stop("X is neither a spectrum or a matrix, please provide an approproiate X.")

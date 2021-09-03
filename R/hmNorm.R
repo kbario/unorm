@@ -15,13 +15,11 @@
 #' * Studies have also found that HM does not handle noise well and does not recover signal like many other normalisation methods do. (see 'See also')
 #' @family {Reference-Based}
 #' @param X A numerical matrix containing the NMR spectra to be normalised. Rows should be the spectra and columns being the chemical shift variables
-#' @param ppm A numerical array holding the chemical shift values of the X matrix. Should be column matched to X provide.
 #' @param noi The array of maximum noise estimations produced from the function [noise()] or provided by the user. Must match X rows.
 #' @param int_binwid This argument dictates the width of the bins. The average span of intensities is from `10`-`30`, meaning that an `intensity_binwidth` of `0.1` would give you 200 bins.
-#' @param a_from `alpha` is the scaling factor that the experiment histograms will be scaled with. `alpha_from` defines what the lowest value of `alpha` will be. Can be as low as `0.1` but `0.5` is default. Consider how much dilution variation there is in your samples before setting `alpha_from` extremely low, the more `alpha`s to test, the longer the computation time will be.
-#' @param a_to This defines the largest value of `alpha`. Default is `1.5.` As above, consider the dilution variation of the samples. The larger `alpha_to` is the longer the computation time.
-#' @param a_size The number of `alpha`s you wish to test. `alpha_n`s default is `101` which will give you `alpha`s incrementing by `0.5.` The larger `alpha_n`, the longer the computing will take and more computing power you will need.
 #' @param use_median This argument dictates whether the function will calculate the median and use that as the reference spectrum or not. If set to `FALSE`, the first sample will be used as the reference. This practice is outlined in the methods paper (see 'See also')
+#' @param alpha The lower and upper bounds that the golden selection search will search between
+#' @param tol This defines the tolerance or level of precision the golden selection search will search until. (i.e., it will search until the bounds are `tol` distance apart)
 #' @return A list with:
 #' 1. The normalised X matrix in the first list element, and
 #' 2. An array of the corresponding dilution factors.
@@ -31,9 +29,10 @@
 #' * The paper discussing HM limitations with noise can be found here: \url{http://dx.doi.org/10.1007/s11306-018-1400-6}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#'  hm <- hmNorm(X, ppm)
-#'  Xn <- hm$Xn
-#'  dilf <- hm$alpha
+#' # it is mandatory to fill args X, noi, and use_median for `hmNorm()` to work.
+#' data(X, noi)
+#' hmNorm(X, noi, use_median = TRUE, alpha = c(0.1, 2.5))
+#' cat(dilf_hm)
 #' @importFrom stats sd
 #' @importFrom graphics hist
 #' @importFrom stats median

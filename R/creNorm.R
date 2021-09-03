@@ -16,6 +16,7 @@
 #' @param ppm A numerical array holding the chemical shift values of the X matrix.
 #' @param cre3 A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 3.05 starts and ends.
 #' @param cre4 A concatenated numerical value of the lower and upper ppm values where the creatinine peak at 4.05 starts and ends.
+#' @param err The level of error given when calculating the creatinine peak ratios. interperted as a percentage (i.e., 5 = 5%)
 #' @return A list of:
 #' 1. The normalised X matrix,
 #' 2. A numerical array of the corresponding dilution factors, and
@@ -24,10 +25,16 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @seealso More on the methodology of CN and issue with using it are outlined here: \url{https://doi.org/10.1021/ac051632c}
 #' @examples
-#' cre <- creNorm(X, ppm)
-#' Xn <- cre$Xn
-#' dilf <- cre$dilf
-#' creRatio <- cre$ratio
+#' # When X contains multiple spectra, ppm is not required
+#' data(X)
+#' creNorm(X)
+#' cat(dilf_cre)
+#'
+#' # When X has only one spectrum, ppm is required
+#' data(X, ppm)
+#' creNorm(X[1,], ppm)
+#' cat(dilf_cre)
+#'
 #' @export
 #' @importFrom metabom8 get_idx
 

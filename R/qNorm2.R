@@ -1,10 +1,9 @@
 #' @title Quantile Normalisation 2
 #' @description A method of NMR spectral normalisation where the maximum intensities
-#' @details ### How It Works:
-#' ### Advantages:
-#' ### Limitations:
+#' @details The method orders spectral intensities smallest to largest and finds the mean of each 'quantile' (i.e., the mean of the maximum intensities, the mean of the 2nd maximum intensities). These means are then reassigned back to the ppm that first housed the maximum, 2nd maximum, etc., and PQN is performed on each spectrum using its quantile normalised self. The calculated dilution factor is then used to normalise the original spectrum to reduce manipulation of peak shapes.
 #' @family {Attribute-Based}
 #' @param X A numerical matrix containing the NMR spectra to be normalised. Rows should be the spectra and columns being the chemical shift variables
+#' @param uv_used The **u**ni**v**ariate measure **used** to calculate the dilution coefficient. `mode` or `median` are accepted
 #' @return This function returns a list with:
 #' 1. The normalised X matrix based on the calculated dilf in the first element,
 #' 2. The quantile normalised X matrix in the second element, and
@@ -12,10 +11,9 @@
 #' @seealso The methods paper that describes quantile normalisation: \url{https://doi.org/10.1007/s11306-011-0350-z}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#' Xqn <- qNorm(X)
-#' Xn <- Xqn$Xn
-#' Xq <- Xqn$Xq
-#' qDilf <- Xqn$dilf
+#' data(X)
+#' qNorm2(X)
+#' cat(dilf_q2)
 #' @export
 
 qNorm2 <- function(X, uv_used = 'mode'){

@@ -7,7 +7,10 @@
 #' @param shift The concatenated ppm values that define the lower and upper bounds of the creatinine signal. Default is c(3,3.1)
 #' @return Returns the original X matrix but with all values with the correct sign.
 #' @author \email{kylebario1@@gmail.com}
-#' @example
+#' @family {Data Minipulation}
+#' @examples
+#' path = system.file('extdata', package = 'unorm')
+#' Xf <- flip(X, ppm)
 #' @importFrom metabom8 get_idx
 #' @export
 

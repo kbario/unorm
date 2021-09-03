@@ -13,6 +13,7 @@
 #' noi <- noise(X, c(9.5,11))
 #' @importFrom metabom8 get_idx
 #' @importFrom stats sd
+#' @family {estimation}
 #' @export
 
 noise <- function(X_OG, ppm_OG, shift = c(9.5,11), sd_mult = 5){

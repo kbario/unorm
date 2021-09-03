@@ -20,15 +20,11 @@ hmNorm(
 
 \item{int_binwid}{This argument dictates the width of the bins. The average span of intensities is from \code{10}-\code{30}, meaning that an \code{intensity_binwidth} of \code{0.1} would give you 200 bins.}
 
+\item{alpha}{The lower and upper bounds that the golden selection search will search between}
+
 \item{use_median}{This argument dictates whether the function will calculate the median and use that as the reference spectrum or not. If set to \code{FALSE}, the first sample will be used as the reference. This practice is outlined in the methods paper (see 'See also')}
 
-\item{ppm}{A numerical array holding the chemical shift values of the X matrix. Should be column matched to X provide.}
-
-\item{a_from}{\code{alpha} is the scaling factor that the experiment histograms will be scaled with. \code{alpha_from} defines what the lowest value of \code{alpha} will be. Can be as low as \code{0.1} but \code{0.5} is default. Consider how much dilution variation there is in your samples before setting \code{alpha_from} extremely low, the more \code{alpha}s to test, the longer the computation time will be.}
-
-\item{a_to}{This defines the largest value of \code{alpha}. Default is \verb{1.5.} As above, consider the dilution variation of the samples. The larger \code{alpha_to} is the longer the computation time.}
-
-\item{a_size}{The number of \code{alpha}s you wish to test. \code{alpha_n}s default is \code{101} which will give you \code{alpha}s incrementing by \verb{0.5.} The larger \code{alpha_n}, the longer the computing will take and more computing power you will need.}
+\item{tol}{This defines the tolerance or level of precision the golden selection search will search until. (i.e., it will search until the bounds are \code{tol} distance apart)}
 }
 \value{
 A list with:
@@ -69,9 +65,10 @@ Histogram Matching (HM) is a reference based normalisation that aims to match th
 }
 }
 \examples{
- hm <- hmNorm(X, ppm)
- Xn <- hm$Xn
- dilf <- hm$alpha
+# it is mandatory to fill args X, noi, and use_median for `hmNorm()` to work.
+data(X, noi)
+hmNorm(X, noi, use_median = TRUE, alpha = c(0.1, 2.5))
+cat(dilf_hm)
 }
 \seealso{
 \itemize{

@@ -16,6 +16,7 @@
 #' * For instance, some spectra have large peaks created by drug metabolites, etc., which increase the total area of the spectrum.
 #' * This large total area will then dramatically down scale spectra and give misleading results.
 #' @param X A numerical matrix with rows being the spectra and columns being the chemical shift variables
+#' @param noi Takes an array that is row matched to the X matrix you are normalising with the values equaling the maximum noise estimation for each spectra respectively.
 #' @return A list of
 #' 1. The normalised X matrix in the first list element, and
 #' 2. A numerical array of the corresponding dilution factors.
@@ -24,9 +25,9 @@
 #' @author \email{kylebario1@@gmail.com}
 #' @family {Attribute-Based}
 #' @examples
-#' ta <- taNorm(X)
-#' Xn <- ta$Xn
-#' dilf <- ta$dilf
+#' data(X, noi)
+#' taNorm(X, noi)
+#' cat(dilf_ta)
 #' @export
 
 taNorm <- function(X, noi){

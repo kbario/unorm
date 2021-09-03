@@ -22,9 +22,9 @@ pqNorm(
 
 \item{uv_used}{PQN utilises finding the median or the mode, which are both \emph{U}ni\emph{v}ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use. Default = 'mode'}
 
-\item{ppm}{An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.}
+\item{calc_region}{The lower and upper bounds of the spectrum that will be used to calculate the dilution coeficient}
 
-\item{width}{Represents the bandwidth used in the 'mode' method. Only required when using \code{uv_used = 'mode'}. Default = 0.1. Look at the help section of \code{\link[stats:density]{stats::density()}} for more information.}
+\item{bin_width}{The width of the bin when the spectra are binned}
 }
 \value{
 The output of this function is a list containing:
@@ -75,9 +75,9 @@ PQN works by normalising experimental spectra in the provided X matrix in relati
 }
 }
 \examples{
-pq <- pqNorm(X)
-Xn <- pq$Xn
-dilf <- pq$dilf
+data(X, noi)
+pqNorm(X, noi)
+cat(dilf_pqn)
 }
 \seealso{
 The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}

@@ -21,20 +21,11 @@ This function returns a list with:
 A method of NMR spectral normalisation where the maximum intensities
 }
 \details{
-\subsection{How It Works:}{
-}
-
-\subsection{Advantages:}{
-}
-
-\subsection{Limitations:}{
-}
+The intensities of each spectrum are ordered smallest to largest, the means of these 'quantiles' are calculated and these means are then reassigned to the ppm they match to (i.e., the ppm which contained the highest intensity will be assigned the mean of the highest values and so on)
 }
 \examples{
-Xqn <- qNorm(X)
-Xn <- Xqn$Xn
-Xq <- Xqn$Xq
-qDilf <- Xqn$dilf
+data(X)
+qNorm(X)
 }
 \seealso{
 The methods paper that describes quantile normalisation: \url{https://doi.org/10.1007/s11306-011-0350-z}
@@ -43,7 +34,8 @@ Other {Attribute-Based}:
 \code{\link{creNorm}()},
 \code{\link{qNorm2}()},
 \code{\link{roiNorm}()},
-\code{\link{taNorm}()}
+\code{\link{taNorm}()},
+\code{\link{vecNorm}()}
 }
 \author{
 \email{kylebario1@gmail.com}

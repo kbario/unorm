@@ -20,11 +20,11 @@
 #' * PQN is also vulnerable to peak shift because it compares intensities of the same ppm variable. If a peak is left- or right-shifted, the apex of one signal will not be compared against the apex of another and thus produce convoluted results.
 #' @family {Reference-Based}
 #' @param X The numerical matrix containing the NMR data you wish to normalise. **This should be a preprocessed matrix** with baseline correction, tsp calibration and non-quantitative region removal performed on it. The rows must contain information of one whole spectrum and the columns contain the specific chemical shift variables.
-#' @param ppm An array of chemical shift variables. ppm should be column matched to the X matrix you are normalising.
 #' @param noi Takes an array that is row matched to the X matrix you are normalising with the values equaling the maximum noise estimation for each spectra respectively.
 #' @param use_ta Requires a boolean `TRUE` or `FALSE` if total area normalisation should be performed on the spectra before PQN is.
 #' @param uv_used PQN utilises finding the median or the mode, which are both *U*ni*v*ariate methods. Recognises either the string 'median' or 'mode' to instruct which method to use. Default = 'mode'
-#' @param width Represents the bandwidth used in the 'mode' method. Only required when using `uv_used = 'mode'`. Default = 0.1. Look at the help section of [stats::density()] for more information.
+#' @param calc_region The lower and upper bounds of the spectrum that will be used to calculate the dilution coeficient
+#' @param bin_width The width of the bin when the spectra are binned
 #' @return The output of this function is a list containing:
 #' 1. The normalised version of X in the first element and
 #' 2. A numerical array of the corresponding dilution factors calculated by the function.
@@ -32,9 +32,9 @@
 #' @seealso The methods paper first describing PQN can be found here: \url{https://doi.org/10.1021/ac051632c}
 #' @author \email{kylebario1@@gmail.com}
 #' @examples
-#' pq <- pqNorm(X)
-#' Xn <- pq$Xn
-#' dilf <- pq$dilf
+#' data(X, noi)
+#' pqNorm(X, noi)
+#' cat(dilf_pqn)
 #' @importFrom metabom8 get_idx
 #' @importFrom stats sd density median
 #' @export
@@ -83,7 +83,7 @@ pqNorm <- function(X, noi, use_ta = F, uv_used = 'mode', calc_region = c(0.5,9.5
   }))
   cat('\033[1;32mDone.\n\033[0m')
   cat('\033[0;34mBinning... \033[0m')
-  Xsb <- binning(Xs, p[idx], width = bin_width)
+  Xsb <- binin(Xs, p[idx], width = bin_width)
   cat('\033[1;32mDone.\n\033[0m')
   cat('\033[0;34mCalculating Reference Spectrum... \033[0m')
   Xm <- apply(Xsb, 2, median)

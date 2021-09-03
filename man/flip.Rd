@@ -22,12 +22,21 @@ Spectra produced from experiments with small scans can often appear upside-down.
 \details{
 NMR urine spectra that are produced from a small number of scans are often incorrectly orientated due to the water signal. This function looks at the creatinine signal (ppm = 3.05) which is in all urine spectra to see if the value is positive or negative. For negative valued spectra, they are mulitplied by -1 and flipped to the correct orientation.
 }
+\examples{
+path = system.file('extdata', package = 'unorm')
+Xf <- flip(X, ppm)
+}
 \seealso{
 Other {preproc}: 
-\code{\link{noise}()},
+\code{\link{noise}()}
+
+Other {Data Minipulation}: 
+\code{\link{binin}()},
+\code{\link{bl}()},
 \code{\link{preprocessing}()}
 }
 \author{
 \email{kylebario1@gmail.com}
 }
+\concept{{Data Minipulation}}
 \concept{{preproc}}
